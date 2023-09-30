@@ -44,7 +44,16 @@ class Main extends Sprite {
 			startingState = MainMenuState;
 		}
 		#end
-		addChild(new FlxGame(0, 0, startingState, 60, 60, true, false));
+
+		var width = Std.int(256);
+		var height = Std.int(240);
+
+		#if !FLX_NO_DEBUG
+		// FlxG.resizeWindow(width * 6, height * 3);
+		width *= 2;
+		#end
+
+		addChild(new FlxGame(width, height, startingState, 60, 60, true, false));
 
 		FlxG.fixedTimestep = false;
 

@@ -4,6 +4,10 @@ package debug;
 // as needed
 enum DebugLayers {
 	GENERAL;
+	SQUARE_GRID;
+	ISO_GRID;
+	ISO_SPACE;
+	GRID_SPACE;
+	GRAPH;
 	RAYCAST;
-	AUDIO;
 }

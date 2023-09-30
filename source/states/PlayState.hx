@@ -1,5 +1,7 @@
 package states;
 
+import debug.Debug;
+import flixel.FlxCamera;
 import entities.Item;
 import flixel.util.FlxColor;
 import debug.DebugLayers;
@@ -21,6 +23,13 @@ class PlayState extends FlxTransitionableState {
 		Lifecycle.startup.dispatch();
 
 		FlxG.camera.pixelPerfectRender = true;
+
+		#if FLX_DEBUG
+		FlxG.camera.width = Std.int(FlxG.camera.width / 2);
+		Debug.dbgCam = new FlxCamera(Std.int(camera.x + camera.width), 0, camera.width, camera.height, camera.zoom);
+		Debug.dbgCam.bgColor = FlxColor.RED.getDarkened(0.9);
+		FlxG.cameras.add(Debug.dbgCam, false);
+		#end
 
 		player = new Player();
 		add(player);
