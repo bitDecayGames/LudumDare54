@@ -1,5 +1,7 @@
 package entities;
 
+import iso.IsoEchoSprite;
+import echo.Body;
 import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.math.FlxMath;
@@ -11,7 +13,7 @@ import input.SimpleController;
 import loaders.Aseprite;
 import loaders.AsepriteMacros;
 
-class Player extends IsoSprite {
+class Player extends IsoEchoSprite {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/rotation_template.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
 	public static var eventData = AsepriteMacros.frameUserData("assets/aseprite/characters/player.json", "Layer 1");
@@ -39,6 +41,10 @@ class Player extends IsoSprite {
 		gridHeight = 1;
 
 		super();
+	}
+
+
+	override function configSprite() {
 		// This call can be used once https://github.com/HaxeFlixel/flixel/pull/2860 is merged
 		// FlxAsepriteUtil.loadAseAtlasAndTags(this, AssetPaths.player__png, AssetPaths.player__json);
 		this.sprite = new FlxSprite();
@@ -48,6 +54,19 @@ class Player extends IsoSprite {
 				trace('frame $index has data ${eventData.get(index)}');
 			}
 		};
+	}
+
+	override function makeBody():Body {
+		return this.add_body({
+			x: x,
+			y: y,
+			shapes: [
+				{
+					type:CIRCLE,
+					radius: 15,
+				},
+			],
+		});
 	}
 
 	override public function update(delta:Float) {
@@ -73,6 +92,7 @@ class Player extends IsoSprite {
 		var intAngle = FlxMath.wrap(cast angleDeg + halfSegment, 0, 359);
 		var spinFrame = Std.int(intAngle / segmentSize);
 		sprite.animation.frameIndex = spinFrame;
+		body.rotation = calculatedAngle;
 
 		FlxG.watch.addQuick('pAngRaw:', rawAngle);
 		FlxG.watch.addQuick('pAngCalc:', calculatedAngle);
@@ -109,7 +129,7 @@ class Player extends IsoSprite {
 
 		var influenceAngle = FlxMath.lerp(initialSkidAngle, rawAngle, inputLerp);
 		movement.rotateByDegrees(influenceAngle + (influenceAngle - rawAngle));
-		velocity.copyFrom(movement);
+		body.velocity.set(movement.x, movement.y);
 	}
 
 	function normalControl(delta:Float) {
@@ -144,6 +164,6 @@ class Player extends IsoSprite {
 
 		var movement = FlxPoint.weak(speed, 0);
 		movement.rotateByDegrees(calculatedAngle);
-		velocity.copyFrom(movement);
+		body.velocity.set(movement.x, movement.y);
 	}
 }

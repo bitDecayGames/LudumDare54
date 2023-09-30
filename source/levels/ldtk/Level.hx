@@ -20,17 +20,17 @@ class Level {
             var firstPlayerEnt = level.l_Entities.all_Player[0];
 
             player = new Player();
-            player.x = firstPlayerEnt.pixelX;
-            player.y = firstPlayerEnt.pixelY;
+            player.body.x = firstPlayerEnt.pixelX;
+            player.body.y = firstPlayerEnt.pixelY;
             g.add(player);
 
             // Survivors
-            for (s in level.l_Entities.all_Survivor) {
-                var item = new Item();
-                item.x = s.pixelX;
-                item.y = s.pixelY;
-                g.add(item);
-            }
+            // for (s in level.l_Entities.all_Survivor) {
+            //     var item = new Item();
+            //     item.x = s.pixelX;
+            //     item.y = s.pixelY;
+            //     g.add(item);
+            // }
         }
     }
 }

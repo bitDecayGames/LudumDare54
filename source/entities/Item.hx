@@ -10,7 +10,11 @@ class Item extends IsoEchoSprite {
 	public static var slices = AsepriteMacros.sliceNames("assets/aseprite/items.json");
 
 	public function new() {
-		super(x, y);
+		gridWidth = 1;
+		gridLength = 1;
+		gridHeight = 1;
+
+		super();
 	}
 
 	override function configSprite() {
@@ -28,7 +32,6 @@ class Item extends IsoEchoSprite {
 					radius: 15,
 				},
 			],
-			// kinematic: true,
 		});
 	}
 
