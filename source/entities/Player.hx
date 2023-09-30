@@ -16,8 +16,14 @@ class Player extends IsoSprite {
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
 	public static var eventData = AsepriteMacros.frameUserData("assets/aseprite/characters/player.json", "Layer 1");
 
-	var speed:Float = 30;
+	var speed:Float = 70;
+	var turnSpeed:Float = 130;
 	var playerNum = 0;
+
+	var rawAngle:Float = 0;
+	var calculatedAngle:Float = 0;
+
+	var snapToleranceDegrees = 10;
 
 	public function new() {
 		gridWidth = 1;
@@ -39,37 +45,40 @@ class Player extends IsoSprite {
 	override public function update(delta:Float) {
 		super.update(delta);
 
-		// var inputDir = InputCalcuator.getInputCardinal(playerNum);
-		// if (inputDir != NONE) {
-		// 	inputDir.asVector(velocity).scale(speed);
-		// } else {
-		// 	velocity.set();
-		// }
-
-		if (SimpleController.just_pressed(Button.A, playerNum)) {
-			color = color ^ 0xFFFFFF;
-		}
-
 		if (SimpleController.pressed(LEFT)) {
-			angle -= 1;
+			rawAngle -= turnSpeed * delta;
 		}
 
 		if (SimpleController.pressed(RIGHT)) {
-			angle += 1;
+			rawAngle += turnSpeed * delta;
+		}
+
+		if (rawAngle < 0) rawAngle += 360;
+		if (rawAngle >= 360) rawAngle -= 360;
+
+		if (rawAngle % 45 <= snapToleranceDegrees) {
+			calculatedAngle = rawAngle - (rawAngle % 45);
+		} else if (rawAngle % 45 >= (45 - snapToleranceDegrees)) {
+			calculatedAngle = rawAngle + (45 - (rawAngle % 45));
+		} else {
+			calculatedAngle = rawAngle;
 		}
 
 		// aka 16 segments
-		var segmentSize = 360 / 16;
+		var segmentSize = 360.0 / 16;
 		var halfSegment = segmentSize / 2;
 
-		var angleDeg = angle;
+		var angleDeg = rawAngle;
 		var intAngle = FlxMath.wrap(cast angleDeg + halfSegment, 0, 359);
-		var segments = Std.int(intAngle / segmentSize);
-		sprite.animation.frameIndex = segments;
+		var spinFrame = Std.int(intAngle / segmentSize);
+		sprite.animation.frameIndex = spinFrame;
 
-		var SPEED = 30;
-		var movement = FlxPoint.weak(SPEED, 0);
-		movement.rotateByDegrees(angle);
+		var movement = FlxPoint.weak(speed, 0);
+		movement.rotateByDegrees(calculatedAngle);
 		velocity.copyFrom(movement);
+
+		FlxG.watch.addQuick('pAngRaw:', rawAngle);
+		FlxG.watch.addQuick('pAngCalc:', calculatedAngle);
+		FlxG.watch.addQuick('pAngFrame:', spinFrame);
 	}
 }
