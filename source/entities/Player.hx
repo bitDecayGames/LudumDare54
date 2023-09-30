@@ -18,12 +18,20 @@ class Player extends IsoSprite {
 
 	var speed:Float = 70;
 	var turnSpeed:Float = 130;
+	var turnSpeedSkid:Float = 200;
 	var playerNum = 0;
 
 	var rawAngle:Float = 0;
 	var calculatedAngle:Float = 0;
 
+	// how far off (in degrees) the direction of travel will snap to the 45 degree angles
 	var snapToleranceDegrees = 10;
+
+	var initialSkidAngle = Math.POSITIVE_INFINITY;
+	var skidDuration = 0.0;
+
+	var MAX_SKID_INPUT_TIME = 1;
+	var MAX_SKID_MOVE_TIME = 1.5;
 
 	public function new() {
 		gridWidth = 1;
@@ -45,6 +53,61 @@ class Player extends IsoSprite {
 	override public function update(delta:Float) {
 		super.update(delta);
 
+		if (SimpleController.pressed(A)) {
+			skidControl(delta);
+		} else {
+			// TODO: We likely want some sort of cooldown as a way to reset when the player can drift/skid again
+			skidDuration = 0;
+			initialSkidAngle = Math.POSITIVE_INFINITY;
+			normalControl(delta);
+		}
+
+		// aka 16 segments
+		var segmentSize = 360.0 / 16;
+		var halfSegment = segmentSize / 2;
+
+		var angleDeg = rawAngle;
+		var intAngle = FlxMath.wrap(cast angleDeg + halfSegment, 0, 359);
+		var spinFrame = Std.int(intAngle / segmentSize);
+		sprite.animation.frameIndex = spinFrame;
+
+		FlxG.watch.addQuick('pAngRaw:', rawAngle);
+		FlxG.watch.addQuick('pAngCalc:', calculatedAngle);
+		FlxG.watch.addQuick('pAngFrame:', spinFrame);
+
+
+		
+	}
+
+	function skidControl(delta:Float) {
+		if (initialSkidAngle == Math.POSITIVE_INFINITY) {
+			initialSkidAngle = rawAngle;
+			skidDuration = 0.0;
+		}
+
+		skidDuration = Math.min(skidDuration + delta, MAX_SKID_MOVE_TIME);
+		var inputLerp = Math.min(skidDuration / MAX_SKID_INPUT_TIME, 1);
+		var moveLerp = skidDuration / MAX_SKID_MOVE_TIME;
+
+		var inputImpact = 1 - inputLerp;
+
+		if (SimpleController.pressed(LEFT)) {
+			rawAngle -= inputImpact * (turnSpeedSkid * delta);
+		}
+
+		if (SimpleController.pressed(RIGHT)) {
+			rawAngle += inputImpact * (turnSpeedSkid * delta);
+		}
+
+
+		var movement = FlxPoint.weak(FlxMath.lerp(speed, 0, moveLerp), 0);
+
+		var influenceAngle = FlxMath.lerp(initialSkidAngle, rawAngle, inputLerp);
+		movement.rotateByDegrees(influenceAngle + (influenceAngle - rawAngle));
+		velocity.copyFrom(movement);
+	}
+
+	function normalControl(delta:Float) {
 		if (SimpleController.pressed(LEFT)) {
 			rawAngle -= turnSpeed * delta;
 		}
@@ -63,22 +126,19 @@ class Player extends IsoSprite {
 		} else {
 			calculatedAngle = rawAngle;
 		}
+		if (rawAngle < 0) rawAngle += 360;
+		if (rawAngle >= 360) rawAngle -= 360;
 
-		// aka 16 segments
-		var segmentSize = 360.0 / 16;
-		var halfSegment = segmentSize / 2;
-
-		var angleDeg = rawAngle;
-		var intAngle = FlxMath.wrap(cast angleDeg + halfSegment, 0, 359);
-		var spinFrame = Std.int(intAngle / segmentSize);
-		sprite.animation.frameIndex = spinFrame;
+		if (rawAngle % 45 <= snapToleranceDegrees) {
+			calculatedAngle = rawAngle - (rawAngle % 45);
+		} else if (rawAngle % 45 >= (45 - snapToleranceDegrees)) {
+			calculatedAngle = rawAngle + (45 - (rawAngle % 45));
+		} else {
+			calculatedAngle = rawAngle;
+		}
 
 		var movement = FlxPoint.weak(speed, 0);
 		movement.rotateByDegrees(calculatedAngle);
 		velocity.copyFrom(movement);
-
-		FlxG.watch.addQuick('pAngRaw:', rawAngle);
-		FlxG.watch.addQuick('pAngCalc:', calculatedAngle);
-		FlxG.watch.addQuick('pAngFrame:', spinFrame);
 	}
 }
