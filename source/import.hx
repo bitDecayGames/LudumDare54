@@ -11,4 +11,6 @@ import bitdecay.flixel.system.QuickLog;
 using bitdecay.flixel.extensions.FlxCameraExt;
 using bitdecay.flixel.extensions.FlxObjectExt;
 using bitdecay.flixel.extensions.FlxPointExt;
+
+using echo.FlxEcho;
 #end

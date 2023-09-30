@@ -16,6 +16,7 @@ import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import bitdecay.flixel.debug.DebugDraw;
 import levels.ldtk.Level;
+import echo.FlxEcho;
 
 using states.FlxStateExt;
 
@@ -27,6 +28,12 @@ class PlayState extends FlxTransitionableState {
 		Lifecycle.startup.dispatch();
 
 		FlxG.camera.pixelPerfectRender = true;
+
+		// Echo/physics init
+		FlxEcho.init({
+			width: FlxG.width,
+			height: FlxG.height,
+		});
 
 		#if FLX_DEBUG
 		FlxG.camera.width = Std.int(FlxG.camera.width / 2);
@@ -47,8 +54,6 @@ class PlayState extends FlxTransitionableState {
 				add(bgTile);
 			}
 		}
-
-		FlxG.camera.bgColor = FlxColor.fromString("0x6495ed"); // cornflower blue
 
 		level = new Level(this);
 
