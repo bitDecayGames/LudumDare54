@@ -67,15 +67,15 @@ class Player extends IsoEchoSprite {
 				},
 				{
 					type:RECT,
-					width: 7,
-					height: 30,
-					offset_x: 7,
+					width: 30,
+					height: 7,
+					offset_y: 7,
 				},
 				{
 					type:RECT,
-					width: 7,
-					height: 30,
-					offset_x: -7,
+					width: 30,
+					height: 7,
+					offset_y: -7,
 				}
 			],
 		});
