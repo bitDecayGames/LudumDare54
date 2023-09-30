@@ -15,13 +15,13 @@ import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import bitdecay.flixel.debug.DebugDraw;
-import levels.ldtk.TestLDTKProject;
+import levels.ldtk.Level;
 
 using states.FlxStateExt;
 
 class PlayState extends FlxTransitionableState {
-	var player:Player;
-
+	var level:Level;
+	
 	override public function create() {
 		super.create();
 		Lifecycle.startup.dispatch();
@@ -48,46 +48,19 @@ class PlayState extends FlxTransitionableState {
 			}
 		}
 
-		player = new Player();
-		add(player);
+		FlxG.camera.bgColor = FlxColor.fromString("0x6495ed"); // cornflower blue
+
+		level = new Level(this);
 
 		#if FLX_DEBUG
-		Debug.dbgCam.follow(player);
+		Debug.dbgCam.follow(level.player);
 		#end
 
-		camera.follow(player.sprite);
-
-		var item = new Item();
-		item.y = 50;
-		add(item);
+		FlxG.camera.follow(level.player.sprite);
 
 		// add(Achievements.ACHIEVEMENT_NAME_HERE.toToast(true, true));
 
 		// QuickLog.error('Example error');
-
-		// Create project instance
-		var project = new TestLDTKProject();
-		// Iterate all world levels
-		for( level in project.all_worlds.Default.levels ) {
-			// Create a FlxGroup for all level layers
-			var container = new FlxSpriteGroup();
-			add(container);
-
-			// Place it using level world coordinates (in pixels)
-			container.x = level.worldX;
-			container.y = level.worldY;
-
-			// Attach level background image, if any
-			if(level.hasBgImage()) {
-				container.add(level.getBgSprite());
-			}
-
-			// Set player position
-			for (p in level.l_Entities.all_Player ) {
-				player.x = p.pixelX;
-				player.y = p.pixelY;
-			}
-		}
 	}
 
 	override public function update(elapsed:Float) {

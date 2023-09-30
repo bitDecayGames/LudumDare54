@@ -19,3 +19,5 @@ dump/
 # misc
 .VSCodeCounter/
 .DS_Store
+.idea/
+*.iml
