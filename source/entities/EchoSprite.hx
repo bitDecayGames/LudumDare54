@@ -4,8 +4,6 @@ import echo.Body;
 import flixel.FlxSprite;
 import echo.data.Data.CollisionData;
 
-using echo.FlxEcho;
-
 class EchoSprite extends FlxSprite {
 	public var body:Body;
 

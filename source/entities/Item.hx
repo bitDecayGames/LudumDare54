@@ -1,11 +1,12 @@
 package entities;
 
+import flixel.FlxSprite;
 import loaders.Aseprite;
 import loaders.AsepriteMacros;
 import echo.Body;
-import flixel.FlxSprite;
+import iso.IsoEchoSprite;
 
-class Item extends EchoSprite {
+class Item extends IsoEchoSprite {
 	public static var slices = AsepriteMacros.sliceNames("assets/aseprite/items.json");
 
 	public function new() {
@@ -13,7 +14,8 @@ class Item extends EchoSprite {
 	}
 
 	override function configSprite() {
-		Aseprite.loadSlice(this, AssetPaths.items__json, slices.item1_0);
+		this.sprite = new FlxSprite();
+		Aseprite.loadSlice(this.sprite, AssetPaths.items__json, slices.item1_0);
 	}
 
 	override function makeBody():Body {
