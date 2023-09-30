@@ -28,8 +28,7 @@ class Player extends IsoSprite {
 		// This call can be used once https://github.com/HaxeFlixel/flixel/pull/2860 is merged
 		// FlxAsepriteUtil.loadAseAtlasAndTags(this, AssetPaths.player__png, AssetPaths.player__json);
 		this.sprite = new FlxSprite();
-		Aseprite.loadAllAnimations(this.sprite, AssetPaths.rotation_template__json);
-		// animation.play(anims.right);
+		Aseprite.loadAllAnimations(this.sprite, AssetPaths.boat__json);
 		animation.callback = (anim, frame, index) -> {
 			if (eventData.exists(index)) {
 				trace('frame $index has data ${eventData.get(index)}');
