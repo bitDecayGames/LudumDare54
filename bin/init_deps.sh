@@ -25,7 +25,7 @@ while read -r line; do
   splits=(${line})
 
   # lines should be of the format:
-  # <libName> <libVersionOrGitOrGit> <OPTIONAL_gitLocation> <OPTIONAL_gitBranchOrTag>
+  # <libName> <libVersionOrGit> <OPTIONAL_gitLocation> <OPTIONAL_gitBranchOrTag>
   libName="${splits[0]}"
   libVersionOrGit="${splits[1]}"
   gitLocation="${splits[2]}"
