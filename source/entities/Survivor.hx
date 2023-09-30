@@ -6,14 +6,15 @@ import loaders.AsepriteMacros;
 
 import entities.statemachine.StateMachine;
 import entities.states.survivor.FloatingState;
-class Survivor extends Bobber {
+class Survivor extends Bobber implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/rotation_template.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
 	public static var eventData = AsepriteMacros.frameUserData("assets/aseprite/characters/player.json", "Layer 1");
 
 	private var stateMachine:StateMachine<Survivor>;
 
-	public var following:FlxSprite;
+	public var following:Follower;
+	public var leading:Follower;
 
 	public function new(x:Float=0, y:Float=0) {
 		gridWidth = 1;

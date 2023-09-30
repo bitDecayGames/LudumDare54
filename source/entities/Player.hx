@@ -13,7 +13,7 @@ import input.SimpleController;
 import loaders.Aseprite;
 import loaders.AsepriteMacros;
 
-class Player extends IsoEchoSprite {
+class Player extends IsoEchoSprite implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/rotation_template.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
 	public static var eventData = AsepriteMacros.frameUserData("assets/aseprite/characters/player.json", "Layer 1");
@@ -34,6 +34,10 @@ class Player extends IsoEchoSprite {
 
 	var MAX_SKID_INPUT_TIME = 1;
 	var MAX_SKID_MOVE_TIME = 1.5;
+
+	// used for survivor FollowingState
+	public var following:Follower;
+	public var leading:Follower;
 
 	public function new() {
 		gridWidth = 1;
@@ -111,7 +115,7 @@ class Player extends IsoEchoSprite {
 		FlxG.watch.addQuick('pAngFrame:', spinFrame);
 
 
-		
+
 	}
 
 	function skidControl(delta:Float) {
