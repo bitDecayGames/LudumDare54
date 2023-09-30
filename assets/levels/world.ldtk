@@ -108,7 +108,7 @@
 			"fieldDefs": []
 		},
 		{
-			"identifier": "Rescuee",
+			"identifier": "Survivor",
 			"uid": 3,
 			"tags": [],
 			"exportToToc": false,
@@ -205,7 +205,7 @@
 							"fieldInstances": []
 						},
 						{
-							"__identifier": "Rescuee",
+							"__identifier": "Survivor",
 							"__grid": [8,5],
 							"__pivot": [0.5,0.5],
 							"__tags": [],
@@ -221,7 +221,7 @@
 							"fieldInstances": []
 						},
 						{
-							"__identifier": "Rescuee",
+							"__identifier": "Survivor",
 							"__grid": [8,9],
 							"__pivot": [0.5,0.5],
 							"__tags": [],

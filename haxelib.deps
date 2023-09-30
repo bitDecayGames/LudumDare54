@@ -10,6 +10,9 @@ newgrounds 2.0.0
 # ldtk tile editor integration
 ldtk-haxe-api 1.4.1-rc.1
 
+# physics
+echo 4.2.2
+
 # bitDecayGames deps
 bitdecaybtree git https://github.com/bitDecayGames/BehaviorTree.git
 bitlytics git https://github.com/bitDecayGames/Bitlytics.git
