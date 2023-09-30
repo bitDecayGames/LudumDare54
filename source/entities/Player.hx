@@ -6,7 +6,6 @@ import flixel.math.FlxMath;
 import flixel.math.FlxAngle;
 import iso.IsoSprite;
 import flixel.FlxSprite;
-
 import input.InputCalcuator;
 import input.SimpleController;
 import loaders.Aseprite;
@@ -52,7 +51,7 @@ class Player extends IsoSprite {
 			color = color ^ 0xFFFFFF;
 		}
 
-		if (SimpleController.pressed(LEFT)) { 
+		if (SimpleController.pressed(LEFT)) {
 			angle -= 1;
 		}
 

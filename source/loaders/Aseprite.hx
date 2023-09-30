@@ -9,7 +9,6 @@ import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.system.FlxAssets.FlxJsonAsset;
 import flixel.system.FlxAssets.FlxGraphicAsset;
-
 import loaders.AsepriteTypes.AseAtlas;
 
 class Aseprite {
@@ -104,8 +103,9 @@ class Aseprite {
 		}
 	}
 
-	private static function texturePackerSliceHelper(frameData:AsepriteTypes.HashOrArray<AsepriteTypes.AseAtlasFrame>, slice:AsepriteTypes.AseAtlasSlice, frames:FlxAtlasFrames, useFrameDuration = false):Void {
-		if (frameData is Array ) {
+	private static function texturePackerSliceHelper(frameData:AsepriteTypes.HashOrArray<AsepriteTypes.AseAtlasFrame>, slice:AsepriteTypes.AseAtlasSlice,
+			frames:FlxAtlasFrames, useFrameDuration = false):Void {
+		if (frameData is Array) {
 			for (key in slice.keys) {
 				var refFrame = frameData[key.frame];
 
