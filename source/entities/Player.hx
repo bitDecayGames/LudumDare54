@@ -16,7 +16,7 @@ class Player extends IsoSprite {
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
 	public static var eventData = AsepriteMacros.frameUserData("assets/aseprite/characters/player.json", "Layer 1");
 
-	var speed:Float = 0;// TODO: MW put this back: 30;
+	var speed:Float = 30;
 	var playerNum = 0;
 
 	public function new() {
