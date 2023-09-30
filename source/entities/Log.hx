@@ -33,6 +33,6 @@ class Log extends Bobber {
 		this.bobVel = minBob;
 		this.bobGravity = .01;
 		this.bobDampening = .999;
-		this.bobEnabled = true;
+		this.bobbingEnabled = true;
 	}
 }
