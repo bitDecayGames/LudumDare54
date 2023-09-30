@@ -16,7 +16,8 @@ class Player extends IsoSprite {
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
 	public static var eventData = AsepriteMacros.frameUserData("assets/aseprite/characters/player.json", "Layer 1");
 
-	var speed:Float = 30;
+	var speed:Float = 70;
+	var turnSpeed:Float = 130;
 	var playerNum = 0;
 
 	public function new() {
@@ -28,8 +29,7 @@ class Player extends IsoSprite {
 		// This call can be used once https://github.com/HaxeFlixel/flixel/pull/2860 is merged
 		// FlxAsepriteUtil.loadAseAtlasAndTags(this, AssetPaths.player__png, AssetPaths.player__json);
 		this.sprite = new FlxSprite();
-		Aseprite.loadAllAnimations(this.sprite, AssetPaths.rotation_template__json);
-		// animation.play(anims.right);
+		Aseprite.loadAllAnimations(this.sprite, AssetPaths.boat__json);
 		animation.callback = (anim, frame, index) -> {
 			if (eventData.exists(index)) {
 				trace('frame $index has data ${eventData.get(index)}');
@@ -40,23 +40,12 @@ class Player extends IsoSprite {
 	override public function update(delta:Float) {
 		super.update(delta);
 
-		// var inputDir = InputCalcuator.getInputCardinal(playerNum);
-		// if (inputDir != NONE) {
-		// 	inputDir.asVector(velocity).scale(speed);
-		// } else {
-		// 	velocity.set();
-		// }
-
-		if (SimpleController.just_pressed(Button.A, playerNum)) {
-			color = color ^ 0xFFFFFF;
-		}
-
 		if (SimpleController.pressed(LEFT)) {
-			angle -= 1;
+			angle -= turnSpeed * delta;
 		}
 
 		if (SimpleController.pressed(RIGHT)) {
-			angle += 1;
+			angle += turnSpeed * delta;
 		}
 
 		// aka 16 segments
@@ -68,8 +57,7 @@ class Player extends IsoSprite {
 		var segments = Std.int(intAngle / segmentSize);
 		sprite.animation.frameIndex = segments;
 
-		var SPEED = 30;
-		var movement = FlxPoint.weak(SPEED, 0);
+		var movement = FlxPoint.weak(speed, 0);
 		movement.rotateByDegrees(angle);
 		velocity.copyFrom(movement);
 	}
