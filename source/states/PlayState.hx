@@ -16,7 +16,7 @@ import bitdecay.flixel.debug.DebugDraw;
 using states.FlxStateExt;
 
 class PlayState extends FlxTransitionableState {
-	var player:FlxSprite;
+	var player:Player;
 
 	override public function create() {
 		super.create();
@@ -34,13 +34,19 @@ class PlayState extends FlxTransitionableState {
 		player = new Player();
 		add(player);
 
+		#if FLX_DEBUG
+		Debug.dbgCam.follow(player);
+		#end
+
+		camera.follow(player.sprite);
+
 		var item = new Item();
 		item.y = 50;
 		add(item);
 
-		add(Achievements.ACHIEVEMENT_NAME_HERE.toToast(true, true));
+		// add(Achievements.ACHIEVEMENT_NAME_HERE.toToast(true, true));
 
-		QuickLog.error('Example error');
+		// QuickLog.error('Example error');
 	}
 
 	override public function update(elapsed:Float) {
