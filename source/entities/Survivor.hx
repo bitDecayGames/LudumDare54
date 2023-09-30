@@ -4,10 +4,16 @@ import flixel.FlxSprite;
 import loaders.Aseprite;
 import loaders.AsepriteMacros;
 
+import entities.statemachine.StateMachine;
+import entities.states.survivor.FloatingState;
 class Survivor extends Bobber {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/rotation_template.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
 	public static var eventData = AsepriteMacros.frameUserData("assets/aseprite/characters/player.json", "Layer 1");
+
+	private var stateMachine:StateMachine<Survivor>;
+
+	public var following:FlxSprite;
 
 	public function new(x:Float=0, y:Float=0) {
 		gridWidth = 1;
@@ -25,14 +31,14 @@ class Survivor extends Bobber {
 				trace('frame $index has data ${eventData.get(index)}');
 			}
 		};
+
+		stateMachine = new StateMachine<Survivor>(this);
+		// sets the initial state
+		stateMachine.setNextState(new FloatingState(this));
 	}
 
-	override private function initBobbingValues() {
-		this.maxBob = 1;
-		this.minBob = .5;
-		this.bobVel = minBob;
-		this.bobGravity = .02;
-		this.bobDampening = .99;
-		this.bobEnabled = true;
+	override public function update(delta:Float):Void {
+		super.update(delta);
+		stateMachine.update(delta);
 	}
 }

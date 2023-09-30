@@ -2,14 +2,13 @@ package entities;
 
 import iso.IsoSprite;
 
-import flixel.FlxG;
 class Bobber extends IsoSprite {
-    private var maxBob:Float;
-    private var minBob:Float;
-    private var bobVel:Float;
-    private var bobGravity:Float;
-    private var bobDampening:Float;
-    private var bobEnabled:Bool = true;
+    public var maxBob:Float;
+    public var minBob:Float;
+    public var bobVel:Float;
+    public var bobGravity:Float;
+    public var bobDampening:Float;
+    public var bobbingEnabled:Bool = true;
 
     public function new(x:Float = 0, y:Float = 0) {
         bobVel = minBob;
@@ -24,13 +23,13 @@ class Bobber extends IsoSprite {
         this.bobVel = minBob;
         this.bobGravity = .02;
         this.bobDampening = .99;
-        this.bobEnabled = true;
+        this.bobbingEnabled = true;
     }
 
     override public function update(delta:Float) {
         super.update(delta);
 
-        if (bobEnabled) {
+        if (bobbingEnabled) {
             // clamp the bobbing velocity to +/-maxBob
             if (bobVel < 0) {
                 bobVel = Math.max(bobVel, -maxBob);
