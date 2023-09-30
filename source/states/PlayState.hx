@@ -18,7 +18,7 @@ import levels.ldtk.TestLDTKProject;
 using states.FlxStateExt;
 
 class PlayState extends FlxTransitionableState {
-	var player:FlxSprite;
+	var player:Player;
 
 	override public function create() {
 		super.create();
@@ -36,9 +36,15 @@ class PlayState extends FlxTransitionableState {
 		player = new Player();
 		add(player);
 
-		add(Achievements.ACHIEVEMENT_NAME_HERE.toToast(true, true));
+		#if FLX_DEBUG
+		Debug.dbgCam.follow(player);
+		#end
 
-		QuickLog.error('Example error');
+		camera.follow(player.sprite);
+
+		// add(Achievements.ACHIEVEMENT_NAME_HERE.toToast(true, true));
+
+		// QuickLog.error('Example error');
 
 		loadLevel();
 	}
