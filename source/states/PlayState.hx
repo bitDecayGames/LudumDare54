@@ -41,6 +41,7 @@ class PlayState extends FlxTransitionableState {
 		Debug.dbgCam = new FlxCamera(0, 0, camera.width, camera.height, camera.zoom);
 		Debug.dbgCam.bgColor = FlxColor.RED.getDarkened(0.9);
 		FlxG.cameras.add(Debug.dbgCam, false);
+		FlxEcho.drawCamera = Debug.dbgCam;
 		#end
 
 		for (x in 0...5) {

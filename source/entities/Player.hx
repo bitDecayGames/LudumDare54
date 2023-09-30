@@ -65,6 +65,18 @@ class Player extends IsoEchoSprite {
 					type:CIRCLE,
 					radius: 15,
 				},
+				{
+					type:RECT,
+					width: 7,
+					height: 30,
+					offset_x: 7,
+				},
+				{
+					type:RECT,
+					width: 7,
+					height: 30,
+					offset_x: -7,
+				}
 			],
 		});
 	}
