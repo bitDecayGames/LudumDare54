@@ -25,6 +25,9 @@ import states.PlayState;
 #if credits
 import states.CreditsState;
 #end
+#if mike
+import states.debug.MikeState;
+#end
 
 class Main extends Sprite {
 	public function new() {
@@ -39,6 +42,8 @@ class Main extends Sprite {
 		startingState = PlayState;
 		#elseif credits
 		startingState = CreditsState;
+		#elseif mike
+		startingState = MikeState;
 		#else
 		if (Macros.isDefined("SKIP_SPLASH")) {
 			startingState = MainMenuState;
