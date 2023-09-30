@@ -27,13 +27,16 @@ class FollowerHelper {
     /**
     Removes this follower and all its children from the chain
     */
-    public static function stopFollwing(it: Follower):Void {
-        if (it == null) return;
+    public static function stopFollowing(it: Follower):Follower {
+        if (it == null) return null;
 
         if (it.following != null) {
+            var f = it.following;
             it.following.leading = null;
             it.following = null;
+            return f;
         }
+        return null;
     }
 
     /**
@@ -56,5 +59,28 @@ class FollowerHelper {
 
         it.following = null;
         it.leading = null;
+    }
+
+    /**
+    Counts the total number of followers
+    */
+    public static function countNumberOfFollowersInChain(it: Follower):Int {
+        return innerCountNumberOfFollowersInChain(it, 0);
+    }
+    private static function innerCountNumberOfFollowersInChain(it: Follower, count:Int):Int {
+        if (it == null) return count;
+        return innerCountNumberOfFollowersInChain(it.leading, count + 1);
+    }
+
+    /**
+    Gets the last link on the chain
+    */
+    public static function getLastLinkOnChain(it: Follower):Follower {
+        return innerGetLastLinkOnChain(it);
+    }
+    private static function innerGetLastLinkOnChain(it: Follower):Follower {
+        if (it == null) return null;
+        if (it.leading == null) return it;
+        return innerGetLastLinkOnChain(it.leading);
     }
 }

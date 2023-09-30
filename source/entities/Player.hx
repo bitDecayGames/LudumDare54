@@ -13,6 +13,7 @@ import input.SimpleController;
 import loaders.Aseprite;
 import loaders.AsepriteMacros;
 
+import flixel.FlxObject;
 class Player extends IsoEchoSprite implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/rotation_template.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
@@ -182,4 +183,23 @@ class Player extends IsoEchoSprite implements Follower {
 		movement.rotateByDegrees(calculatedAngle);
 		body.velocity.set(movement.x, movement.y);
 	}
+
+    public function damaged(thingBoatRanInto:FlxObject) {
+        // TODO: SFX boat ran into something
+        // TODO: MW blink the boat white
+
+        if (leading == null) return;
+
+        // throw off the back half of the follow chain
+        var followerCount = FollowerHelper.countNumberOfFollowersInChain(this);
+        if (followerCount > 1) {
+            var numberOfFollowersToThrowOff = followerCount / 2;
+            var i = 0;
+            var lastFollower = FollowerHelper.getLastLinkOnChain(this);
+            while (i < numberOfFollowersToThrowOff) {
+                i++;
+                lastFollower = FollowerHelper.stopFollowing(lastFollower);
+            }
+        }
+    }
 }

@@ -13,8 +13,8 @@ class Survivor extends Bobber implements Follower {
 
 	private var stateMachine:StateMachine<Survivor>;
 
-	public var following:Follower;
-	public var leading:Follower;
+	public var following:Follower = null;
+	public var leading:Follower = null;
 
 	public function new(x:Float=0, y:Float=0) {
 		gridWidth = 1;
