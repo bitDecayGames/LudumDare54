@@ -1,5 +1,7 @@
 package states;
 
+import iso.Grid;
+import entities.Terrain;
 import debug.Debug;
 import flixel.FlxCamera;
 import entities.Item;
@@ -32,6 +34,19 @@ class PlayState extends FlxTransitionableState {
 		Debug.dbgCam.bgColor = FlxColor.RED.getDarkened(0.9);
 		FlxG.cameras.add(Debug.dbgCam, false);
 		#end
+
+		for (x in 0...5) {
+			for (y in 0...5) {
+				var tile = 0;
+				if (x == 0 || x == 4) {
+					tile = 1;
+				}
+				var bgTile = new Terrain(x * Grid.CELL_SIZE, y * Grid.CELL_SIZE, tile);
+				bgTile.alpha = 0.2;
+				bgTile.sprite.alpha = 0.5;
+				add(bgTile);
+			}
+		}
 
 		player = new Player();
 		add(player);
@@ -80,6 +95,10 @@ class PlayState extends FlxTransitionableState {
 
 		var cam = FlxG.camera;
 		DebugDraw.ME.drawCameraRect(cam.getCenterPoint().x - 5, cam.getCenterPoint().y - 5, 10, 10, DebugLayers.RAYCAST, FlxColor.RED);
+
+		if (FlxG.keys.pressed.P) {
+			Grid.drawGrid(5, 5);
+		}
 	}
 
 	override public function onFocusLost() {

@@ -11,8 +11,8 @@ class Grid {
 	// to isometric movement
 	public static final CELL_SIZE = 16;
 
-	public static final TILE_WIDTH = 22;
-	public static final TILE_HEIGHT = 11;
+	public static final TILE_WIDTH = 32;
+	public static final TILE_HEIGHT = 16;
 
 	public static function gridToIso(x:Float, y:Float, ?p:FlxPoint):FlxPoint {
 		if (p == null) {
@@ -42,7 +42,7 @@ class Grid {
 		var end = FlxPoint.get();
 		for (i in 0...xs) {
 			start.set(i * Grid.CELL_SIZE, 0);
-			end.set(i * Grid.CELL_SIZE, 50);
+			end.set(i * Grid.CELL_SIZE, ys * Grid.CELL_SIZE);
 			DebugDraw.ME.drawWorldLine(Debug.dbgCam, start.x, start.y, end.x, end.y, DebugLayers.SQUARE_GRID, FlxColor.CYAN);
 
 			Grid.gridToIso(i * Grid.CELL_SIZE, 0, start);
@@ -52,7 +52,7 @@ class Grid {
 
 		for (i in 0...ys) {
 			start.set(0, i * Grid.CELL_SIZE);
-			end.set(50, i * Grid.CELL_SIZE);
+			end.set(xs * Grid.CELL_SIZE, i * Grid.CELL_SIZE);
 			DebugDraw.ME.drawWorldLine(Debug.dbgCam, start.x, start.y, end.x, end.y, DebugLayers.SQUARE_GRID, FlxColor.CYAN);
 
 			Grid.gridToIso(0, i * Grid.CELL_SIZE, start);
