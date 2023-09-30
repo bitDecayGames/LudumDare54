@@ -56,9 +56,12 @@ class Player extends IsoSprite {
 		if (SimpleController.pressed(A)) {
 			skidControl(delta);
 		} else {
-			// TODO: We likely want some sort of cooldown as a way to reset when the player can drift/skid again
-			skidDuration = 0;
-			initialSkidAngle = Math.POSITIVE_INFINITY;
+			if (skidDuration > 0) {
+				// TODO SFX: Skid ended
+				// TODO: We likely want some sort of cooldown as a way to reset when the player can drift/skid again
+				skidDuration = 0;
+				initialSkidAngle = Math.POSITIVE_INFINITY;
+			}
 			normalControl(delta);
 		}
 
@@ -83,6 +86,8 @@ class Player extends IsoSprite {
 		if (initialSkidAngle == Math.POSITIVE_INFINITY) {
 			initialSkidAngle = rawAngle;
 			skidDuration = 0.0;
+
+			// TODO SFX: Start boat skid
 		}
 
 		skidDuration = Math.min(skidDuration + delta, MAX_SKID_MOVE_TIME);
