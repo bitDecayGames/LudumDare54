@@ -59,9 +59,10 @@ class Bobber extends IsoSprite {
             z += bobVel;
 
 
-            if (FlxG.keys.pressed.SPACE) {
-                applyForceToBobbing(.5);
-            }
+            // for testing the applyForce function
+//            if (FlxG.keys.pressed.SPACE) {
+//                applyForceToBobbing(.5);
+//            }
         }
     }
 
