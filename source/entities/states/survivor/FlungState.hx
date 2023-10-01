@@ -21,6 +21,7 @@ class FlungState extends State<Survivor> {
         return null;
     }
     override public function onEnter():Void {
+        entity.startFling();
         // TODO: MW start the animation for a flung survivor
 
         // TODO: SFX waaaAaaAaaahhh!!! (like mario)

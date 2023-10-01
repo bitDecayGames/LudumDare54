@@ -25,6 +25,20 @@ class Survivor extends Bobber implements Follower {
 	public var targetX(get, null):Float;
 	public var targetY(get, null):Float;
 
+	private static inline var FLOAT_ANIM = "Float";
+	private static inline var FLY_ANIM = "Fly";
+	private static inline var TUBE_ANIM = "Tube";
+
+	private static var arts = [
+		AssetPaths.Lady1__json,
+		AssetPaths.Lady2__json,
+		AssetPaths.Lady3__json,
+		AssetPaths.Lady4__json,
+		AssetPaths.Man1__json,
+		AssetPaths.Man2__json,
+		AssetPaths.Man3__json,
+		AssetPaths.Man4__json,
+	];
 
 	public function new(x:Float=0, y:Float=0) {
 		gridWidth = .5;
@@ -43,26 +57,26 @@ class Survivor extends Bobber implements Follower {
 	}
 
 	public function startTow() {
-		var curAnimName = sprite.animation.curAnim.name;
-		if (!StringTools.endsWith(curAnimName, "_tube")) {
-			// TODO SFX: Survivor gets into tube and starts town behind boat
-			sprite.animation.play('${curAnimName}_tube');
-		}
+		// TODO SFX: Survivor thrown from boat.
+		sprite.animation.play(TUBE_ANIM);
+		sprite.animation.pause();
 	}
 
-	public function endTow() {
-		var curAnimName = sprite.animation.curAnim.name;
-		if (StringTools.endsWith(curAnimName, "_tube")) {
-			// TODO SFX: Survivor thrown from boat.
-			sprite.animation.play(StringTools.replace(curAnimName, "_tube", ""));
-		}
+	public function startFloat() {
+		// TODO SFX: Survivor begins just floating in water waiting rescue.
+		sprite.animation.play(FLOAT_ANIM);
 	}
+
+	// public function endTow() {
+	// 	// TODO SFX: Survivor thrown from boat.
+	// 	sprite.animation.play(TUBE_ANIM);
+	// }
 
 	override function configSprite() {
 		this.sprite = new FlxSprite();
-		Aseprite.loadAllAnimations(this.sprite, AssetPaths.survivors_floating__json);
-		var allAnims = sprite.animation.getNameList().filter((a) -> !StringTools.endsWith(a, "_tube"));
-		sprite.animation.play(allAnims[FlxG.random.int(0, allAnims.length)]);
+		var asset = FlxG.random.getObject(arts);
+		Aseprite.loadAllAnimations(this.sprite, asset);
+		startFloat();
 	}
 
 	override function makeBody():Body {
@@ -93,5 +107,10 @@ class Survivor extends Bobber implements Follower {
 
 	function get_targetY():Float {
 		return body.y;
+	}
+
+	public function startFling() {
+		// TODO SFX: Survivor thrown from boat.
+		sprite.animation.play(FLY_ANIM);
 	}
 }

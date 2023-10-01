@@ -1,4 +1,5 @@
 package entities.states.survivor;
+import flixel.math.FlxMath;
 import entities.statemachine.State;
 
 import flixel.math.FlxPoint;
@@ -20,6 +21,15 @@ class FollowingState extends State<Survivor> {
             entity.body.y += _diff.y * FOLLOW_DAMPENER;
         }
 
+        // aka 16 segments
+		var segmentSize = 360.0 / 16;
+		var halfSegment = segmentSize / 2;
+
+        var angleDeg = _diff.degrees;
+		var intAngle = FlxMath.wrap(cast angleDeg + halfSegment, 0, 359);
+		var spinFrame = Std.int(intAngle / segmentSize);
+		entity.sprite.animation.frameIndex = spinFrame;
+
         return null;
     }
     override public function onEnter():Void {
@@ -34,6 +44,5 @@ class FollowingState extends State<Survivor> {
         entity.startTow();
     }
     override public function onExit():Void {
-        entity.endTow();
     }
 }
