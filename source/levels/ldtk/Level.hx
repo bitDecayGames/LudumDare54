@@ -1,5 +1,6 @@
 package levels.ldtk;
 
+import entities.Pier;
 import entities.Log;
 import entities.Survivor;
 import entities.Item;
@@ -14,6 +15,7 @@ class Level {
     public var survivors = new Array<Survivor>();
     public var logs = new Array<Log>();
     public var currents = new Array<Current>();
+    public var piers = new Array<Pier>();
 
     public var raw:levels.ldtk.LDTKProject.LDTKProject_Level = null;
 
@@ -43,6 +45,12 @@ class Level {
         for (l in raw.l_Entities.all_Log) {
             var ent = new Log(l.pixelX, l.pixelY);
             logs.push(ent);
+        }
+
+        // Piers
+        for (p in raw.l_Entities.all_Pier) {
+            var ent = new Pier(p.pixelX, p.pixelY);
+            piers.push(ent);
         }
 
         var rawTerrainLayer = raw.l_Terrain;

@@ -161,7 +161,6 @@ class Player extends IsoEchoSprite implements Follower {
 			// colliding with boat
 			if (collision.sa == boatShape) {
 				// TODO SFX survivor dying
-				// TODO Switch to corpse state
 				ScoreManager.survivorKilled();
 				survivor.hitByObject();
 			// colliding with pickup area
@@ -179,7 +178,26 @@ class Player extends IsoEchoSprite implements Follower {
 				ScoreManager.playerCrashed();
 				damageMe(log);
 			}
+		// colliding with pier
+		} else if (other.object is Pier) {
+			var pier: Pier = cast other.object;
+			// TODO SFX Dropping people off at pier
+			var followerCount = FollowerHelper.countNumberOfFollowersInChain(this);
+			ScoreManager.maybeUpdateLongestChain(followerCount);
+
+			var lastFollower = FollowerHelper.getLastLinkOnChain(this);
+			while (lastFollower != null && lastFollower != this) {
+				if (lastFollower is Survivor) {
+					var survivor: Survivor = cast lastFollower;
+					// TODO This is where we would animate followers
+					// being dropped off on the pier
+					survivor.kill();
+					ScoreManager.survivorSaved(followerCount);
+				}
+				lastFollower = FollowerHelper.stopFollowing(lastFollower);
+			}
 		}
+
 	}
 
 	function get_targetX():Float {
