@@ -38,8 +38,8 @@ class ScoreManager {
         completedLevelScores.push(currentScore);
     }
 
-    public static function survivorSaved() {
-        currentScore.survivorsSaved += 1;
+    public static function survivorSaved(chainLen: Int) {
+        currentScore.survivorsSaved += chainLen;
     }
 
     public static function survivorKilled() {
