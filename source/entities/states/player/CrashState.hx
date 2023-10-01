@@ -29,12 +29,12 @@ class CrashState extends State<Player> {
             var i = 0;
             var lastFollower = FollowerHelper.getLastLinkOnChain(entity);
             while (i < numberOfFollowersToThrowOff && lastFollower != null) {
-                i++;
                 var survivor = cast (lastFollower, Survivor);
                 if (survivor != null) {
                     survivor.flingMe(directionToFlingSurvivors);
                 }
                 lastFollower = FollowerHelper.stopFollowing(lastFollower);
+                i++;
             }
         }
     }
