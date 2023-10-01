@@ -4,7 +4,7 @@ import entities.statemachine.State;
 import flixel.math.FlxPoint;
 class FollowingState extends State<Survivor> {
     private var followDistance:Float = 10;
-    private var followDampener:Float = 0.02; // smaller value equals looser spring movement
+    private var followDampener:Float = 0.05; // smaller value equals looser spring movement
 
     private var _diff:FlxPoint = FlxPoint.get(0, 0);
 
@@ -16,8 +16,8 @@ class FollowingState extends State<Survivor> {
 
         _diff.set(entity.following.x - entity.x, entity.following.y - entity.y);
         if (_diff.length > followDistance) {
-            entity.x += _diff.x * followDampener;
-            entity.y += _diff.y * followDampener;
+            entity.body.x += _diff.x * followDampener;
+            entity.body.y += _diff.y * followDampener;
         }
 
         return null;
