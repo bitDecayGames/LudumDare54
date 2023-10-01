@@ -36,6 +36,7 @@ class PlayState extends FlxTransitionableState {
 	public static var ME:PlayState = null;
 
 	var level:Level;
+	var initialLevelName = "Level_0";
 
 	var playerGroup = new FlxGroup();
 	var survivors = new FlxGroup();
@@ -121,7 +122,7 @@ class PlayState extends FlxTransitionableState {
 		add(piers);
 		add(playerGroup);
 
-		loadLevel("Level_0");
+		loadLevel(initialLevelName);
 	}
 
 	public function loadLevel(levelName:String) {
