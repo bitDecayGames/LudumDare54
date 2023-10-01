@@ -31,8 +31,9 @@ class FollowingState extends State<Survivor> {
         entity.bobGravity = .04;
         entity.bobDampening = .99;
         entity.bobbingEnabled = true;
+        entity.startTow();
     }
     override public function onExit():Void {
-
+        entity.endTow();
     }
 }

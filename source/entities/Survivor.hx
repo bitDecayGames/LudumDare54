@@ -42,6 +42,20 @@ class Survivor extends Bobber implements Follower {
 		return stateMachine.getCurrentState() is FollowingState;
 	}
 
+	public function startTow() {
+		var curAnimName = sprite.animation.curAnim.name;
+		if (!StringTools.endsWith(curAnimName, "_tube")) {
+			sprite.animation.play('${curAnimName}_tube');
+		}
+	}
+
+	public function endTow() {
+		var curAnimName = sprite.animation.curAnim.name;
+		if (StringTools.endsWith(curAnimName, "_tube")) {
+			sprite.animation.play(StringTools.replace(curAnimName, "_tube", ""));
+		}
+	}
+
 	override function configSprite() {
 		this.sprite = new FlxSprite();
 		Aseprite.loadAllAnimations(this.sprite, AssetPaths.survivors_floating__json);
