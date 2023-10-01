@@ -33,13 +33,4 @@ class Log extends Bobber {
 			kinematic: true,
 		});
 	}
-
-	// override private function initBobbingValues() {
-	// 	this.maxBob = .5;
-	// 	this.minBob = .2;
-	// 	this.bobVel = minBob;
-	// 	this.bobGravity = .01;
-	// 	this.bobDampening = .999;
-	// 	this.bobbingEnabled = true;
-	// }
 }

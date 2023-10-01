@@ -76,8 +76,6 @@ class PlayState extends FlxTransitionableState {
 		FlxEcho.drawCamera = Debug.dbgCam;
 		#end
 
-
-
 		// add(Achievements.ACHIEVEMENT_NAME_HERE.toToast(true, true));
 
 		// QuickLog.error('Example error');
@@ -152,6 +150,13 @@ class PlayState extends FlxTransitionableState {
 
 		// collide logs as second group so they are always on the 'b' side of interaction
 		FlxEcho.listen(playerGroup, logs, {
+			separate: true,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+
+		// collide enemies as second group so they are always on the 'b' side of interaction
+		FlxEcho.instance.world.listen(FlxEcho.get_group_bodies(playerGroup), terrainBodies, {
 			separate: true,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
