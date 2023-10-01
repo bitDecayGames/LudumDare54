@@ -25,7 +25,7 @@ class FollowerHelper {
     }
 
     /**
-    Removes this follower and all its children from the chain
+    Removes this follower and all its children from the chain, and returns the thing that it WAS following
     */
     public static function stopFollowing(it: Follower):Follower {
         if (it == null) return null;

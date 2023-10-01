@@ -43,6 +43,8 @@ class Player extends IsoEchoSprite implements Follower {
 
 	private var stateMachine:StateMachine<Player>;
 
+	public var isInvincible = false; // TODO: MW need to actually use this boolean to determine if collision causes crash
+
 	public function new(x:Float, y:Float) {
 		gridWidth = 1;
 		gridLength = 1;
@@ -119,6 +121,11 @@ class Player extends IsoEchoSprite implements Follower {
 	}
 
     public function damageMe(thingBoatRanInto:FlxSprite) {
+		if (isInvincible) {
+			// ignore this collision because the boat is invincible
+			return;
+		}
+
 		var directionToFling = FlxPoint.get(thingBoatRanInto.x - x, thingBoatRanInto.y - y);
 		stateMachine.setNextState(new CrashState(this, directionToFling));
     }
