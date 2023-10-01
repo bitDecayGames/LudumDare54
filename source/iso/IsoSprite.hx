@@ -51,6 +51,11 @@ class IsoSprite extends FlxSprite {
 		}
 	}
 
+	override function update(elapsed:Float) {
+		super.update(elapsed);
+		sprite.update(elapsed);
+	}
+
 	override function draw() {
 		super.draw();
 
