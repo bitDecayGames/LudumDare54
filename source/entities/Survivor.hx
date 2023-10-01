@@ -113,7 +113,7 @@ class Survivor extends Bobber implements Follower {
 	}
 
 	public function startFling() {
-		// TODO SFX: Survivor thrown from boat.
+		// FmodManager.PlaySoundOneShot(FmodSFX.VoiceFling);
 		sprite.animation.play(FLY_ANIM);
 	}
 

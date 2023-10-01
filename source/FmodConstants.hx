@@ -21,8 +21,10 @@ class FmodSFX {
     public static inline var BoatEngine:String = "event:/SFX/Boat/BoatEngine";
     public static inline var BoatEngine2:String = "event:/SFX/Boat/BoatEngine2";
     public static inline var BoatEngineBoost:String = "event:/SFX/Boat/BoatEngineBoost";
+    public static inline var VoiceFling:String = "event:/SFX/Characters/VoiceFling";
     public static inline var VoiceHit:String = "event:/SFX/Characters/VoiceHit";
     public static inline var VoiceRad:String = "event:/SFX/Characters/VoiceRad";
     public static inline var MenuHover:String = "event:/SFX/Menu/MenuHover";
     public static inline var MenuSelect:String = "event:/SFX/Menu/MenuSelect";
+    public static inline var SurvivorsSplash:String = "event:/SFX/Survivors/SurvivorsSplash";
 }

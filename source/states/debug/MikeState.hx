@@ -1,19 +1,16 @@
 package states.debug;
 
-import entities.Survivor;
-import states.PlayState;
-import entities.Follower;
-
-import entities.Current;
 import flixel.FlxG;
+import states.PlayState;
+
 class MikeState extends PlayState {
+	public function new() {
+		initialLevelName = "Mike_01";
+		super();
+	}
 
 	override public function create() {
 		super.create();
-
 		FlxG.debugger.visible = true;
-
-		var current = new Current(100, 100, 300, 300, 50);
-		add(current);
 	}
 }

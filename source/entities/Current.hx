@@ -29,6 +29,7 @@ class Current extends EchoSprite {
 		currentRotation = start.degreesTo(end);
 		this.radius = radius;
 		entitiesInCurrent = [];
+		visible = false;
 		super(x, y);
 	}
 
@@ -64,14 +65,13 @@ class Current extends EchoSprite {
 
 	override public function update(delta:Float):Void {
 		super.update(delta);
-		var l = entitiesInCurrent.length;
-		FlxG.watch.addQuick("L", l);
 		for (entity in entitiesInCurrent) {
 			if (entity != null && entity.alive) {
 				entity.body.x += diff.x;
 				entity.body.y += diff.y;
 				#if FLX_DEBUG
-				DebugDraw.ME.drawWorldLine(Debug.dbgCam, x, y, entity.x, entity.y, null, 0x0377fc);
+				// MW This is pretty noisy on screen
+				//DebugDraw.ME.drawWorldLine(Debug.dbgCam, x, y, entity.x, entity.y, null, 0x0377fc);
 				#end
 			}
 		}

@@ -36,6 +36,7 @@ class PlayState extends FlxTransitionableState {
 	public static var ME:PlayState = null;
 
 	var level:Level;
+	var initialLevelName = "Level_0";
 
 	var playerGroup = new FlxGroup();
 	var survivors = new FlxGroup();
@@ -43,7 +44,7 @@ class PlayState extends FlxTransitionableState {
 	var terrain = new FlxGroup();
 	var particles = new FlxGroup();
 	var currents = new FlxGroup();
-
+	var piers = new FlxGroup();
 
 	private static function defaultEnterHandler(a, b, o) {
 		if ((a.object is IsoEchoSprite)) {
@@ -91,7 +92,7 @@ class PlayState extends FlxTransitionableState {
 		// FlxG.camera.pixelPerfectRender = true;
 
 		#if tanner
-		FmodManager.PlaySong(FmodSongs.Game);	
+		FmodManager.PlaySong(FmodSongs.Game);
 		#end
 
 		// Echo/physics init
@@ -118,9 +119,10 @@ class PlayState extends FlxTransitionableState {
 		add(survivors);
 		add(particles);
 		add(logs);
+		add(piers);
 		add(playerGroup);
 
-		loadLevel("Level_0");
+		loadLevel(initialLevelName);
 	}
 
 	public function loadLevel(levelName:String) {
@@ -154,6 +156,11 @@ class PlayState extends FlxTransitionableState {
 		});
 		particles.clear();
 
+		piers.forEach((t) -> {
+			t.destroy();
+		});
+		piers.clear();
+
 		FlxEcho.clear();
 
 		level = new Level(levelName);
@@ -186,6 +193,9 @@ class PlayState extends FlxTransitionableState {
 		for (v in level.currents) {
 			v.add_to_group(currents);
 		}
+		for (p in level.piers) {
+			p.add_to_group(piers);
+		}
 
 		#if FLX_DEBUG
 		Debug.dbgCam.follow(level.player);
@@ -207,15 +217,35 @@ class PlayState extends FlxTransitionableState {
 			exit: defaultExitHandler,
 		});
 
-		// collide stuff? for collisions? Maybe?
+		// collide currents with survivors
 		FlxEcho.listen(currents, survivors, {
 			separate: false,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
 		});
+		// collide currents with logs
+		FlxEcho.listen(currents, logs, {
+			separate: false,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
 
-		// collide enemies as second group so they are always on the 'b' side of interaction
+		// collide piers as second group so they are always on the 'b' side of interaction
+		FlxEcho.listen(playerGroup, piers, {
+			separate: true,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+
+		// collide player with terrain
 		FlxEcho.instance.world.listen(FlxEcho.get_group_bodies(playerGroup), terrainBodies, {
+			separate: true,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+
+		// collide survivors with terrain
+		FlxEcho.instance.world.listen(FlxEcho.get_group_bodies(survivors), terrainBodies, {
 			separate: true,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
