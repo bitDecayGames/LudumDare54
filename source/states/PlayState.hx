@@ -1,11 +1,7 @@
 package states;
 
-<<<<<<< HEAD
 import echo.util.TileMap;
-import flixel.addons.editors.tiled.TiledMap;
-=======
 import iso.IsoEchoSprite;
->>>>>>> 166062bb7eb3204daf7176c91465758ec1a1659c
 import entities.Survivor;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
@@ -34,7 +30,7 @@ class PlayState extends FlxTransitionableState {
 
 	var playerGroup = new FlxGroup();
 	var survivors = new FlxGroup();
-	var terrain = new FlxTypedGroup<Terrain>();
+	var terrain = new FlxGroup();
 	
 	override public function create() {
 		super.create();
@@ -97,6 +93,10 @@ class PlayState extends FlxTransitionableState {
 		}
 
 		var terrainBodies = TileMap.generate(level.terrainInts, 16, 16, level.terrainTilesWide, level.terrainTilesHigh);
+		terrain.add_group_bodies();
+		for (tb in terrainBodies) {
+			FlxEcho.instance.groups.get(terrain).push(tb);
+		}
 
 		level.player.add_to_group(playerGroup);
 
