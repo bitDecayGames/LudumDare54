@@ -65,8 +65,6 @@ class Current extends EchoSprite {
 
 	override public function update(delta:Float):Void {
 		super.update(delta);
-		var l = entitiesInCurrent.length;
-		FlxG.watch.addQuick("L", l);
 		for (entity in entitiesInCurrent) {
 			if (entity != null && entity.alive) {
 				entity.body.x += diff.x;
