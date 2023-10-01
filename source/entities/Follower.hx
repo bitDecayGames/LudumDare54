@@ -1,5 +1,7 @@
 package entities;
 
+import bitdecay.flixel.debug.DebugDraw;
+import debug.Debug;
 interface Follower {
     public var following:Follower;
     public var leading:Follower;
@@ -82,5 +84,13 @@ class FollowerHelper {
         if (it == null) return null;
         if (it.leading == null) return it;
         return innerGetLastLinkOnChain(it.leading);
+    }
+
+    public static function drawDebugLines(it:Follower) {
+        var f = getLastLinkOnChain(it);
+        while (f != null && f.following != null) {
+            DebugDraw.ME.drawWorldLine(Debug.dbgCam, f.x, f.y, f.following.x, f.following.y, null, 0x03fc41);
+            f = f.following;
+        }
     }
 }
