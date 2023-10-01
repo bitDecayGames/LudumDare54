@@ -14,13 +14,17 @@ class FmodSongs {
 
 class FmodSFX {
     public static inline var BoatCollectSurvivor:String = "event:/SFX/Boat/BoatCollectSurvivor";
+    public static inline var BoatCollideSurvivor:String = "event:/SFX/Boat/BoatCollideSurvivor";
     public static inline var BoatCrash:String = "event:/SFX/Boat/BoatCrash";
     public static inline var BoatDrift:String = "event:/SFX/Boat/BoatDrift";
     public static inline var BoatDriftComposite:String = "event:/SFX/Boat/BoatDriftComposite";
     public static inline var BoatEngine:String = "event:/SFX/Boat/BoatEngine";
     public static inline var BoatEngine2:String = "event:/SFX/Boat/BoatEngine2";
     public static inline var BoatEngineBoost:String = "event:/SFX/Boat/BoatEngineBoost";
+    public static inline var VoiceFling:String = "event:/SFX/Characters/VoiceFling";
+    public static inline var VoiceHit:String = "event:/SFX/Characters/VoiceHit";
     public static inline var VoiceRad:String = "event:/SFX/Characters/VoiceRad";
     public static inline var MenuHover:String = "event:/SFX/Menu/MenuHover";
     public static inline var MenuSelect:String = "event:/SFX/Menu/MenuSelect";
+    public static inline var SurvivorsSplash:String = "event:/SFX/Survivors/SurvivorsSplash";
 }

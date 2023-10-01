@@ -20,6 +20,7 @@ class SplashState extends State<Survivor> {
     override public function onEnter(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
         entity.visible = false;
         PlayState.ME.addParticle(new Splash(entity.body.x, entity.body.y, () -> { done = true; }));
+		FmodManager.PlaySoundOneShot(FmodSFX.SurvivorsSplash);
     }
     override public function onExit(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
         entity.visible = true;
