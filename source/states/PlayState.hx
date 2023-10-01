@@ -1,5 +1,6 @@
 package states;
 
+import states.substate.TalkerOverlay;
 import loaders.TileShapes;
 import score.ScoreManager;
 import ui.font.BitmapText.CruiseText;
@@ -89,6 +90,7 @@ class PlayState extends FlxTransitionableState {
 		Lifecycle.startup.dispatch();
 
 		// FlxG.camera.pixelPerfectRender = true;
+		persistentUpdate = false;
 
 		#if tanner
 		FmodManager.PlaySong(FmodSongs.Game);	
@@ -219,6 +221,12 @@ class PlayState extends FlxTransitionableState {
 			separate: true,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
+		});
+
+		FlxEcho.updates = false;
+		openSubState(new TalkerOverlay("COP", 10));
+		subStateClosed.addOnce((ss) -> {
+			FlxEcho.updates = true;
 		});
 	}
 
