@@ -111,7 +111,7 @@ class PlayState extends FlxTransitionableState {
 
 		FlxEcho.clear();
 		
-		level = new Level("Level_0");
+		level = new Level(levelName);
 		FlxEcho.instance.world.width = level.raw.pxWid;
 		FlxEcho.instance.world.height = level.raw.pxHei;
 
