@@ -1,6 +1,7 @@
 package states;
 
 import loaders.TileShapes;
+import score.ScoreManager;
 import ui.font.BitmapText.CruiseText;
 import flixel.FlxObject;
 import echo.util.TileMap;
@@ -26,6 +27,7 @@ import bitdecay.flixel.debug.DebugDraw;
 import levels.ldtk.Level;
 import echo.FlxEcho;
 
+import entities.Current;
 using states.FlxStateExt;
 
 class PlayState extends FlxTransitionableState {
@@ -38,6 +40,7 @@ class PlayState extends FlxTransitionableState {
 	var logs = new FlxGroup();
 	var terrain = new FlxGroup();
 	var particles = new FlxGroup();
+	var currents = new FlxGroup();
 
 	private static function defaultEnterHandler(a, b, o) {
 		if (a.object is IsoEchoSprite) {
@@ -92,6 +95,7 @@ class PlayState extends FlxTransitionableState {
 		// QuickLog.error('Example error');
 
 		add(terrain);
+		add(currents);
 		add(survivors);
 		add(particles);
 		add(logs);
@@ -105,6 +109,11 @@ class PlayState extends FlxTransitionableState {
 			t.destroy();
 		});
 		terrain.clear();
+
+		currents.forEach((t) -> {
+			t.destroy();
+		});
+		currents.clear();
 
 		playerGroup.forEach((t) -> {
 			t.destroy();
@@ -127,10 +136,15 @@ class PlayState extends FlxTransitionableState {
 		particles.clear();
 
 		FlxEcho.clear();
-		
+
 		level = new Level(levelName);
+
+		// TODO: MW this is to test currents, take this out when you are done
+		level.currents.push(new Current(100, 100, 300, 300, 50));
+
 		FlxEcho.instance.world.width = level.raw.pxWid;
 		FlxEcho.instance.world.height = level.raw.pxHei;
+		ScoreManager.startLevel(levelName);
 
 		for (y in 0...level.raw.l_Terrain.cHei) {
 			for (x in 0...level.raw.l_Terrain.cWid) {
@@ -153,6 +167,9 @@ class PlayState extends FlxTransitionableState {
 		for (l in level.logs) {
 			l.add_to_group(logs);
 		}
+		for (v in level.currents) {
+			v.add_to_group(currents);
+		}
 
 		#if FLX_DEBUG
 		Debug.dbgCam.follow(level.player);
@@ -170,6 +187,13 @@ class PlayState extends FlxTransitionableState {
 		// collide logs as second group so they are always on the 'b' side of interaction
 		FlxEcho.listen(playerGroup, logs, {
 			separate: true,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+
+		// collide stuff? for collisions? Maybe?
+		FlxEcho.listen(currents, survivors, {
+			separate: false,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
 		});
