@@ -150,10 +150,20 @@ class Player extends IsoEchoSprite implements Follower {
 	override function handleEnter(other:Body, data:Array<CollisionData>) {
 		super.handleEnter(other, data);
 
+		var collision = data[0];
 		if (other.object is Survivor) {
 			var survivor: Survivor = cast other.object;
-			if (!survivor.isFollowing()) {
-				FollowerHelper.addFollower(this, survivor);
+			if (collision.sa != null) {
+				if (collision.sa == boatShape) {
+					// TODO SFX survivor dying
+					// TODO Switch to corpse state
+					survivor.kill();
+				} else if (collision.sa == pickupShape) {
+					// TODO SFX survivor pickup, maybe in addFollower
+					if (!survivor.isFollowing()) {
+						FollowerHelper.addFollower(this, survivor);
+					}
+				}
 			}
 		} else if (other.object is Log) {
 			var log: Log = cast other.object;
