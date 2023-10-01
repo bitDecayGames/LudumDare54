@@ -1,5 +1,6 @@
 package states;
 
+import loaders.TileShapes;
 import ui.font.BitmapText.CruiseText;
 import flixel.FlxObject;
 import echo.util.TileMap;
@@ -137,7 +138,7 @@ class PlayState extends FlxTransitionableState {
 			}
 		}
 
-		var terrainBodies = TileMap.generate(level.terrainInts, 16, 16, level.terrainTilesWide, level.terrainTilesHigh);
+		var terrainBodies = TileMap.generate(level.terrainInts, 16, 16, level.terrainTilesWide, level.terrainTilesHigh, TileShapes.shapes);
 		terrain.add_group_bodies();
 		for (tb in terrainBodies) {
 			FlxEcho.instance.world.add(tb);
