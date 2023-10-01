@@ -28,7 +28,7 @@
    },
    {
     "filename": "profiles 3.aseprite",
-    "frame": { "x": 0, "y": 61, "w": 73, "h": 61 },
+    "frame": { "x": 219, "y": 0, "w": 73, "h": 61 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
@@ -37,7 +37,7 @@
    },
    {
     "filename": "profiles 4.aseprite",
-    "frame": { "x": 73, "y": 61, "w": 73, "h": 61 },
+    "frame": { "x": 0, "y": 61, "w": 73, "h": 61 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
@@ -46,7 +46,7 @@
    },
    {
     "filename": "profiles 5.aseprite",
-    "frame": { "x": 146, "y": 61, "w": 73, "h": 61 },
+    "frame": { "x": 73, "y": 61, "w": 73, "h": 61 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
@@ -55,7 +55,7 @@
    },
    {
     "filename": "profiles 6.aseprite",
-    "frame": { "x": 0, "y": 122, "w": 73, "h": 61 },
+    "frame": { "x": 146, "y": 61, "w": 73, "h": 61 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
@@ -64,7 +64,7 @@
    },
    {
     "filename": "profiles 7.aseprite",
-    "frame": { "x": 73, "y": 122, "w": 73, "h": 61 },
+    "frame": { "x": 219, "y": 61, "w": 73, "h": 61 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
@@ -73,7 +73,70 @@
    },
    {
     "filename": "profiles 8.aseprite",
+    "frame": { "x": 0, "y": 122, "w": 73, "h": 61 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
+    "sourceSize": { "w": 73, "h": 61 },
+    "duration": 100
+   },
+   {
+    "filename": "profiles 9.aseprite",
+    "frame": { "x": 73, "y": 122, "w": 73, "h": 61 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
+    "sourceSize": { "w": 73, "h": 61 },
+    "duration": 100
+   },
+   {
+    "filename": "profiles 10.aseprite",
     "frame": { "x": 146, "y": 122, "w": 73, "h": 61 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
+    "sourceSize": { "w": 73, "h": 61 },
+    "duration": 100
+   },
+   {
+    "filename": "profiles 11.aseprite",
+    "frame": { "x": 219, "y": 122, "w": 73, "h": 61 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
+    "sourceSize": { "w": 73, "h": 61 },
+    "duration": 100
+   },
+   {
+    "filename": "profiles 12.aseprite",
+    "frame": { "x": 219, "y": 122, "w": 73, "h": 61 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
+    "sourceSize": { "w": 73, "h": 61 },
+    "duration": 100
+   },
+   {
+    "filename": "profiles 13.aseprite",
+    "frame": { "x": 219, "y": 122, "w": 73, "h": 61 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
+    "sourceSize": { "w": 73, "h": 61 },
+    "duration": 100
+   },
+   {
+    "filename": "profiles 14.aseprite",
+    "frame": { "x": 219, "y": 122, "w": 73, "h": 61 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
+    "sourceSize": { "w": 73, "h": 61 },
+    "duration": 100
+   },
+   {
+    "filename": "profiles 15.aseprite",
+    "frame": { "x": 219, "y": 122, "w": 73, "h": 61 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
@@ -86,13 +149,22 @@
   "version": "1.3-rc6-x64",
   "image": "profiles.png",
   "format": "RGBA8888",
-  "size": { "w": 219, "h": 183 },
+  "size": { "w": 292, "h": 183 },
   "scale": "1",
   "frameTags": [
+   { "name": "Driver", "from": 0, "to": 0, "direction": "forward", "repeat": "1", "color": "#000000ff" },
+   { "name": "Cop", "from": 1, "to": 1, "direction": "forward", "repeat": "1", "color": "#000000ff" },
+   { "name": "Man1", "from": 3, "to": 3, "direction": "forward", "repeat": "1", "color": "#000000ff" },
+   { "name": "Lady1", "from": 4, "to": 4, "direction": "forward", "repeat": "1", "color": "#000000ff" },
+   { "name": "Man2", "from": 5, "to": 5, "direction": "forward", "repeat": "1", "color": "#000000ff" },
+   { "name": "Lady2", "from": 6, "to": 6, "direction": "forward", "repeat": "1", "color": "#000000ff" },
+   { "name": "Man3", "from": 7, "to": 7, "direction": "forward", "repeat": "1", "color": "#000000ff" },
+   { "name": "Lady3", "from": 8, "to": 8, "direction": "forward", "repeat": "1", "color": "#000000ff" },
+   { "name": "Man4", "from": 9, "to": 9, "direction": "forward", "repeat": "1", "color": "#000000ff" },
+   { "name": "Lady4", "from": 10, "to": 10, "direction": "forward", "repeat": "1", "color": "#000000ff" }
   ],
   "layers": [
-   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
-   { "name": "Layer 2", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 4", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 3", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [

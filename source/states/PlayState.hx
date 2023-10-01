@@ -28,6 +28,8 @@ import levels.ldtk.Level;
 import echo.FlxEcho;
 
 import entities.Current;
+import entities.EchoSprite;
+import entities.EchoSprite;
 using states.FlxStateExt;
 
 class PlayState extends FlxTransitionableState {
@@ -44,23 +46,35 @@ class PlayState extends FlxTransitionableState {
 
 
 	private static function defaultEnterHandler(a, b, o) {
-		if (a.object is IsoEchoSprite) {
+		if ((a.object is IsoEchoSprite)) {
 			var aSpr:IsoEchoSprite = cast a.object;
 			aSpr.handleEnter(b, o);
+		} else if ((a.object is EchoSprite)) {
+			var aSpr:EchoSprite = cast a.object;
+			aSpr.handleEnter(b, o);
 		}
-		if (b.object is IsoEchoSprite) {
+		if ((b.object is IsoEchoSprite)) {
 			var bSpr:IsoEchoSprite = cast b.object;
+			bSpr.handleEnter(a, o);
+		} else if ((b.object is EchoSprite)) {
+			var bSpr:EchoSprite = cast b.object;
 			bSpr.handleEnter(a, o);
 		}
 	}
 
 	private static function defaultExitHandler(a, b) {
-		if (a.object is IsoEchoSprite) {
+		if ((a.object is IsoEchoSprite)) {
 			var aSpr:IsoEchoSprite = cast a.object;
 			aSpr.handleExit(b);
+		} else if ((a.object is EchoSprite)) {
+			var aSpr:EchoSprite = cast a.object;
+			aSpr.handleExit(b);
 		}
-		if (b.object is IsoEchoSprite) {
+		if ((b.object is IsoEchoSprite)) {
 			var bSpr:IsoEchoSprite = cast b.object;
+			bSpr.handleExit(a);
+		} else if ((b.object is EchoSprite)) {
+			var bSpr:EchoSprite = cast b.object;
 			bSpr.handleExit(a);
 		}
 	}
@@ -143,9 +157,6 @@ class PlayState extends FlxTransitionableState {
 		FlxEcho.clear();
 
 		level = new Level(levelName);
-
-		// TODO: MW this is to test currents, take this out when you are done
-		level.currents.push(new Current(100, 100, 300, 300, 50));
 
 		FlxEcho.instance.world.width = level.raw.pxWid;
 		FlxEcho.instance.world.height = level.raw.pxHei;

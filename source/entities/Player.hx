@@ -57,12 +57,13 @@ class Player extends IsoEchoSprite implements Follower {
 
 
 	public function new(x:Float, y:Float) {
-		gridWidth = 1;
-		gridLength = .5;
+		gridWidth = .8;
+		gridLength = 6/16;
 		gridHeight = 1;
 
 		super(x, y);
 
+		sprite.offset.x += 4;
 		rawAngle = -90;
 
 		stateMachine = new StateMachine<Player>(this);
@@ -88,8 +89,8 @@ class Player extends IsoEchoSprite implements Follower {
 				// Boat collision shape
 				{
 					type: RECT,
-					width: 16,
-					height: 8,
+					width: gridWidth * 16,
+					height: gridLength * 16,
 				},
 				// Survivor pickup area
 				{

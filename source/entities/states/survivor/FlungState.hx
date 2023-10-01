@@ -3,6 +3,7 @@ import entities.particle.Splash;
 import entities.statemachine.State;
 
 import flixel.math.FlxPoint;
+
 class FlungState extends State<Survivor> {
 
     private static inline var CRASH_VELOCITY:Float = 30; // bigger number means the survivor gets thrown farther out
@@ -22,10 +23,10 @@ class FlungState extends State<Survivor> {
         return null;
     }
     override public function onEnter(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
+        // start the animation for a flung survivor
         entity.startFling();
-        // TODO: MW start the animation for a flung survivor
 
-        // TODO: SFX waaaAaaAaaahhh!!! (like mario)
+        // TODO: SFX guy got thrown from boat: waaaAaaAaaahhh!!! (like mario)
 
         entity.maxBob = BOB_VEL * 3; // just make the max bob bigger than BOB_VEL so that it doesn't get clamped
         entity.bobVel = BOB_VEL;
