@@ -61,6 +61,24 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
     "sourceSize": { "w": 73, "h": 61 },
     "duration": 100
+   },
+   {
+    "filename": "profiles 7.aseprite",
+    "frame": { "x": 73, "y": 122, "w": 73, "h": 61 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
+    "sourceSize": { "w": 73, "h": 61 },
+    "duration": 100
+   },
+   {
+    "filename": "profiles 8.aseprite",
+    "frame": { "x": 146, "y": 122, "w": 73, "h": 61 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 73, "h": 61 },
+    "sourceSize": { "w": 73, "h": 61 },
+    "duration": 100
    }
  ],
  "meta": {
