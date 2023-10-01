@@ -1,6 +1,7 @@
 package states;
 
 import score.ScoreManager;
+import ui.font.BitmapText.CruiseText;
 import flixel.FlxObject;
 import echo.util.TileMap;
 import iso.IsoEchoSprite;

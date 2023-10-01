@@ -7,7 +7,7 @@ import flixel.math.FlxPoint;
 import flixel.graphics.frames.FlxBitmapFont;
 
 @:forward
-abstract PressStart(BitmapText) to BitmapText {
+abstract CruiseText(BitmapText) to BitmapText {
 	static public var font(get, null):FlxBitmapFont = null;
 
 	inline public function new(x = 0.0, y = 0.0, text = "") {
@@ -17,7 +17,7 @@ abstract PressStart(BitmapText) to BitmapText {
 	inline static function get_font() {
 		if (font == null) {
 			@:privateAccess
-			font = BitmapText.createPressStartFont();
+			font = BitmapText.createMonospace("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234566789.,!?~", AssetPaths.font9x13__png, 0, 13, 9);
 		}
 		return font;
 	}
@@ -73,9 +73,8 @@ class BitmapText extends flixel.text.FlxBitmapText {
 		return font;
 	}
 
-	private static function createMonospace(chars:String, path:String, yOffset:Int = 0, size:Int = 8):FlxBitmapFont {
-		var spaceWidth = size;
-		var height = size;
+	private static function createMonospace(chars:String, path:String, yOffset:Int = 0, height:Int = 8, width:Int = 8):FlxBitmapFont {
+		var spaceWidth = width;
 
 		var graphic = FlxG.bitmap.add(path);
 		var frame = graphic.imageFrame.frame;
@@ -85,8 +84,8 @@ class BitmapText extends flixel.text.FlxBitmapText {
 		var x = 0;
 		for (i in 0...chars.length) {
 			var code = chars.charCodeAt(i);
-			font.addCharFrame(code, FlxRect.get(x, yOffset, size, height), FlxPoint.get(), size);
-			x += size;
+			font.addCharFrame(code, FlxRect.get(x, yOffset, width, height), FlxPoint.get(), width);
+			x += width;
 		}
 
 		font.lineHeight = height;
