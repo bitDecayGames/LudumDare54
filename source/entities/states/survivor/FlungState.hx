@@ -21,7 +21,7 @@ class FlungState extends State<Survivor> {
         if (entity.z < 0 && entity.bobVel < 0) return new SplashState(entity);
         return null;
     }
-    override public function onEnter():Void {
+    override public function onEnter(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
         entity.startFling();
         // TODO: MW start the animation for a flung survivor
 
@@ -32,7 +32,7 @@ class FlungState extends State<Survivor> {
         entity.body.velocity.x = directionToBeFlung.x;
         entity.body.velocity.y = directionToBeFlung.y;
     }
-    override public function onExit():Void {
+    override public function onExit(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
         entity.body.velocity.x = 0;
         entity.body.velocity.y = 0;
         entity.z = 0;

@@ -42,6 +42,7 @@ class PlayState extends FlxTransitionableState {
 	var particles = new FlxGroup();
 	var currents = new FlxGroup();
 
+
 	private static function defaultEnterHandler(a, b, o) {
 		if (a.object is IsoEchoSprite) {
 			var aSpr:IsoEchoSprite = cast a.object;
@@ -74,6 +75,10 @@ class PlayState extends FlxTransitionableState {
 		Lifecycle.startup.dispatch();
 
 		// FlxG.camera.pixelPerfectRender = true;
+
+		#if tanner
+		FmodManager.PlaySong(FmodSongs.Game);	
+		#end
 
 		// Echo/physics init
 		FlxEcho.init({

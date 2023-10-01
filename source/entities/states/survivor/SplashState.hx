@@ -17,11 +17,11 @@ class SplashState extends State<Survivor> {
         if (done) return new FloatingState(entity);
         return null;
     }
-    override public function onEnter():Void {
+    override public function onEnter(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
         entity.visible = false;
         PlayState.ME.addParticle(new Splash(entity.body.x, entity.body.y, () -> { done = true; }));
     }
-    override public function onExit():Void {
+    override public function onExit(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
         entity.visible = true;
 
         entity.body.velocity.x = 0;

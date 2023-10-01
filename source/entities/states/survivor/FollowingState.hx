@@ -32,7 +32,7 @@ class FollowingState extends State<Survivor> {
 
         return null;
     }
-    override public function onEnter():Void {
+    override public function onEnter(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
         // TODO: SFX survivor was just added to the saved chain
         // TODO: MW start the animation for saved survivor
         entity.maxBob = 1;
@@ -43,6 +43,6 @@ class FollowingState extends State<Survivor> {
         entity.bobbingEnabled = true;
         entity.startTow();
     }
-    override public function onExit():Void {
+    override public function onExit(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
     }
 }
