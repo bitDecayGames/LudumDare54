@@ -11,7 +11,7 @@
 	"iid": "78d68120-3b70-11ee-9951-dff492d275d9",
 	"jsonVersion": "1.4.1",
 	"appBuildId": 471015,
-	"nextUid": 14,
+	"nextUid": 15,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -379,6 +379,40 @@
 					"tilesetUid": null
 				}
 			]
+		},
+		{
+			"identifier": "Dam",
+			"uid": 14,
+			"tags": [],
+			"exportToToc": false,
+			"doc": "This is the end of the level.",
+			"width": 16,
+			"height": 16,
+			"resizableX": false,
+			"resizableY": false,
+			"minWidth": null,
+			"maxWidth": null,
+			"minHeight": null,
+			"maxHeight": null,
+			"keepAspectRatio": false,
+			"tileOpacity": 1,
+			"fillOpacity": 1,
+			"lineOpacity": 1,
+			"hollow": false,
+			"color": "#5A6988",
+			"renderMode": "Rectangle",
+			"showName": true,
+			"tilesetId": null,
+			"tileRenderMode": "FitInside",
+			"tileRect": null,
+			"uiTileRect": null,
+			"nineSliceBorders": [],
+			"maxCount": 0,
+			"limitScope": "PerLevel",
+			"limitBehavior": "MoveLastOne",
+			"pivotX": 0.5,
+			"pivotY": 0.5,
+			"fieldDefs": []
 		}
 	], "tilesets": [
 		{
@@ -944,6 +978,22 @@
 							"height": 16,
 							"defUid": 3,
 							"px": [296,568],
+							"fieldInstances": []
+						},
+						{
+							"__identifier": "Dam",
+							"__grid": [14,3],
+							"__pivot": [0.5,0.5],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#5A6988",
+							"__worldX": 168,
+							"__worldY": -472,
+							"iid": "ccbec8f0-3b70-11ee-aa99-b15f9462dee3",
+							"width": 16,
+							"height": 16,
+							"defUid": 14,
+							"px": [232,56],
 							"fieldInstances": []
 						}
 					]
@@ -2784,6 +2834,38 @@
 							"height": 16,
 							"defUid": 8,
 							"px": [1816,152],
+							"fieldInstances": []
+						},
+						{
+							"__identifier": "Dam",
+							"__grid": [126,7],
+							"__pivot": [0.5,0.5],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#5A6988",
+							"__worldX": 2728,
+							"__worldY": -1144,
+							"iid": "a3877c20-3b70-11ee-aa99-c5de581be089",
+							"width": 16,
+							"height": 16,
+							"defUid": 14,
+							"px": [2024,120],
+							"fieldInstances": []
+						},
+						{
+							"__identifier": "Pier",
+							"__grid": [77,46],
+							"__pivot": [0.5,0.5],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#3E8948",
+							"__worldX": 1944,
+							"__worldY": -520,
+							"iid": "a6e30330-3b70-11ee-aa99-6b36b558d65f",
+							"width": 16,
+							"height": 16,
+							"defUid": 8,
+							"px": [1240,744],
 							"fieldInstances": []
 						}
 					]
