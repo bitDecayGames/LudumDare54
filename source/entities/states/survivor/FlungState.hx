@@ -3,8 +3,8 @@ import entities.statemachine.State;
 
 import flixel.math.FlxPoint;
 class FlungState extends State<Survivor> {
-    
-    private static inline var CRASH_VELOCITY:Float = 0.3;
+
+    private static inline var CRASH_VELOCITY:Float = 30;
 
     var directionToBeFlung:FlxPoint;
 
@@ -28,5 +28,7 @@ class FlungState extends State<Survivor> {
         entity.body.velocity.y = directionToBeFlung.y;
     }
     override public function onExit():Void {
+        entity.body.velocity.x = 0;
+        entity.body.velocity.y = 0;
     }
 }

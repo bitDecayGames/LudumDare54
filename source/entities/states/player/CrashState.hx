@@ -18,6 +18,7 @@ class CrashState extends State<Player> {
     override public function onEnter():Void {
         // TODO: SFX boat ran into something
         // TODO: MW blink the boat white
+        // TODO: MW screen shake
 
         if (entity.leading == null) return;
 
