@@ -4,7 +4,8 @@ import entities.statemachine.State;
 import flixel.math.FlxPoint;
 class FlungState extends State<Survivor> {
 
-    private static inline var CRASH_VELOCITY:Float = 30;
+    private static inline var CRASH_VELOCITY:Float = 30; // bigger number means the survivor gets thrown farther out
+    private static inline var BOB_VEL:Float = 2; // bigger number means the survivor gets thrown higher up
 
     var directionToBeFlung:FlxPoint;
 
@@ -20,10 +21,13 @@ class FlungState extends State<Survivor> {
         return null;
     }
     override public function onEnter():Void {
+        entity.startFling();
         // TODO: MW start the animation for a flung survivor
+
         // TODO: SFX waaaAaaAaaahhh!!! (like mario)
-        entity.maxBob = 10;
-        entity.bobVel = 3;
+
+        entity.maxBob = BOB_VEL * 3; // just make the max bob bigger than BOB_VEL so that it doesn't get clamped
+        entity.bobVel = BOB_VEL;
         entity.body.velocity.x = directionToBeFlung.x;
         entity.body.velocity.y = directionToBeFlung.y;
     }

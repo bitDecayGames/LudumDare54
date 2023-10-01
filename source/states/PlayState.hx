@@ -30,6 +30,7 @@ class PlayState extends FlxTransitionableState {
 
 	var playerGroup = new FlxGroup();
 	var survivors = new FlxGroup();
+	var logs = new FlxGroup();
 	var terrain = new FlxGroup();
 
 	private static function defaultEnterHandler(a, b, o) {
@@ -58,7 +59,7 @@ class PlayState extends FlxTransitionableState {
 		super.create();
 		Lifecycle.startup.dispatch();
 
-		FlxG.camera.pixelPerfectRender = true;
+		// FlxG.camera.pixelPerfectRender = true;
 
 		#if tanner
 		FmodManager.PlaySong(FmodSongs.Game);	
@@ -79,14 +80,13 @@ class PlayState extends FlxTransitionableState {
 		FlxEcho.drawCamera = Debug.dbgCam;
 		#end
 
-
-
 		// add(Achievements.ACHIEVEMENT_NAME_HERE.toToast(true, true));
 
 		// QuickLog.error('Example error');
 
 		add(terrain);
 		add(survivors);
+		add(logs);
 		add(playerGroup);
 
 		loadLevel("Level_0");
@@ -108,6 +108,11 @@ class PlayState extends FlxTransitionableState {
 		});
 		survivors.clear();
 
+		logs.forEach((t) -> {
+			t.destroy();
+		});
+		logs.clear();
+
 		FlxEcho.clear();
 
 		level = new Level("Level_0");
@@ -121,6 +126,7 @@ class PlayState extends FlxTransitionableState {
 		var terrainBodies = TileMap.generate(level.terrainInts, 16, 16, level.terrainTilesWide, level.terrainTilesHigh);
 		terrain.add_group_bodies();
 		for (tb in terrainBodies) {
+			FlxEcho.instance.world.add(tb);
 			FlxEcho.instance.groups.get(terrain).push(tb);
 		}
 
@@ -128,6 +134,9 @@ class PlayState extends FlxTransitionableState {
 
 		for (s in level.survivors) {
 			s.add_to_group(survivors);
+		}
+		for (l in level.logs) {
+			l.add_to_group(logs);
 		}
 
 		#if FLX_DEBUG
@@ -139,6 +148,20 @@ class PlayState extends FlxTransitionableState {
 		// collide survivors as second group so they are always on the 'b' side of interaction
 		FlxEcho.listen(playerGroup, survivors, {
 			separate: false,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+
+		// collide logs as second group so they are always on the 'b' side of interaction
+		FlxEcho.listen(playerGroup, logs, {
+			separate: true,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+
+		// collide enemies as second group so they are always on the 'b' side of interaction
+		FlxEcho.instance.world.listen(FlxEcho.get_group_bodies(playerGroup), terrainBodies, {
+			separate: true,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
 		});

@@ -1,10 +1,11 @@
 package entities.states.survivor;
+import flixel.math.FlxMath;
 import entities.statemachine.State;
 
 import flixel.math.FlxPoint;
 class FollowingState extends State<Survivor> {
-    private var followDistance:Float = 10;
-    private var followDampener:Float = 0.05; // smaller value equals looser spring movement
+    private static inline var FOLLOW_DISTANCE:Float = 10;
+    private static inline var FOLLOW_DAMPENER:Float = 0.05; // smaller value equals looser spring movement
 
     private var _diff:FlxPoint = FlxPoint.get(0, 0);
 
@@ -14,11 +15,20 @@ class FollowingState extends State<Survivor> {
             return new FloatingState(entity);
         }
 
-        _diff.set(entity.following.x - entity.x, entity.following.y - entity.y);
-        if (_diff.length > followDistance) {
-            entity.body.x += _diff.x * followDampener;
-            entity.body.y += _diff.y * followDampener;
+        _diff.set(entity.following.targetX - entity.body.x, entity.following.targetY - entity.body.y);
+        if (_diff.length > FOLLOW_DISTANCE) {
+            entity.body.x += _diff.x * FOLLOW_DAMPENER;
+            entity.body.y += _diff.y * FOLLOW_DAMPENER;
         }
+
+        // aka 16 segments
+		var segmentSize = 360.0 / 16;
+		var halfSegment = segmentSize / 2;
+
+        var angleDeg = _diff.degrees;
+		var intAngle = FlxMath.wrap(cast angleDeg + halfSegment, 0, 359);
+		var spinFrame = Std.int(intAngle / segmentSize);
+		entity.sprite.animation.frameIndex = spinFrame;
 
         return null;
     }
@@ -31,8 +41,8 @@ class FollowingState extends State<Survivor> {
         entity.bobGravity = .04;
         entity.bobDampening = .99;
         entity.bobbingEnabled = true;
+        entity.startTow();
     }
     override public function onExit():Void {
-
     }
 }

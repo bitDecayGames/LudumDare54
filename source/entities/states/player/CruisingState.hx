@@ -9,7 +9,7 @@ import flixel.FlxG;
 class CruisingState extends State<Player> {
 
     // how far off (in degrees) the direction of travel will snap to the 45 degree angles
-    var snapToleranceDegrees = 10;
+    private static inline var SNAP_TOLERANCE_DEGREES = 10;
 
     override public function update(delta:Float):State<Player> {
         if (SimpleController.pressed(A)) {
@@ -17,7 +17,7 @@ class CruisingState extends State<Player> {
         }
 
         #if FLX_DEBUG
-        if (FlxG.keys.pressed.K) {
+        if (FlxG.keys.justPressed.K) {
             return new CrashState(entity, FlxPoint.get(10, 10));
         }
         #end
@@ -33,9 +33,9 @@ class CruisingState extends State<Player> {
         if (entity.rawAngle < 0) entity.rawAngle += 360;
         if (entity.rawAngle >= 360) entity.rawAngle -= 360;
 
-        if (entity.rawAngle % 45 <= snapToleranceDegrees) {
+        if (entity.rawAngle % 45 <= SNAP_TOLERANCE_DEGREES) {
             entity.calculatedAngle = entity.rawAngle - (entity.rawAngle % 45);
-        } else if (entity.rawAngle % 45 >= (45 - snapToleranceDegrees)) {
+        } else if (entity.rawAngle % 45 >= (45 - SNAP_TOLERANCE_DEGREES)) {
             entity.calculatedAngle = entity.rawAngle + (45 - (entity.rawAngle % 45));
         } else {
             entity.calculatedAngle = entity.rawAngle;
@@ -43,9 +43,9 @@ class CruisingState extends State<Player> {
         if (entity.rawAngle < 0) entity.rawAngle += 360;
         if (entity.rawAngle >= 360) entity.rawAngle -= 360;
 
-        if (entity.rawAngle % 45 <= snapToleranceDegrees) {
+        if (entity.rawAngle % 45 <= SNAP_TOLERANCE_DEGREES) {
             entity.calculatedAngle = entity.rawAngle - (entity.rawAngle % 45);
-        } else if (entity.rawAngle % 45 >= (45 - snapToleranceDegrees)) {
+        } else if (entity.rawAngle % 45 >= (45 - SNAP_TOLERANCE_DEGREES)) {
             entity.calculatedAngle = entity.rawAngle + (45 - (entity.rawAngle % 45));
         } else {
             entity.calculatedAngle = entity.rawAngle;

@@ -1,8 +1,15 @@
 package entities;
 
+import bitdecay.flixel.debug.DebugDraw;
+import bitdecay.flixel.system.QuickLog;
+import debug.Debug;
+
 interface Follower {
     public var following:Follower;
     public var leading:Follower;
+
+    public var targetX(get, null):Float;
+    public var targetY(get, null):Float;
 
     public var x(default, set):Float;
     public var y(default, set):Float;
@@ -15,17 +22,28 @@ class FollowerHelper {
     You can definitely get into an infinite loop here if you make a loop in the chain, be careful!
     */
     public static function addFollower(it:Follower, follower:Follower):Void {
-        if (follower == null) return;
+        FollowerHelper.innerAddFollower(it, follower, []);
+    }
+    private static function innerAddFollower(it:Follower, follower:Follower, followerArray:Array<Follower>):Array<Follower> {
+        if (it == null || follower == null) {
+            return followerArray;
+        }
+        if (followerArray.indexOf(it) >= 0) {
+            QuickLog.critical('You just created an infinite loop by adding ${follower} to the follow chain');
+            return followerArray;
+        }
+        followerArray.push(it);
         if (it.leading != null) {
-            FollowerHelper.addFollower(it.leading, follower);
+            return innerAddFollower(it.leading, follower, followerArray);
         } else {
             it.leading = follower;
             follower.following = it;
+            return followerArray;
         }
     }
 
     /**
-    Removes this follower and all its children from the chain
+    Removes this follower and all its children from the chain, and returns the thing that it WAS following
     */
     public static function stopFollowing(it: Follower):Follower {
         if (it == null) return null;
@@ -82,5 +100,13 @@ class FollowerHelper {
         if (it == null) return null;
         if (it.leading == null) return it;
         return innerGetLastLinkOnChain(it.leading);
+    }
+
+    public static function drawDebugLines(it:Follower) {
+        var f = getLastLinkOnChain(it);
+        while (f != null && f.following != null) {
+            DebugDraw.ME.drawWorldLine(Debug.dbgCam, f.x, f.y, f.following.x, f.following.y, null, 0x03fc41);
+            f = f.following;
+        }
     }
 }

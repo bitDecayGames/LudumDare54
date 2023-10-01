@@ -15,6 +15,8 @@ class Terrain extends IsoSprite {
 
         sprite = new FlxSprite();
         sprite.loadGraphic(AssetPaths.tiles__png, true, 32, 16);
+        sprite.offset.set(sprite.width/2, sprite.height);
+
         sprite.animation.frameIndex = frameIndex;
     }
 }

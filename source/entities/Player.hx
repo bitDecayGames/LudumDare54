@@ -1,5 +1,8 @@
 package entities;
 
+import iso.Grid;
+import flixel.util.FlxColor;
+import bitdecay.flixel.debug.DebugDraw;
 import entities.statemachine.StateMachine;
 import echo.data.Data.CollisionData;
 import entities.Follower.FollowerHelper;
@@ -21,6 +24,7 @@ import flixel.FlxObject;
 import entities.statemachine.StateMachine;
 import entities.states.player.CruisingState;
 import entities.states.player.CrashState;
+import bitdecay.flixel.debug.DebugDraw;
 class Player extends IsoEchoSprite implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/rotation_template.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
@@ -40,12 +44,18 @@ class Player extends IsoEchoSprite implements Follower {
 
 	private var stateMachine:StateMachine<Player>;
 
-	public function new() {
+	public var isInvincible = false; // TODO: MW need to actually use this boolean to determine if collision causes crash
+
+	public var targetX(get, null):Float;
+	public var targetY(get, null):Float;
+
+
+	public function new(x:Float, y:Float) {
 		gridWidth = 1;
 		gridLength = 1;
 		gridHeight = 1;
 
-		super();
+		super(x, y);
 
 		rawAngle = -90;
 
@@ -73,19 +83,19 @@ class Player extends IsoEchoSprite implements Follower {
 			shapes: [
 				{
 					type:CIRCLE,
-					radius: 15,
+					radius: 10,
 				},
 				{
 					type:RECT,
-					width: 30,
+					width: 15,
 					height: 7,
-					offset_y: 7,
+					offset_y: 10,
 				},
 				{
 					type:RECT,
-					width: 30,
+					width: 15,
 					height: 7,
-					offset_y: -7,
+					offset_y: -10,
 				}
 			],
 		});
@@ -110,9 +120,21 @@ class Player extends IsoEchoSprite implements Follower {
 		FlxG.watch.addQuick('pAngCalc:', calculatedAngle);
 		FlxG.watch.addQuick('pAngFrame:', spinFrame);
 
+		FlxG.watch.addQuick('playerPos:', sprite.getPosition());
+
+		debugDraw(0, FlxColor.MAGENTA);
+
+		#if FLX_DEBUG
+		FollowerHelper.drawDebugLines(this);
+		#end
 	}
 
     public function damageMe(thingBoatRanInto:FlxSprite) {
+		if (isInvincible) {
+			// ignore this collision because the boat is invincible
+			return;
+		}
+
 		var directionToFling = FlxPoint.get(thingBoatRanInto.x - x, thingBoatRanInto.y - y);
 		stateMachine.setNextState(new CrashState(this, directionToFling));
     }
@@ -126,6 +148,17 @@ class Player extends IsoEchoSprite implements Follower {
 			if (!survivor.isFollowing()) {
 				FollowerHelper.addFollower(this, survivor);
 			}
+		} else if (other.object is Log) {
+			var log: Log = cast other.object;
+			damageMe(log);
 		}
+	}
+
+	function get_targetX():Float {
+		return body.x;
+	}
+
+	function get_targetY():Float {
+		return body.y;
 	}
 }

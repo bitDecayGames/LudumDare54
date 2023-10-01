@@ -46,7 +46,7 @@ class Grid {
 			DebugDraw.ME.drawWorldLine(Debug.dbgCam, start.x, start.y, end.x, end.y, DebugLayers.SQUARE_GRID, FlxColor.CYAN);
 
 			Grid.gridToIso(i * Grid.CELL_SIZE, 0, start);
-			Grid.gridToIso(i * Grid.CELL_SIZE, 50, end);
+			Grid.gridToIso(i * Grid.CELL_SIZE, ys * Grid.CELL_SIZE, end);
 			DebugDraw.ME.drawWorldLine(start.x, start.y, end.x, end.y, DebugLayers.ISO_GRID);
 		}
 
@@ -56,7 +56,7 @@ class Grid {
 			DebugDraw.ME.drawWorldLine(Debug.dbgCam, start.x, start.y, end.x, end.y, DebugLayers.SQUARE_GRID, FlxColor.CYAN);
 
 			Grid.gridToIso(0, i * Grid.CELL_SIZE, start);
-			Grid.gridToIso(50, i * Grid.CELL_SIZE, end);
+			Grid.gridToIso(xs * Grid.CELL_SIZE, i * Grid.CELL_SIZE, end);
 			DebugDraw.ME.drawWorldLine(start.x, start.y, end.x, end.y, DebugLayers.ISO_GRID);
 		}
 
