@@ -91,7 +91,7 @@ class PlayState extends FlxTransitionableState {
 		// FlxG.camera.pixelPerfectRender = true;
 
 		#if tanner
-		FmodManager.PlaySong(FmodSongs.Game);	
+		FmodManager.PlaySong(FmodSongs.Game);
 		#end
 
 		// Echo/physics init
@@ -216,8 +216,14 @@ class PlayState extends FlxTransitionableState {
 			exit: defaultExitHandler,
 		});
 
-		// collide stuff? for collisions? Maybe?
+		// collide currents with survivors
 		FlxEcho.listen(currents, survivors, {
+			separate: false,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+		// collide currents with logs
+		FlxEcho.listen(currents, logs, {
 			separate: false,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,

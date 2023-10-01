@@ -29,6 +29,7 @@ class Current extends EchoSprite {
 		currentRotation = start.degreesTo(end);
 		this.radius = radius;
 		entitiesInCurrent = [];
+		visible = false;
 		super(x, y);
 	}
 
