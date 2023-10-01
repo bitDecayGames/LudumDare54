@@ -39,8 +39,8 @@ class Player extends IsoEchoSprite implements Follower {
 	public var rawAngle:Float = 0;
 	public var calculatedAngle:Float = 0;
 
-	public var collisionShape: Shape;
-	public var pickupShapes: Array<Shape>;
+	public var boatShape: Shape;
+	public var pickupShape: Shape;
 
 	// used for survivor FollowingState
 	public var following:Follower;
@@ -85,29 +85,25 @@ class Player extends IsoEchoSprite implements Follower {
 			x: x,
 			y: y,
 			shapes: [
+				// Boat collision shape
 				{
-					type:CIRCLE,
-					radius: 10,
+					type: RECT,
+					width: 20,
+					height: 10,
 				},
+				// Survivor pickup area
 				{
-					type:RECT,
-					width: 15,
-					height: 7,
-					offset_y: 10,
-					solid: false,
-				},
-				{
-					type:RECT,
-					width: 15,
-					height: 7,
-					offset_y: -10,
+					type: RECT,
+					width: 18,
+					height: 28,
+					offset_x: -8,
 					solid: false,
 				}
 			],
 		});
 
-		collisionShape = body.shapes[0];
-		pickupShapes = body.shapes.slice(1, 3);
+		boatShape = body.shapes[0];
+		pickupShape = body.shapes[1];
 
 		return body;
 	}
