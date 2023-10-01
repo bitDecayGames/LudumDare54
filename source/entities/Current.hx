@@ -85,7 +85,7 @@ class Current extends EchoSprite {
 	}
 
 	@:access(echo.Shape)
-	override function handleEnter(other:Body, data:Array<CollisionData>) {
+	public override function handleEnter(other:Body, data:Array<CollisionData>) {
 		super.handleEnter(other, data);
 
 		if ((other.object is IsoEchoSprite)) {
@@ -97,7 +97,7 @@ class Current extends EchoSprite {
 	}
 
 	@:access(echo.Shape)
-	override function handleExit(other:Body) {
+	public override function handleExit(other:Body) {
 		super.handleExit(other);
 
 		if ((other.object is IsoEchoSprite)) {
