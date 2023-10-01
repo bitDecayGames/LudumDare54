@@ -56,7 +56,7 @@ class Player extends IsoEchoSprite implements Follower {
 
 	public function new(x:Float, y:Float) {
 		gridWidth = 1;
-		gridLength = 1;
+		gridLength = .5;
 		gridHeight = 1;
 
 		super(x, y);
@@ -69,8 +69,6 @@ class Player extends IsoEchoSprite implements Follower {
 
 
 	override function configSprite() {
-		// This call can be used once https://github.com/HaxeFlixel/flixel/pull/2860 is merged
-		// FlxAsepriteUtil.loadAseAtlasAndTags(this, AssetPaths.player__png, AssetPaths.player__json);
 		this.sprite = new FlxSprite();
 		Aseprite.loadAllAnimations(this.sprite, AssetPaths.boat__json);
 		animation.callback = (anim, frame, index) -> {
@@ -88,8 +86,8 @@ class Player extends IsoEchoSprite implements Follower {
 				// Boat collision shape
 				{
 					type: RECT,
-					width: 20,
-					height: 10,
+					width: 16,
+					height: 8,
 				},
 				// Survivor pickup area
 				{
@@ -108,8 +106,14 @@ class Player extends IsoEchoSprite implements Follower {
 		return body;
 	}
 
+	override function setBounds() {
+		boatShape.bounds(bounds);
+	}
+
 	override public function update(delta:Float) {
 		super.update(delta);
+
+
 
 		stateMachine.update(delta);
 
@@ -128,8 +132,6 @@ class Player extends IsoEchoSprite implements Follower {
 		FlxG.watch.addQuick('pAngFrame:', spinFrame);
 
 		FlxG.watch.addQuick('playerPos:', sprite.getPosition());
-
-		debugDraw(0, FlxColor.MAGENTA);
 
 		#if FLX_DEBUG
 		FollowerHelper.drawDebugLines(this);

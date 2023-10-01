@@ -1,5 +1,6 @@
 package iso;
 
+import echo.util.AABB;
 import bitdecay.flixel.debug.DebugDraw;
 import debug.Debug;
 import debug.DebugLayers;
@@ -78,6 +79,8 @@ class IsoEchoSprite extends FlxSprite {
 	public var hMin(get, never):Float;
 	public var hMax(get, never):Float;
 
+	var bounds:AABB = AABB.get();
+
 	override function draw() {
 		super.draw();
 
@@ -92,19 +95,19 @@ class IsoEchoSprite extends FlxSprite {
 	}
 
 	function get_gridXmin():Float {
-		return x + adjust;
+		return bounds.min_x;
 	}
 
 	function get_gridXmax():Float {
-		return x + (gridWidth * Grid.CELL_SIZE) - adjust;
+		return bounds.max_x;
 	}
 
 	function get_gridYmin():Float {
-		return y + adjust;
+		return bounds.min_y;
 	}
 
 	function get_gridYmax():Float {
-		return y + (gridLength * Grid.CELL_SIZE) - adjust;
+		return bounds.max_y;
 	}
 
 	function get_gridZmin():Float {
@@ -116,27 +119,27 @@ class IsoEchoSprite extends FlxSprite {
 	}
 
 	function get_isoXmin():Float {
-		return x - gridHeight * Grid.CELL_SIZE - z;
+		return bounds.min_x - z;
 	}
 
 	function get_isoXmax():Float {
-		return x + gridWidth * Grid.CELL_SIZE - z;
+		return bounds.max_x - z;
 	}
 
 	function get_isoYmin():Float {
-		return y - gridHeight * Grid.CELL_SIZE - z;
+		return bounds.min_y - z;
 	}
 
 	function get_isoYmax():Float {
-		return y + gridLength * Grid.CELL_SIZE - z;
+		return bounds.max_y - z;
 	}
 
 	function get_hMin():Float {
-		return Grid.gridToIso(x, y + gridLength * Grid.CELL_SIZE).x;
+		return Grid.gridToIso(bounds.max_x, bounds.max_y).x;
 	}
 
 	function get_hMax():Float {
-		return Grid.gridToIso(x + gridWidth * Grid.CELL_SIZE, y).x;
+		return Grid.gridToIso(bounds.min_x, bounds.min_y).x;
 	}
 
 	public function debugDraw(i:Int, color:FlxColor) {
@@ -223,6 +226,14 @@ class IsoEchoSprite extends FlxSprite {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 		sprite.update(elapsed);
+
+		setBounds();
+
+		debugDraw(1, FlxColor.MAGENTA);
+	}
+
+	function setBounds() {
+		body.bounds(bounds);
 	}
 
 	/**

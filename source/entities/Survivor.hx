@@ -41,8 +41,8 @@ class Survivor extends Bobber implements Follower {
 	];
 
 	public function new(x:Float=0, y:Float=0) {
-		gridWidth = .5;
-		gridLength = .5;
+		gridWidth = 6/16;
+		gridLength = 6/16;
 		gridHeight = .5;
 
 		super(x, y);

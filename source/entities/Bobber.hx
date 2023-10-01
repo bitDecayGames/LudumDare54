@@ -18,10 +18,10 @@ class Bobber extends IsoEchoSprite {
 
 	// this function should be overridden by the child class, these values are decent to start with
     private function initBobbingValues() {
-        this.maxBob = 1;
-        this.minBob = .5;
+        this.maxBob = .2;
+        this.minBob = .1;
         this.bobVel = minBob;
-        this.bobGravity = .02;
+        this.bobGravity = .005;
         this.bobDampening = .99;
         this.bobbingEnabled = true;
     }
