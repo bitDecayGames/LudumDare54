@@ -1,5 +1,6 @@
 package entities;
 
+import flixel.FlxG;
 import flixel.util.FlxColor;
 import echo.Body;
 import flixel.FlxSprite;
@@ -34,6 +35,8 @@ class Survivor extends Bobber implements Follower {
 	override function configSprite() {
 		this.sprite = new FlxSprite();
 		Aseprite.loadAllAnimations(this.sprite, AssetPaths.survivors_floating__json);
+		// var survivor:String = FlxG.random.getObject(animation.getNameList());
+		// animation.play(survivor);
 		animation.play(anims.Lady1);
 	}
 
