@@ -95,6 +95,7 @@ class PlayState extends FlxTransitionableState {
 		var terrainBodies = TileMap.generate(level.terrainInts, 16, 16, level.terrainTilesWide, level.terrainTilesHigh);
 		terrain.add_group_bodies();
 		for (tb in terrainBodies) {
+			FlxEcho.instance.world.add(tb);
 			FlxEcho.instance.groups.get(terrain).push(tb);
 		}
 
