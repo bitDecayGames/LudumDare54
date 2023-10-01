@@ -71,7 +71,8 @@ class Current extends EchoSprite {
 				entity.body.x += diff.x;
 				entity.body.y += diff.y;
 				#if FLX_DEBUG
-				DebugDraw.ME.drawWorldLine(Debug.dbgCam, x, y, entity.x, entity.y, null, 0x0377fc);
+				// MW This is pretty noisy on screen
+				//DebugDraw.ME.drawWorldLine(Debug.dbgCam, x, y, entity.x, entity.y, null, 0x0377fc);
 				#end
 			}
 		}

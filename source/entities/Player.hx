@@ -1,5 +1,6 @@
 package entities;
 
+import flixel.util.FlxTimer;
 import score.ScoreManager;
 import iso.Grid;
 import flixel.util.FlxColor;
@@ -160,12 +161,17 @@ class Player extends IsoEchoSprite implements Follower {
 			var survivor: Survivor = cast other.object;
 			// colliding with boat
 			if (collision.sa == boatShape) {
-				// TODO SFX survivor dying
+        		FmodManager.PlaySoundOneShot(FmodSFX.BoatCollideSurvivor);
+        		FmodManager.PlaySoundOneShot(FmodSFX.VoiceHit);
 				ScoreManager.survivorKilled();
 				survivor.hitByObject();
 			// colliding with pickup area
 			} else if (survivor.isCollectable() && collision.sa == pickupShape) {
-				// TODO SFX survivor pickup, maybe in addFollower
+        		FmodManager.PlaySoundOneShot(FmodSFX.BoatCollectSurvivor);
+				new FlxTimer().start(0.75, (t) -> {
+					FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
+				});
+
 				if (!survivor.isFollowing()) {
 					FollowerHelper.addFollower(this, survivor);
 				}
