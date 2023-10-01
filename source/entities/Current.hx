@@ -6,6 +6,11 @@ import echo.data.Data.CollisionData;
 import flixel.FlxG;
 import iso.IsoEchoSprite;
 
+#if FLX_DEBUG
+import bitdecay.flixel.debug.DebugDraw;
+import debug.Debug;
+#end
+
 class Current extends EchoSprite {
 	public var start:FlxPoint = FlxPoint.get();
 	public var end:FlxPoint = FlxPoint.get();
@@ -16,7 +21,7 @@ class Current extends EchoSprite {
 	private var entitiesInCurrent: Array<IsoEchoSprite> = [];
 	private var diff:FlxPoint = FlxPoint.get();
 
-	public function new(x:Float=0, y:Float=0, x2:Float=1, y2:Float=1, radius:Float=10, strength:Float=1) {
+	public function new(x:Float=0, y:Float=0, x2:Float=1, y2:Float=1, radius:Float=10, strength:Float=0.25) {
 		start.set(x, y);
 		end.set(x2, y2);
 		diff.set(x2 - x, y2 - y).normalize().scale(strength, strength); // MW might need to move this to the update if the current needs to change at all
@@ -59,14 +64,18 @@ class Current extends EchoSprite {
 
 	override public function update(delta:Float):Void {
 		super.update(delta);
+		var l = entitiesInCurrent.length;
+		FlxG.watch.addQuick("L", l);
 		for (entity in entitiesInCurrent) {
 			if (entity != null && entity.alive) {
-				entity.x += diff.x;
-				entity.y += diff.y;
+				entity.body.x += diff.x;
+				entity.body.y += diff.y;
+				#if FLX_DEBUG
+				DebugDraw.ME.drawWorldLine(Debug.dbgCam, x, y, entity.x, entity.y, null, 0x0377fc);
+				#end
 			}
 		}
 
-		FlxG.watch.addQuick("L", entitiesInCurrent.length);
 	}
 
 	override public function destroy() {
