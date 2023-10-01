@@ -1,5 +1,6 @@
 package entities;
 
+import entities.states.survivor.FollowingState;
 import flixel.util.FlxColor;
 import echo.Body;
 import flixel.FlxSprite;
@@ -30,6 +31,9 @@ class Survivor extends Bobber implements Follower {
 		stateMachine.setNextState(new FloatingState(this));
 	}
 
+	public function isFollowing():Bool {
+		return stateMachine.getCurrentState() is FollowingState;
+	}
 
 	override function configSprite() {
 		this.sprite = new FlxSprite();

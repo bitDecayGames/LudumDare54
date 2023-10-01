@@ -1,5 +1,7 @@
 package entities;
 
+import entities.statemachine.StateMachine;
+import echo.data.Data.CollisionData;
 import entities.Follower.FollowerHelper;
 import iso.IsoEchoSprite;
 import echo.Body;
@@ -207,4 +209,16 @@ class Player extends IsoEchoSprite implements Follower {
             }
         }
     }
+
+	@:access(echo.Shape)
+	override function handleEnter(other:Body, data:Array<CollisionData>) {
+		super.handleEnter(other, data);
+
+		if (other.object is Survivor) {
+			var survivor: Survivor = cast other.object;
+			if (!survivor.isFollowing()) {
+				FollowerHelper.addFollower(this, survivor);
+			}
+		}
+	}
 }

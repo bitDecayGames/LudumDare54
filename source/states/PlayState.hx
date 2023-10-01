@@ -1,7 +1,9 @@
 package states;
 
+import iso.IsoEchoSprite;
 import entities.Survivor;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxGroup;
 import iso.Grid;
 import entities.Terrain;
 import debug.Debug;
@@ -25,8 +27,8 @@ using states.FlxStateExt;
 class PlayState extends FlxTransitionableState {
 	var level:Level;
 
-	var playerGroup = new FlxTypedGroup<Player>();
-	var survivors = new FlxTypedGroup<Survivor>();
+	var playerGroup = new FlxGroup();
+	var survivors = new FlxGroup();
 	var terrain = new FlxTypedGroup<Terrain>();
 	
 	override public function create() {
@@ -79,6 +81,8 @@ class PlayState extends FlxTransitionableState {
 		});
 		survivors.clear();
 
+		FlxEcho.clear();
+
 		level = new Level("Level_0");
 
 		for (y in 0...level.raw.l_Terrain.cHei) {
@@ -87,10 +91,10 @@ class PlayState extends FlxTransitionableState {
 			}
 		}
 
-		playerGroup.add(level.player);
+		level.player.add_to_group(playerGroup);
 
 		for (s in level.survivors) {
-			survivors.add(s);
+			s.add_to_group(survivors);
 		}
 
 		#if FLX_DEBUG
@@ -98,6 +102,31 @@ class PlayState extends FlxTransitionableState {
 		#end
 
 		FlxG.camera.follow(level.player.sprite);
+
+		// collide survivors as second group so they are always on the 'b' side of interaction
+		FlxEcho.listen(playerGroup, survivors, {
+			separate: false,
+			enter: (a, b, o) -> {
+				if (a.object is IsoEchoSprite) {
+					var aSpr:IsoEchoSprite = cast a.object;
+					aSpr.handleEnter(b, o);
+				}
+				if (b.object is IsoEchoSprite) {
+					var bSpr:IsoEchoSprite = cast b.object;
+					bSpr.handleEnter(a, o);
+				}
+			},
+			exit: (a, b) -> {
+				if (a.object is IsoEchoSprite) {
+					var aSpr:IsoEchoSprite = cast a.object;
+					aSpr.handleExit(b);
+				}
+				if (b.object is IsoEchoSprite) {
+					var bSpr:IsoEchoSprite = cast b.object;
+					bSpr.handleExit(a);
+				}
+			}
+		});
 	}
 
 	override public function update(elapsed:Float) {
