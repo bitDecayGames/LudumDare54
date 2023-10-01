@@ -9,6 +9,8 @@ import loaders.AsepriteMacros;
 
 import entities.statemachine.StateMachine;
 import entities.states.survivor.FloatingState;
+import entities.states.survivor.FlungState;
+import flixel.math.FlxPoint;
 class Survivor extends Bobber implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/characters/survivors_floating.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/survivors_floating.json");
@@ -56,5 +58,9 @@ class Survivor extends Bobber implements Follower {
 	override public function update(delta:Float):Void {
 		super.update(delta);
 		stateMachine.update(delta);
+	}
+
+	public function flingMe(directionToBeFlung: FlxPoint) {
+		stateMachine.setNextState(new FlungState(this, directionToBeFlung));
 	}
 }
