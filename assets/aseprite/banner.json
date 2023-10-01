@@ -1,0 +1,83 @@
+{ "frames": [
+   {
+    "filename": "banner 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 256, "h": 94 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 94 },
+    "sourceSize": { "w": 256, "h": 94 },
+    "duration": 100
+   },
+   {
+    "filename": "banner 1.aseprite",
+    "frame": { "x": 256, "y": 0, "w": 256, "h": 94 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 94 },
+    "sourceSize": { "w": 256, "h": 94 },
+    "duration": 100
+   },
+   {
+    "filename": "banner 2.aseprite",
+    "frame": { "x": 512, "y": 0, "w": 256, "h": 94 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 94 },
+    "sourceSize": { "w": 256, "h": 94 },
+    "duration": 100
+   },
+   {
+    "filename": "banner 3.aseprite",
+    "frame": { "x": 0, "y": 94, "w": 256, "h": 94 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 94 },
+    "sourceSize": { "w": 256, "h": 94 },
+    "duration": 100
+   },
+   {
+    "filename": "banner 4.aseprite",
+    "frame": { "x": 256, "y": 94, "w": 256, "h": 94 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 94 },
+    "sourceSize": { "w": 256, "h": 94 },
+    "duration": 100
+   },
+   {
+    "filename": "banner 5.aseprite",
+    "frame": { "x": 512, "y": 94, "w": 256, "h": 94 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 94 },
+    "sourceSize": { "w": 256, "h": 94 },
+    "duration": 100
+   },
+   {
+    "filename": "banner 6.aseprite",
+    "frame": { "x": 0, "y": 188, "w": 256, "h": 94 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 94 },
+    "sourceSize": { "w": 256, "h": 94 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3-rc6-x64",
+  "image": "banner.png",
+  "format": "RGBA8888",
+  "size": { "w": 768, "h": 282 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 2", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 3", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
