@@ -50,7 +50,8 @@ class MainMenuState extends FlxUIState {
 			cursor.setDefaultKeys(keys);
 		}
 
-		FmodManager.PlaySong(FmodSongs.LetsGo);
+		FmodManager.PlaySong(FmodSongs.Title);
+		FmodManager.PlaySoundOneShot(FmodSFX.BoatEngine);
 		bgColor = FlxColor.TRANSPARENT;
 		FlxG.camera.pixelPerfectRender = true;
 

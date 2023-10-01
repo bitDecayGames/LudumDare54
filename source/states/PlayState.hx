@@ -60,6 +60,10 @@ class PlayState extends FlxTransitionableState {
 
 		FlxG.camera.pixelPerfectRender = true;
 
+		#if tanner
+		FmodManager.PlaySong(FmodSongs.Game);	
+		#end
+
 		// Echo/physics init
 		FlxEcho.init({
 			width: FlxG.width,
