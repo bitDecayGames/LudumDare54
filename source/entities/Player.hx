@@ -113,7 +113,8 @@ class Player extends IsoEchoSprite implements Follower {
 	}
 
     public function damageMe(thingBoatRanInto:FlxSprite) {
-		stateMachine.setNextState(new CrashState(this, thingBoatRanInto));
+		var directionToFling = FlxPoint.get(thingBoatRanInto.x - x, thingBoatRanInto.y - y);
+		stateMachine.setNextState(new CrashState(this, directionToFling));
     }
 
 	@:access(echo.Shape)

@@ -2,6 +2,10 @@ package entities.states.player;
 import entities.statemachine.State;
 import input.SimpleController;
 import flixel.math.FlxPoint;
+#if FLX_DEBUG
+import flixel.FlxG;
+#end
+
 class CruisingState extends State<Player> {
 
     // how far off (in degrees) the direction of travel will snap to the 45 degree angles
@@ -11,6 +15,12 @@ class CruisingState extends State<Player> {
         if (SimpleController.pressed(A)) {
             return new SlidingState(entity);
         }
+
+        #if FLX_DEBUG
+        if (FlxG.keys.pressed.K) {
+            return new CrashState(entity, FlxPoint.get(1, 1));
+        }
+        #end
 
         if (SimpleController.pressed(LEFT)) {
             entity.rawAngle -= entity.turnSpeed * delta;
