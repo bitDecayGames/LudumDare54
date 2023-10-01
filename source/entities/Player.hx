@@ -119,8 +119,9 @@ class Player extends IsoEchoSprite implements Follower {
 		FlxG.watch.addQuick('playerPos:', sprite.getPosition());
 
 		debugDraw(0, FlxColor.MAGENTA);
-		FollowerHelper.drawDebugLines(this);
+
 		#if FLX_DEBUG
+		FollowerHelper.drawDebugLines(this);
 		#end
 	}
 
