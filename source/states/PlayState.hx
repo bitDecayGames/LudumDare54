@@ -236,8 +236,15 @@ class PlayState extends FlxTransitionableState {
 			exit: defaultExitHandler,
 		});
 
-		// collide terrain as second group so they are always on the 'b' side of interaction
+		// collide player with terrain
 		FlxEcho.instance.world.listen(FlxEcho.get_group_bodies(playerGroup), terrainBodies, {
+			separate: true,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+
+		// collide survivors with terrain
+		FlxEcho.instance.world.listen(FlxEcho.get_group_bodies(survivors), terrainBodies, {
 			separate: true,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
