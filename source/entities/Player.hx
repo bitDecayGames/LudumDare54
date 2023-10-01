@@ -161,8 +161,8 @@ class Player extends IsoEchoSprite implements Follower {
 			var survivor: Survivor = cast other.object;
 			// colliding with boat
 			if (collision.sa == boatShape) {
-				// TODO SFX survivor dying
-				// TODO Switch to corpse state
+        		FmodManager.PlaySoundOneShot(FmodSFX.BoatCollideSurvivor);
+        		FmodManager.PlaySoundOneShot(FmodSFX.VoiceHit);
 				ScoreManager.survivorKilled();
 				survivor.hitByObject();
 			// colliding with pickup area
