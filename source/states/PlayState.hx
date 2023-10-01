@@ -31,7 +31,29 @@ class PlayState extends FlxTransitionableState {
 	var playerGroup = new FlxGroup();
 	var survivors = new FlxGroup();
 	var terrain = new FlxGroup();
-	
+
+	private static function defaultEnterHandler(a, b, o) {
+		if (a.object is IsoEchoSprite) {
+			var aSpr:IsoEchoSprite = cast a.object;
+			aSpr.handleEnter(b, o);
+		}
+		if (b.object is IsoEchoSprite) {
+			var bSpr:IsoEchoSprite = cast b.object;
+			bSpr.handleEnter(a, o);
+		}
+	}
+
+	private static function defaultExitHandler(a, b) {
+		if (a.object is IsoEchoSprite) {
+			var aSpr:IsoEchoSprite = cast a.object;
+			aSpr.handleExit(b);
+		}
+		if (b.object is IsoEchoSprite) {
+			var bSpr:IsoEchoSprite = cast b.object;
+			bSpr.handleExit(a);
+		}
+	}
+
 	override public function create() {
 		super.create();
 		Lifecycle.startup.dispatch();
@@ -114,26 +136,8 @@ class PlayState extends FlxTransitionableState {
 		// collide survivors as second group so they are always on the 'b' side of interaction
 		FlxEcho.listen(playerGroup, survivors, {
 			separate: false,
-			enter: (a, b, o) -> {
-				if (a.object is IsoEchoSprite) {
-					var aSpr:IsoEchoSprite = cast a.object;
-					aSpr.handleEnter(b, o);
-				}
-				if (b.object is IsoEchoSprite) {
-					var bSpr:IsoEchoSprite = cast b.object;
-					bSpr.handleEnter(a, o);
-				}
-			},
-			exit: (a, b) -> {
-				if (a.object is IsoEchoSprite) {
-					var aSpr:IsoEchoSprite = cast a.object;
-					aSpr.handleExit(b);
-				}
-				if (b.object is IsoEchoSprite) {
-					var bSpr:IsoEchoSprite = cast b.object;
-					bSpr.handleExit(a);
-				}
-			}
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
 		});
 	}
 
