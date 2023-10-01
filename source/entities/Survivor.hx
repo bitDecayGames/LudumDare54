@@ -1,5 +1,6 @@
 package entities;
 
+import flixel.FlxG;
 import flixel.util.FlxColor;
 import echo.Body;
 import flixel.FlxSprite;
@@ -8,6 +9,8 @@ import loaders.AsepriteMacros;
 
 import entities.statemachine.StateMachine;
 import entities.states.survivor.FloatingState;
+import entities.states.survivor.FlungState;
+import flixel.math.FlxPoint;
 class Survivor extends Bobber implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/characters/survivors_floating.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/survivors_floating.json");
@@ -34,6 +37,8 @@ class Survivor extends Bobber implements Follower {
 	override function configSprite() {
 		this.sprite = new FlxSprite();
 		Aseprite.loadAllAnimations(this.sprite, AssetPaths.survivors_floating__json);
+		// var survivor:String = FlxG.random.getObject(animation.getNameList());
+		// animation.play(survivor);
 		animation.play(anims.Lady1);
 	}
 
@@ -53,5 +58,9 @@ class Survivor extends Bobber implements Follower {
 	override public function update(delta:Float):Void {
 		super.update(delta);
 		stateMachine.update(delta);
+	}
+
+	public function flingMe(directionToBeFlung: FlxPoint) {
+		stateMachine.setNextState(new FlungState(this, directionToBeFlung));
 	}
 }
