@@ -1,5 +1,6 @@
 package states;
 
+import score.ScoreManager;
 import flixel.FlxObject;
 import echo.util.TileMap;
 import iso.IsoEchoSprite;
@@ -129,6 +130,7 @@ class PlayState extends FlxTransitionableState {
 		level = new Level(levelName);
 		FlxEcho.instance.world.width = level.raw.pxWid;
 		FlxEcho.instance.world.height = level.raw.pxHei;
+		ScoreManager.startLevel(levelName);
 
 		for (y in 0...level.raw.l_Terrain.cHei) {
 			for (x in 0...level.raw.l_Terrain.cWid) {

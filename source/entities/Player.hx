@@ -1,5 +1,6 @@
 package entities;
 
+import score.ScoreManager;
 import iso.Grid;
 import flixel.util.FlxColor;
 import bitdecay.flixel.debug.DebugDraw;
@@ -153,23 +154,30 @@ class Player extends IsoEchoSprite implements Follower {
 		super.handleEnter(other, data);
 
 		var collision = data[0];
+		// colliding with survivor
 		if (other.object is Survivor) {
 			var survivor: Survivor = cast other.object;
-			if (collision.sa != null) {
-				if (collision.sa == boatShape) {
-					// TODO SFX survivor dying
-					// TODO Switch to corpse state
-					survivor.kill();
-				} else if (collision.sa == pickupShape) {
-					// TODO SFX survivor pickup, maybe in addFollower
-					if (!survivor.isFollowing()) {
-						FollowerHelper.addFollower(this, survivor);
-					}
+			// colliding with boat
+			if (collision.sa == boatShape) {
+				// TODO SFX survivor dying
+				// TODO Switch to corpse state
+				ScoreManager.survivorKilled();
+				survivor.kill();
+			// colliding with pickup area
+			} else if (collision.sa == pickupShape) {
+				// TODO SFX survivor pickup, maybe in addFollower
+				if (!survivor.isFollowing()) {
+					FollowerHelper.addFollower(this, survivor);
 				}
 			}
+		// colliding with log
 		} else if (other.object is Log) {
 			var log: Log = cast other.object;
-			damageMe(log);
+			// colliding with boat
+			if (collision.sb == boatShape) { 
+				ScoreManager.playerCrashed();
+				damageMe(log);
+			}
 		}
 	}
 
