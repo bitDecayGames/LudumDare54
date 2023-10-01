@@ -6,12 +6,14 @@ import entities.Item;
 import flixel.group.FlxGroup;
 import entities.Player;
 
+import entities.Current;
 class Level {
     public static var project = new LDTKProject();
     public var player: Player;
 
     public var survivors = new Array<Survivor>();
     public var logs = new Array<Log>();
+    public var currents = new Array<Current>();
 
     public var raw:levels.ldtk.LDTKProject.LDTKProject_Level = null;
 
@@ -20,9 +22,9 @@ class Level {
     public var terrainTilesWide = 0;
 
     public function new(level:String) {
-        
+
         raw = project.all_worlds.Default.getLevel(level);
-        
+
         // Player
         if (raw.l_Entities.all_Player.length > 1) {
             QuickLog.warn("more than one player loaded for level, defaulting to first one");

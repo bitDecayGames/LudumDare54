@@ -12,6 +12,7 @@ class Log extends Bobber {
 		gridHeight = 1;
 
 		super(x, y);
+		sprite.offset.x += 8;
 	}
 
 	override function configSprite() {
@@ -27,9 +28,10 @@ class Log extends Bobber {
 				{
 					type:RECT,
 					width: 28,
-					height: 8,
+					height: 6,
 				},
 			],
+			rotation: 5,
 			kinematic: true,
 		});
 	}

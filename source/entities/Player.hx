@@ -1,5 +1,6 @@
 package entities;
 
+import score.ScoreManager;
 import iso.Grid;
 import flixel.util.FlxColor;
 import bitdecay.flixel.debug.DebugDraw;
@@ -8,6 +9,7 @@ import echo.data.Data.CollisionData;
 import entities.Follower.FollowerHelper;
 import iso.IsoEchoSprite;
 import echo.Body;
+import echo.Shape;
 import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.math.FlxMath;
@@ -38,6 +40,9 @@ class Player extends IsoEchoSprite implements Follower {
 	public var rawAngle:Float = 0;
 	public var calculatedAngle:Float = 0;
 
+	public var boatShape: Shape;
+	public var pickupShape: Shape;
+
 	// used for survivor FollowingState
 	public var following:Follower;
 	public var leading:Follower;
@@ -52,7 +57,7 @@ class Player extends IsoEchoSprite implements Follower {
 
 	public function new(x:Float, y:Float) {
 		gridWidth = 1;
-		gridLength = 1;
+		gridLength = .5;
 		gridHeight = 1;
 
 		super(x, y);
@@ -65,8 +70,6 @@ class Player extends IsoEchoSprite implements Follower {
 
 
 	override function configSprite() {
-		// This call can be used once https://github.com/HaxeFlixel/flixel/pull/2860 is merged
-		// FlxAsepriteUtil.loadAseAtlasAndTags(this, AssetPaths.player__png, AssetPaths.player__json);
 		this.sprite = new FlxSprite();
 		Aseprite.loadAllAnimations(this.sprite, AssetPaths.boat__json);
 		animation.callback = (anim, frame, index) -> {
@@ -77,32 +80,41 @@ class Player extends IsoEchoSprite implements Follower {
 	}
 
 	override function makeBody():Body {
-		return this.add_body({
+		var body = this.add_body({
 			x: x,
 			y: y,
 			shapes: [
+				// Boat collision shape
 				{
-					type:CIRCLE,
-					radius: 10,
+					type: RECT,
+					width: 16,
+					height: 8,
 				},
+				// Survivor pickup area
 				{
-					type:RECT,
-					width: 15,
-					height: 7,
-					offset_y: 10,
-				},
-				{
-					type:RECT,
-					width: 15,
-					height: 7,
-					offset_y: -10,
+					type: RECT,
+					width: 18,
+					height: 28,
+					offset_x: -8,
+					solid: false,
 				}
 			],
 		});
+
+		boatShape = body.shapes[0];
+		pickupShape = body.shapes[1];
+
+		return body;
+	}
+
+	override function setBounds() {
+		boatShape.bounds(bounds);
 	}
 
 	override public function update(delta:Float) {
 		super.update(delta);
+
+
 
 		stateMachine.update(delta);
 
@@ -121,8 +133,6 @@ class Player extends IsoEchoSprite implements Follower {
 		FlxG.watch.addQuick('pAngFrame:', spinFrame);
 
 		FlxG.watch.addQuick('playerPos:', sprite.getPosition());
-
-		debugDraw(0, FlxColor.MAGENTA);
 
 		#if FLX_DEBUG
 		FollowerHelper.drawDebugLines(this);
@@ -143,14 +153,31 @@ class Player extends IsoEchoSprite implements Follower {
 	override function handleEnter(other:Body, data:Array<CollisionData>) {
 		super.handleEnter(other, data);
 
+		var collision = data[0];
+		// colliding with survivor
 		if (other.object is Survivor) {
 			var survivor: Survivor = cast other.object;
-			if (!survivor.isFollowing()) {
-				FollowerHelper.addFollower(this, survivor);
+			// colliding with boat
+			if (collision.sa == boatShape) {
+				// TODO SFX survivor dying
+				// TODO Switch to corpse state
+				ScoreManager.survivorKilled();
+				survivor.kill();
+			// colliding with pickup area
+			} else if (collision.sa == pickupShape) {
+				// TODO SFX survivor pickup, maybe in addFollower
+				if (!survivor.isFollowing()) {
+					FollowerHelper.addFollower(this, survivor);
+				}
 			}
+		// colliding with log
 		} else if (other.object is Log) {
 			var log: Log = cast other.object;
-			damageMe(log);
+			// colliding with boat
+			if (collision.sb == boatShape) { 
+				ScoreManager.playerCrashed();
+				damageMe(log);
+			}
 		}
 	}
 
