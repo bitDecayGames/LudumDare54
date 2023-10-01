@@ -11,9 +11,9 @@ class FloatingState extends State<Survivor> {
     override public function onEnter(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
         // TODO: MW start the animation for a floating, non-saved survivor
         entity.maxBob = 1;
-        entity.minBob = .5;
+        entity.minBob = .15;
         entity.bobVel = entity.minBob;
-        entity.bobGravity = .02;
+        entity.bobGravity = .01;
         entity.bobDampening = .99;
         entity.bobbingEnabled = true;
         entity.startFloat();
