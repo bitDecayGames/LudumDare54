@@ -45,6 +45,7 @@ class Survivor extends Bobber implements Follower {
 	public function startTow() {
 		var curAnimName = sprite.animation.curAnim.name;
 		if (!StringTools.endsWith(curAnimName, "_tube")) {
+			// TODO SFX: Survivor gets into tube and starts town behind boat
 			sprite.animation.play('${curAnimName}_tube');
 		}
 	}
@@ -52,6 +53,7 @@ class Survivor extends Bobber implements Follower {
 	public function endTow() {
 		var curAnimName = sprite.animation.curAnim.name;
 		if (StringTools.endsWith(curAnimName, "_tube")) {
+			// TODO SFX: Survivor thrown from boat.
 			sprite.animation.play(StringTools.replace(curAnimName, "_tube", ""));
 		}
 	}
