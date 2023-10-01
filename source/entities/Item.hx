@@ -9,12 +9,12 @@ import iso.IsoEchoSprite;
 class Item extends IsoEchoSprite {
 	public static var slices = AsepriteMacros.sliceNames("assets/aseprite/items.json");
 
-	public function new() {
+	public function new(x:Float, y:Float) {
 		gridWidth = 1;
 		gridLength = 1;
 		gridHeight = 1;
 
-		super();
+		super(x, y);
 	}
 
 	override function configSprite() {

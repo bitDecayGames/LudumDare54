@@ -1,5 +1,7 @@
 package states;
 
+import entities.Survivor;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import iso.Grid;
 import entities.Terrain;
 import debug.Debug;
@@ -22,6 +24,10 @@ using states.FlxStateExt;
 
 class PlayState extends FlxTransitionableState {
 	var level:Level;
+
+	var playerGroup = new FlxTypedGroup<Player>();
+	var survivors = new FlxTypedGroup<Survivor>();
+	var terrain = new FlxTypedGroup<Terrain>();
 	
 	override public function create() {
 		super.create();
@@ -44,30 +50,54 @@ class PlayState extends FlxTransitionableState {
 		FlxEcho.drawCamera = Debug.dbgCam;
 		#end
 
-		for (x in 0...5) {
-			for (y in 0...5) {
-				var tile = 0;
-				if (x == 0 || x == 4) {
-					tile = 1;
-				}
-				var bgTile = new Terrain(x * Grid.CELL_SIZE, y * Grid.CELL_SIZE, tile);
-				bgTile.alpha = 0.2;
-				bgTile.sprite.alpha = 0.5;
-				add(bgTile);
+
+
+		// add(Achievements.ACHIEVEMENT_NAME_HERE.toToast(true, true));
+
+		// QuickLog.error('Example error');
+
+		add(terrain);
+		add(survivors);
+		add(playerGroup);
+
+		loadLevel("Level_0");
+	}
+
+	public function loadLevel(levelName:String) {
+		terrain.forEach((t) -> {
+			t.destroy();
+		});
+		terrain.clear();
+
+		playerGroup.forEach((t) -> {
+			t.destroy();
+		});
+		playerGroup.clear();
+
+		survivors.forEach((t) -> {
+			t.destroy();
+		});
+		survivors.clear();
+
+		level = new Level("Level_0");
+
+		for (y in 0...level.raw.l_Terrain.cHei) {
+			for (x in 0...level.raw.l_Terrain.cWid) {
+				terrain.add(new Terrain(x * Grid.CELL_SIZE, y * Grid.CELL_SIZE, level.raw.l_Terrain.getInt(x, y)));
 			}
 		}
 
-		level = new Level(this);
+		playerGroup.add(level.player);
+
+		for (s in level.survivors) {
+			survivors.add(s);
+		}
 
 		#if FLX_DEBUG
 		Debug.dbgCam.follow(level.player);
 		#end
 
 		FlxG.camera.follow(level.player.sprite);
-
-		// add(Achievements.ACHIEVEMENT_NAME_HERE.toToast(true, true));
-
-		// QuickLog.error('Example error');
 	}
 
 	override public function update(elapsed:Float) {

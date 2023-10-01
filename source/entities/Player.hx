@@ -48,6 +48,8 @@ class Player extends IsoEchoSprite implements Follower {
 		gridHeight = 1;
 
 		super();
+
+		rawAngle = -90;
 	}
 
 
@@ -143,6 +145,7 @@ class Player extends IsoEchoSprite implements Follower {
 			rawAngle += inputImpact * (turnSpeedSkid * delta);
 		}
 
+		calculatedAngle = rawAngle;
 
 		var movement = FlxPoint.weak(FlxMath.lerp(speed, 0, moveLerp), 0);
 

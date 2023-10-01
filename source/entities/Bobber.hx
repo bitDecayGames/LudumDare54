@@ -1,8 +1,8 @@
 package entities;
 
-import iso.IsoSprite;
+import iso.IsoEchoSprite;
 
-class Bobber extends IsoSprite {
+class Bobber extends IsoEchoSprite {
     public var maxBob:Float;
     public var minBob:Float;
     public var bobVel:Float;
