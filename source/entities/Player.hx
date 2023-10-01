@@ -46,6 +46,10 @@ class Player extends IsoEchoSprite implements Follower {
 
 	public var isInvincible = false; // TODO: MW need to actually use this boolean to determine if collision causes crash
 
+	public var targetX(get, null):Float;
+	public var targetY(get, null):Float;
+
+
 	public function new(x:Float, y:Float) {
 		gridWidth = 1;
 		gridLength = 1;
@@ -148,5 +152,13 @@ class Player extends IsoEchoSprite implements Follower {
 			var log: Log = cast other.object;
 			damageMe(log);
 		}
+	}
+
+	function get_targetX():Float {
+		return body.x;
+	}
+
+	function get_targetY():Float {
+		return body.y;
 	}
 }

@@ -8,6 +8,9 @@ interface Follower {
     public var following:Follower;
     public var leading:Follower;
 
+    public var targetX(get, null):Float;
+    public var targetY(get, null):Float;
+
     public var x(default, set):Float;
     public var y(default, set):Float;
 }
@@ -31,10 +34,11 @@ class FollowerHelper {
         }
         followerArray.push(it);
         if (it.leading != null) {
-            innerAddFollower(it.leading, follower, followerArray);
+            return innerAddFollower(it.leading, follower, followerArray);
         } else {
             it.leading = follower;
             follower.following = it;
+            return followerArray;
         }
     }
 

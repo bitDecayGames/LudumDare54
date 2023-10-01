@@ -14,7 +14,7 @@ class FollowingState extends State<Survivor> {
             return new FloatingState(entity);
         }
 
-        _diff.set(entity.following.x - entity.x, entity.following.y - entity.y);
+        _diff.set(entity.following.targetX - entity.body.x, entity.following.targetY - entity.body.y);
         if (_diff.length > FOLLOW_DISTANCE) {
             entity.body.x += _diff.x * FOLLOW_DAMPENER;
             entity.body.y += _diff.y * FOLLOW_DAMPENER;

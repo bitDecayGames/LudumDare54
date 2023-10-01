@@ -22,6 +22,10 @@ class Survivor extends Bobber implements Follower {
 	public var following:Follower = null;
 	public var leading:Follower = null;
 
+	public var targetX(get, null):Float;
+	public var targetY(get, null):Float;
+
+
 	public function new(x:Float=0, y:Float=0) {
 		gridWidth = .5;
 		gridLength = .5;
@@ -65,5 +69,13 @@ class Survivor extends Bobber implements Follower {
 
 	public function flingMe(directionToBeFlung: FlxPoint) {
 		stateMachine.setNextState(new FlungState(this, directionToBeFlung));
+	}
+
+	function get_targetX():Float {
+		return body.x;
+	}
+
+	function get_targetY():Float {
+		return body.y;
 	}
 }
