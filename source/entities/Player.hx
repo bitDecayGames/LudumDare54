@@ -18,31 +18,27 @@ import loaders.AsepriteMacros;
 
 import flixel.FlxObject;
 
+import entities.statemachine.StateMachine;
+import entities.states.player.CruisingState;
+import entities.states.player.CrashState;
 class Player extends IsoEchoSprite implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/rotation_template.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
 	public static var eventData = AsepriteMacros.frameUserData("assets/aseprite/characters/player.json", "Layer 1");
 
-	var speed:Float = 70;
-	var turnSpeed:Float = 130;
-	var turnSpeedSkid:Float = 200;
-	var playerNum = 0;
+	public var speed:Float = 70;
+	public var turnSpeed:Float = 130;
+	public var turnSpeedSkid:Float = 200;
+	public var playerNum = 0;
 
-	var rawAngle:Float = 0;
-	var calculatedAngle:Float = 0;
-
-	// how far off (in degrees) the direction of travel will snap to the 45 degree angles
-	var snapToleranceDegrees = 10;
-
-	var initialSkidAngle = Math.POSITIVE_INFINITY;
-	var skidDuration = 0.0;
-
-	var MAX_SKID_INPUT_TIME = 1;
-	var MAX_SKID_MOVE_TIME = 1.5;
+	public var rawAngle:Float = 0;
+	public var calculatedAngle:Float = 0;
 
 	// used for survivor FollowingState
 	public var following:Follower;
 	public var leading:Follower;
+
+	private var stateMachine:StateMachine<Player>;
 
 	public function new() {
 		gridWidth = 1;
@@ -52,6 +48,9 @@ class Player extends IsoEchoSprite implements Follower {
 		super();
 
 		rawAngle = -90;
+
+		stateMachine = new StateMachine<Player>(this);
+		stateMachine.setNextState(new CruisingState(this));
 	}
 
 
@@ -95,17 +94,7 @@ class Player extends IsoEchoSprite implements Follower {
 	override public function update(delta:Float) {
 		super.update(delta);
 
-		if (SimpleController.pressed(A)) {
-			skidControl(delta);
-		} else {
-			if (skidDuration > 0) {
-				// TODO SFX: Skid ended
-				// TODO: We likely want some sort of cooldown as a way to reset when the player can drift/skid again
-				skidDuration = 0;
-				initialSkidAngle = Math.POSITIVE_INFINITY;
-			}
-			normalControl(delta);
-		}
+		stateMachine.update(delta);
 
 		// aka 16 segments
 		var segmentSize = 360.0 / 16;
@@ -121,93 +110,10 @@ class Player extends IsoEchoSprite implements Follower {
 		FlxG.watch.addQuick('pAngCalc:', calculatedAngle);
 		FlxG.watch.addQuick('pAngFrame:', spinFrame);
 
-
-
 	}
 
-	function skidControl(delta:Float) {
-		if (initialSkidAngle == Math.POSITIVE_INFINITY) {
-			initialSkidAngle = rawAngle;
-			skidDuration = 0.0;
-
-			// TODO SFX: Start boat skid
-		}
-
-		skidDuration = Math.min(skidDuration + delta, MAX_SKID_MOVE_TIME);
-		var inputLerp = Math.min(skidDuration / MAX_SKID_INPUT_TIME, 1);
-		var moveLerp = skidDuration / MAX_SKID_MOVE_TIME;
-
-		var inputImpact = 1 - inputLerp;
-
-		if (SimpleController.pressed(LEFT)) {
-			rawAngle -= inputImpact * (turnSpeedSkid * delta);
-		}
-
-		if (SimpleController.pressed(RIGHT)) {
-			rawAngle += inputImpact * (turnSpeedSkid * delta);
-		}
-
-		calculatedAngle = rawAngle;
-
-		var movement = FlxPoint.weak(FlxMath.lerp(speed, 0, moveLerp), 0);
-
-		var influenceAngle = FlxMath.lerp(initialSkidAngle, rawAngle, inputLerp);
-		movement.rotateByDegrees(influenceAngle + (influenceAngle - rawAngle));
-		body.velocity.set(movement.x, movement.y);
-	}
-
-	function normalControl(delta:Float) {
-		if (SimpleController.pressed(LEFT)) {
-			rawAngle -= turnSpeed * delta;
-		}
-
-		if (SimpleController.pressed(RIGHT)) {
-			rawAngle += turnSpeed * delta;
-		}
-
-		if (rawAngle < 0) rawAngle += 360;
-		if (rawAngle >= 360) rawAngle -= 360;
-
-		if (rawAngle % 45 <= snapToleranceDegrees) {
-			calculatedAngle = rawAngle - (rawAngle % 45);
-		} else if (rawAngle % 45 >= (45 - snapToleranceDegrees)) {
-			calculatedAngle = rawAngle + (45 - (rawAngle % 45));
-		} else {
-			calculatedAngle = rawAngle;
-		}
-		if (rawAngle < 0) rawAngle += 360;
-		if (rawAngle >= 360) rawAngle -= 360;
-
-		if (rawAngle % 45 <= snapToleranceDegrees) {
-			calculatedAngle = rawAngle - (rawAngle % 45);
-		} else if (rawAngle % 45 >= (45 - snapToleranceDegrees)) {
-			calculatedAngle = rawAngle + (45 - (rawAngle % 45));
-		} else {
-			calculatedAngle = rawAngle;
-		}
-
-		var movement = FlxPoint.weak(speed, 0);
-		movement.rotateByDegrees(calculatedAngle);
-		body.velocity.set(movement.x, movement.y);
-	}
-
-    public function damaged(thingBoatRanInto:FlxObject) {
-        // TODO: SFX boat ran into something
-        // TODO: MW blink the boat white
-
-        if (leading == null) return;
-
-        // throw off the back half of the follow chain
-        var followerCount = FollowerHelper.countNumberOfFollowersInChain(this);
-        if (followerCount > 1) {
-            var numberOfFollowersToThrowOff = followerCount / 2;
-            var i = 0;
-            var lastFollower = FollowerHelper.getLastLinkOnChain(this);
-            while (i < numberOfFollowersToThrowOff) {
-                i++;
-                lastFollower = FollowerHelper.stopFollowing(lastFollower);
-            }
-        }
+    public function damageMe(thingBoatRanInto:FlxSprite) {
+		stateMachine.setNextState(new CrashState(this, thingBoatRanInto));
     }
 
 	@:access(echo.Shape)

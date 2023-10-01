@@ -1,0 +1,52 @@
+package entities.states.player;
+import entities.statemachine.State;
+import input.SimpleController;
+import flixel.math.FlxPoint;
+class CruisingState extends State<Player> {
+
+    // how far off (in degrees) the direction of travel will snap to the 45 degree angles
+    var snapToleranceDegrees = 10;
+
+    override public function update(delta:Float):State<Player> {
+        if (SimpleController.pressed(A)) {
+            return new SlidingState(entity);
+        }
+
+        if (SimpleController.pressed(LEFT)) {
+            entity.rawAngle -= entity.turnSpeed * delta;
+        }
+
+        if (SimpleController.pressed(RIGHT)) {
+            entity.rawAngle += entity.turnSpeed * delta;
+        }
+
+        if (entity.rawAngle < 0) entity.rawAngle += 360;
+        if (entity.rawAngle >= 360) entity.rawAngle -= 360;
+
+        if (entity.rawAngle % 45 <= snapToleranceDegrees) {
+            entity.calculatedAngle = entity.rawAngle - (entity.rawAngle % 45);
+        } else if (entity.rawAngle % 45 >= (45 - snapToleranceDegrees)) {
+            entity.calculatedAngle = entity.rawAngle + (45 - (entity.rawAngle % 45));
+        } else {
+            entity.calculatedAngle = entity.rawAngle;
+        }
+        if (entity.rawAngle < 0) entity.rawAngle += 360;
+        if (entity.rawAngle >= 360) entity.rawAngle -= 360;
+
+        if (entity.rawAngle % 45 <= snapToleranceDegrees) {
+            entity.calculatedAngle = entity.rawAngle - (entity.rawAngle % 45);
+        } else if (entity.rawAngle % 45 >= (45 - snapToleranceDegrees)) {
+            entity.calculatedAngle = entity.rawAngle + (45 - (entity.rawAngle % 45));
+        } else {
+            entity.calculatedAngle = entity.rawAngle;
+        }
+
+        var movement = FlxPoint.weak(entity.speed, 0);
+        movement.rotateByDegrees(entity.calculatedAngle);
+        entity.body.velocity.set(movement.x, movement.y);
+
+        return null;
+    }
+    override public function onEnter():Void {}
+    override public function onExit():Void {}
+}
