@@ -27,9 +27,7 @@ class Level {
         }
         var firstPlayerEnt = raw.l_Entities.all_Player[0];
 
-        player = new Player();
-        player.body.x = firstPlayerEnt.pixelX;
-        player.body.y = firstPlayerEnt.pixelY;
+        player = new Player(firstPlayerEnt.pixelX, firstPlayerEnt.pixelY);
 
         // Survivors
         for (s in raw.l_Entities.all_Survivor) {

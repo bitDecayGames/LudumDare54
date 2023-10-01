@@ -1,5 +1,8 @@
 package entities;
 
+import iso.Grid;
+import flixel.util.FlxColor;
+import bitdecay.flixel.debug.DebugDraw;
 import entities.statemachine.StateMachine;
 import echo.data.Data.CollisionData;
 import entities.Follower.FollowerHelper;
@@ -40,12 +43,12 @@ class Player extends IsoEchoSprite implements Follower {
 
 	private var stateMachine:StateMachine<Player>;
 
-	public function new() {
+	public function new(x:Float, y:Float) {
 		gridWidth = 1;
 		gridLength = 1;
 		gridHeight = 1;
 
-		super();
+		super(x, y);
 
 		rawAngle = -90;
 
@@ -73,19 +76,19 @@ class Player extends IsoEchoSprite implements Follower {
 			shapes: [
 				{
 					type:CIRCLE,
-					radius: 15,
+					radius: 10,
 				},
 				{
 					type:RECT,
-					width: 30,
+					width: 15,
 					height: 7,
-					offset_y: 7,
+					offset_y: 10,
 				},
 				{
 					type:RECT,
-					width: 30,
+					width: 15,
 					height: 7,
-					offset_y: -7,
+					offset_y: -10,
 				}
 			],
 		});
@@ -110,6 +113,9 @@ class Player extends IsoEchoSprite implements Follower {
 		FlxG.watch.addQuick('pAngCalc:', calculatedAngle);
 		FlxG.watch.addQuick('pAngFrame:', spinFrame);
 
+		FlxG.watch.addQuick('playerPos:', sprite.getPosition());
+
+		debugDraw(0, FlxColor.MAGENTA);
 	}
 
     public function damageMe(thingBoatRanInto:FlxSprite) {

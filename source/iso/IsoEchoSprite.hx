@@ -21,11 +21,12 @@ class IsoEchoSprite extends FlxSprite {
 	 @:access(echo.FlxEcho)
 	 public function new(X:Float = 0, Y:Float = 0) {
 		 super(X, Y);
- 
+
 		 // It is critical that your grid size matches well with your `sprite` graphic so collisions feel correct
 		 makeGraphic(Math.ceil(gridWidth * Grid.CELL_SIZE), Math.ceil(gridLength * Grid.CELL_SIZE), FlxColor.GRAY);
 
 		 configSprite();
+		 sprite.offset.set(sprite.width/2, sprite.height);
 		 body = makeBody();
  
 		 // XXX: We want to force position and rotation immediately
@@ -157,6 +158,20 @@ class IsoEchoSprite extends FlxSprite {
 		Grid.gridToIso(-i, isoYmax, end);
 		DebugDraw.ME.drawWorldLine(start.x, start.y, end.x, end.y, DebugLayers.ISO_SPACE, color);
 
+		Grid.gridToIso(isoXmin, isoYmin, start);
+		Grid.gridToIso(isoXmax, isoYmin, end);
+		DebugDraw.ME.drawWorldLine(start.x, start.y, end.x, end.y, DebugLayers.ISO_SPACE, color);
+		Grid.gridToIso(isoXmin, isoYmax, start);
+		Grid.gridToIso(isoXmax, isoYmax, end);
+		DebugDraw.ME.drawWorldLine(start.x, start.y, end.x, end.y, DebugLayers.ISO_SPACE, color);
+		Grid.gridToIso(isoXmin, isoYmin, start);
+		Grid.gridToIso(isoXmin, isoYmax, end);
+		DebugDraw.ME.drawWorldLine(start.x, start.y, end.x, end.y, DebugLayers.ISO_SPACE, color);
+		Grid.gridToIso(isoXmax, isoYmin, start);
+		Grid.gridToIso(isoXmax, isoYmax, end);
+		DebugDraw.ME.drawWorldLine(start.x, start.y, end.x, end.y, DebugLayers.ISO_SPACE, color);
+
+
 		start.put();
 		end.put();
 
@@ -203,6 +218,11 @@ class IsoEchoSprite extends FlxSprite {
 
 	public function handleExit(other:Body) {
 		
+	}
+
+	override function update(elapsed:Float) {
+		super.update(elapsed);
+		sprite.update(elapsed);
 	}
 
 	/**

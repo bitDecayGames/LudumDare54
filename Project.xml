@@ -43,12 +43,9 @@
 
 	<!-- _____________________________ First Party Libraries _____________________ -->
 
-	<haxelib name="bitdecaybtree" />
 	<haxelib name="bitlytics" />
 	<haxelib name="flixelutils" />
-	<haxelib name="dialog-manager" />
 	<haxelib name="haxefmod" />
-	<haxelib name="textpop" />
 	<haxelib name="newgrounds" />
 	<haxelib name="ldtk-haxe-api" />
 	<haxelib name="echo" />

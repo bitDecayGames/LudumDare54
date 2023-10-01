@@ -23,9 +23,9 @@ class Survivor extends Bobber implements Follower {
 	public var leading:Follower = null;
 
 	public function new(x:Float=0, y:Float=0) {
-		gridWidth = 1;
-		gridLength = 1;
-		gridHeight = 1;
+		gridWidth = .5;
+		gridLength = .5;
+		gridHeight = .5;
 
 		super(x, y);
 
@@ -41,9 +41,8 @@ class Survivor extends Bobber implements Follower {
 	override function configSprite() {
 		this.sprite = new FlxSprite();
 		Aseprite.loadAllAnimations(this.sprite, AssetPaths.survivors_floating__json);
-		// var survivor:String = FlxG.random.getObject(animation.getNameList());
-		// animation.play(survivor);
-		animation.play(anims.Lady1);
+		var allAnims = sprite.animation.getNameList().filter((a) -> !StringTools.endsWith(a, "_tube"));
+		sprite.animation.play(allAnims[FlxG.random.int(0, allAnims.length)]);
 	}
 
 	override function makeBody():Body {
@@ -53,7 +52,7 @@ class Survivor extends Bobber implements Follower {
 			shapes: [
 				{
 					type:CIRCLE,
-					radius: 12,
+					radius: 6,
 				}
 			],
 		});

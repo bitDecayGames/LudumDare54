@@ -58,7 +58,7 @@ class PlayState extends FlxTransitionableState {
 		super.create();
 		Lifecycle.startup.dispatch();
 
-		FlxG.camera.pixelPerfectRender = true;
+		// FlxG.camera.pixelPerfectRender = true;
 
 		// Echo/physics init
 		FlxEcho.init({
