@@ -28,8 +28,8 @@ class FollowerHelper {
         if (it == null || follower == null) {
             return followerArray;
         }
-        if (followerArray.indexOf(it) >= 0) {
-            QuickLog.critical('You just created an infinite loop by adding ${follower} to the follow chain');
+        if (followerArray.contains(it)) {
+            QuickLog.error('You just tried to add a follower to the chain that would create a loop');
             return followerArray;
         }
         followerArray.push(it);
@@ -40,6 +40,7 @@ class FollowerHelper {
             follower.following = it;
             return followerArray;
         }
+        return followerArray;
     }
 
     /**
@@ -83,28 +84,32 @@ class FollowerHelper {
     Counts the total number of followers
     */
     public static function countNumberOfFollowersInChain(it: Follower):Int {
-        return innerCountNumberOfFollowersInChain(it, 0);
+        return innerCountNumberOfFollowersInChain(it, 0, []);
     }
-    private static function innerCountNumberOfFollowersInChain(it: Follower, count:Int):Int {
-        if (it == null) return count;
-        return innerCountNumberOfFollowersInChain(it.leading, count + 1);
+    private static function innerCountNumberOfFollowersInChain(it: Follower, count:Int, visited:Array<Follower>):Int {
+        if (it == null || visited.contains(it)) return count;
+        visited.push(it);
+        return innerCountNumberOfFollowersInChain(it.leading, count + 1, visited);
     }
 
     /**
     Gets the last link on the chain
     */
     public static function getLastLinkOnChain(it: Follower):Follower {
-        return innerGetLastLinkOnChain(it);
+        return innerGetLastLinkOnChain(it, []);
     }
-    private static function innerGetLastLinkOnChain(it: Follower):Follower {
+    private static function innerGetLastLinkOnChain(it: Follower, visited:Array<Follower>):Follower {
         if (it == null) return null;
-        if (it.leading == null) return it;
-        return innerGetLastLinkOnChain(it.leading);
+        if (it.leading == null || visited.contains(it)) return it;
+        visited.push(it);
+        return innerGetLastLinkOnChain(it.leading, visited);
     }
 
     public static function drawDebugLines(it:Follower) {
         var f = getLastLinkOnChain(it);
-        while (f != null && f.following != null) {
+        var visited:Array<Follower> = [];
+        while (f != null && f.following != null && !visited.contains(f)) {
+            visited.push(f);
             DebugDraw.ME.drawWorldLine(Debug.dbgCam, f.x, f.y, f.following.x, f.following.y, null, 0x03fc41);
             f = f.following;
         }
