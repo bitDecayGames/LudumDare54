@@ -23,8 +23,8 @@ class CrashState extends State<Player> {
         return new CruisingState(entity);
     }
 
-    override public function onEnter():Void {
-        // TODO: SFX boat ran into something
+    override public function onEnter(last:State<Player>, current:State<Player>, next:State<Player>):Void {
+        FmodManager.PlaySoundOneShot(FmodSFX.BoatCrash);
 
         // blink the boat white to indicate it is invincible
         entity.isInvincible = true;
@@ -56,5 +56,5 @@ class CrashState extends State<Player> {
         }
     }
 
-    override public function onExit():Void {}
+    override public function onExit(last:State<Player>, current:State<Player>, next:State<Player>):Void {}
 }

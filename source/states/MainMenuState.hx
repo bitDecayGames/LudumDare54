@@ -51,7 +51,6 @@ class MainMenuState extends FlxUIState {
 		}
 
 		FmodManager.PlaySong(FmodSongs.Title);
-		FmodManager.PlaySoundOneShot(FmodSFX.BoatEngine);
 		bgColor = FlxColor.TRANSPARENT;
 		FlxG.camera.pixelPerfectRender = true;
 

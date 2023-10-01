@@ -8,7 +8,7 @@ class FloatingState extends State<Survivor> {
         }
         return null;
     }
-    override public function onEnter():Void {
+    override public function onEnter(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
         // TODO: MW start the animation for a floating, non-saved survivor
         entity.maxBob = 1;
         entity.minBob = .5;
@@ -19,7 +19,7 @@ class FloatingState extends State<Survivor> {
         entity.startFloat();
     }
     
-    override public function onExit():Void {
+    override public function onExit(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
 
     }
 }

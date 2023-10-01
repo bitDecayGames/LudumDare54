@@ -10,6 +10,8 @@ class SlidingState extends State<Player> {
     var initialSkidAngle = Math.POSITIVE_INFINITY;
     var skidDuration = 0.0;
 
+	public var boatDriftId = "boatDriftId";
+
     override public function update(delta:Float):State<Player> {
         // if you stop pressing the button, switch back to cruising state
         if (!SimpleController.pressed(A)) {
@@ -46,13 +48,16 @@ class SlidingState extends State<Player> {
 
         return null;
     }
-    override public function onEnter():Void {}
-    override public function onExit():Void {
+    override public function onEnter(last:State<Player>, current:State<Player>, next:State<Player>):Void {
+        FmodManager.PlaySoundAndAssignId(FmodSFX.BoatDriftComposite, boatDriftId);
+    }
+    override public function onExit(last:State<Player>, current:State<Player>, next:State<Player>):Void {
         if (skidDuration > 0) {
             // TODO SFX: Skid ended
             // TODO: We likely want some sort of cooldown as a way to reset when the player can drift/skid again
             skidDuration = 0;
             initialSkidAngle = Math.POSITIVE_INFINITY;
+            FmodManager.StopSoundImmediately(boatDriftId);
         }
     }
 }

@@ -33,6 +33,7 @@ class PlayState extends FlxTransitionableState {
 	var logs = new FlxGroup();
 	var terrain = new FlxGroup();
 
+
 	private static function defaultEnterHandler(a, b, o) {
 		if (a.object is IsoEchoSprite) {
 			var aSpr:IsoEchoSprite = cast a.object;

@@ -8,6 +8,6 @@ abstract class State<T> {
     public function update(delta:Float):State<T> {
         return null;
     }
-    public function onEnter():Void {}
-    public function onExit():Void {}
+    public function onEnter(last:State<T>, current:State<T>, next:State<T>):Void {}
+    public function onExit(last:State<T>, current:State<T>, next:State<T>):Void {}
 }
