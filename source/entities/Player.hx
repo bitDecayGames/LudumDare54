@@ -139,6 +139,9 @@ class Player extends IsoEchoSprite implements Follower {
 			if (!survivor.isFollowing()) {
 				FollowerHelper.addFollower(this, survivor);
 			}
+		} else if (other.object is Log) {
+			var log: Log = cast other.object;
+			damageMe(log);
 		}
 	}
 }

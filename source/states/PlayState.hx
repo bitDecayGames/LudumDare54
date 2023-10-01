@@ -30,6 +30,7 @@ class PlayState extends FlxTransitionableState {
 
 	var playerGroup = new FlxGroup();
 	var survivors = new FlxGroup();
+	var logs = new FlxGroup();
 	var terrain = new FlxGroup();
 
 	private static function defaultEnterHandler(a, b, o) {
@@ -83,6 +84,7 @@ class PlayState extends FlxTransitionableState {
 
 		add(terrain);
 		add(survivors);
+		add(logs);
 		add(playerGroup);
 
 		loadLevel("Level_0");
@@ -103,6 +105,11 @@ class PlayState extends FlxTransitionableState {
 			t.destroy();
 		});
 		survivors.clear();
+
+		logs.forEach((t) -> {
+			t.destroy();
+		});
+		logs.clear();
 
 		FlxEcho.clear();
 
@@ -126,6 +133,9 @@ class PlayState extends FlxTransitionableState {
 		for (s in level.survivors) {
 			s.add_to_group(survivors);
 		}
+		for (l in level.logs) {
+			l.add_to_group(logs);
+		}
 
 		#if FLX_DEBUG
 		Debug.dbgCam.follow(level.player);
@@ -136,6 +146,13 @@ class PlayState extends FlxTransitionableState {
 		// collide survivors as second group so they are always on the 'b' side of interaction
 		FlxEcho.listen(playerGroup, survivors, {
 			separate: false,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+
+		// collide logs as second group so they are always on the 'b' side of interaction
+		FlxEcho.listen(playerGroup, logs, {
+			separate: true,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
 		});
