@@ -1,18 +1,15 @@
 package entities.states.player;
 import entities.statemachine.State;
 import entities.Follower.FollowerHelper;
-import flixel.FlxSprite;
 
 import flixel.math.FlxPoint;
 class CrashState extends State<Player> {
 
-    private var thingThatIRanInto:FlxSprite;
     private var directionToFlingSurvivors:FlxPoint;
 
-    public function new(entity:Player, thingThatIRanInto:FlxSprite) {
+    public function new(entity:Player, directionToFlingSurvivors:FlxPoint) {
         super(entity);
-        this.thingThatIRanInto = thingThatIRanInto;
-        directionToFlingSurvivors = FlxPoint.get(thingThatIRanInto.x - entity.x, thingThatIRanInto.y - entity.y);
+        this.directionToFlingSurvivors = directionToFlingSurvivors;
     }
 
     override public function update(delta:Float):State<Player> {
