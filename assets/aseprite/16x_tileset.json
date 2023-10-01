@@ -1,25 +1,24 @@
 { "frames": [
    {
-    "filename": "tiles.ase",
-    "frame": { "x": 0, "y": 0, "w": 320, "h": 160 },
+    "filename": "16x_tileset.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 160, "h": 160 },
     "rotated": false,
     "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 160 },
-    "sourceSize": { "w": 320, "h": 160 },
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 160 },
+    "sourceSize": { "w": 160, "h": 160 },
     "duration": 100
    }
  ],
  "meta": {
   "app": "https://www.aseprite.org/",
   "version": "1.3-rc6-x64",
-  "image": "tiles.png",
+  "image": "16x_tileset.png",
   "format": "RGBA8888",
-  "size": { "w": 320, "h": 160 },
+  "size": { "w": 160, "h": 160 },
   "scale": "1",
   "frameTags": [
   ],
   "layers": [
-   { "name": "Flattened", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
