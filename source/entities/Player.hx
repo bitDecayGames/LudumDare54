@@ -24,6 +24,7 @@ import flixel.FlxObject;
 import entities.statemachine.StateMachine;
 import entities.states.player.CruisingState;
 import entities.states.player.CrashState;
+import bitdecay.flixel.debug.DebugDraw;
 class Player extends IsoEchoSprite implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/rotation_template.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
@@ -118,6 +119,10 @@ class Player extends IsoEchoSprite implements Follower {
 		FlxG.watch.addQuick('playerPos:', sprite.getPosition());
 
 		debugDraw(0, FlxColor.MAGENTA);
+
+		#if FLX_DEBUG
+		FollowerHelper.drawDebugLines(this);
+		#end
 	}
 
     public function damageMe(thingBoatRanInto:FlxSprite) {
