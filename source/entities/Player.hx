@@ -8,6 +8,7 @@ import echo.data.Data.CollisionData;
 import entities.Follower.FollowerHelper;
 import iso.IsoEchoSprite;
 import echo.Body;
+import echo.Shape;
 import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.math.FlxMath;
@@ -37,6 +38,9 @@ class Player extends IsoEchoSprite implements Follower {
 
 	public var rawAngle:Float = 0;
 	public var calculatedAngle:Float = 0;
+
+	public var collisionShape: Shape;
+	public var pickupShapes: Array<Shape>;
 
 	// used for survivor FollowingState
 	public var following:Follower;
@@ -77,7 +81,7 @@ class Player extends IsoEchoSprite implements Follower {
 	}
 
 	override function makeBody():Body {
-		return this.add_body({
+		var body = this.add_body({
 			x: x,
 			y: y,
 			shapes: [
@@ -90,15 +94,22 @@ class Player extends IsoEchoSprite implements Follower {
 					width: 15,
 					height: 7,
 					offset_y: 10,
+					solid: false,
 				},
 				{
 					type:RECT,
 					width: 15,
 					height: 7,
 					offset_y: -10,
+					solid: false,
 				}
 			],
 		});
+
+		collisionShape = body.shapes[0];
+		pickupShapes = body.shapes.slice(1, 3);
+
+		return body;
 	}
 
 	override public function update(delta:Float) {
