@@ -1,7 +1,9 @@
 package entities;
 
 import bitdecay.flixel.debug.DebugDraw;
+import bitdecay.flixel.system.QuickLog;
 import debug.Debug;
+
 interface Follower {
     public var following:Follower;
     public var leading:Follower;
@@ -17,9 +19,19 @@ class FollowerHelper {
     You can definitely get into an infinite loop here if you make a loop in the chain, be careful!
     */
     public static function addFollower(it:Follower, follower:Follower):Void {
-        if (follower == null) return;
+        FollowerHelper.innerAddFollower(it, follower, []);
+    }
+    private static function innerAddFollower(it:Follower, follower:Follower, followerArray:Array<Follower>):Array<Follower> {
+        if (it == null || follower == null) {
+            return followerArray;
+        }
+        if (followerArray.indexOf(it) >= 0) {
+            QuickLog.critical('You just created an infinite loop by adding ${follower} to the follow chain');
+            return followerArray;
+        }
+        followerArray.push(it);
         if (it.leading != null) {
-            FollowerHelper.addFollower(it.leading, follower);
+            innerAddFollower(it.leading, follower, followerArray);
         } else {
             it.leading = follower;
             follower.following = it;
