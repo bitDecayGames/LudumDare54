@@ -12,7 +12,7 @@ ldtk-haxe-api 1.4.1-rc.1
 
 # physics
 echo 4.2.2
-echo-flixel 0.0.1
+echo-flixel git https://github.com/bitDecayGames/echo-flixel.git ld54
 
 # bitDecayGames deps
 bitdecaybtree git https://github.com/bitDecayGames/BehaviorTree.git

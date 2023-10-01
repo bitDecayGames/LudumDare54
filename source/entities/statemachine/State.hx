@@ -1,5 +1,5 @@
 package entities.statemachine;
-class State<T> {
+abstract class State<T> {
     public var entity:T;
     public function new(entity:T) {
         this.entity = entity;

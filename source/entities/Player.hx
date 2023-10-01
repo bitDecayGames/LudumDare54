@@ -1,5 +1,8 @@
 package entities;
 
+import entities.Follower.FollowerHelper;
+import iso.IsoEchoSprite;
+import echo.Body;
 import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.math.FlxMath;
@@ -11,7 +14,9 @@ import input.SimpleController;
 import loaders.Aseprite;
 import loaders.AsepriteMacros;
 
-class Player extends IsoSprite {
+import flixel.FlxObject;
+
+class Player extends IsoEchoSprite implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/rotation_template.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
 	public static var eventData = AsepriteMacros.frameUserData("assets/aseprite/characters/player.json", "Layer 1");
@@ -33,12 +38,22 @@ class Player extends IsoSprite {
 	var MAX_SKID_INPUT_TIME = 1;
 	var MAX_SKID_MOVE_TIME = 1.5;
 
+	// used for survivor FollowingState
+	public var following:Follower;
+	public var leading:Follower;
+
 	public function new() {
 		gridWidth = 1;
 		gridLength = 1;
 		gridHeight = 1;
 
 		super();
+
+		rawAngle = -90;
+	}
+
+
+	override function configSprite() {
 		// This call can be used once https://github.com/HaxeFlixel/flixel/pull/2860 is merged
 		// FlxAsepriteUtil.loadAseAtlasAndTags(this, AssetPaths.player__png, AssetPaths.player__json);
 		this.sprite = new FlxSprite();
@@ -48,6 +63,31 @@ class Player extends IsoSprite {
 				trace('frame $index has data ${eventData.get(index)}');
 			}
 		};
+	}
+
+	override function makeBody():Body {
+		return this.add_body({
+			x: x,
+			y: y,
+			shapes: [
+				{
+					type:CIRCLE,
+					radius: 15,
+				},
+				{
+					type:RECT,
+					width: 30,
+					height: 7,
+					offset_y: 7,
+				},
+				{
+					type:RECT,
+					width: 30,
+					height: 7,
+					offset_y: -7,
+				}
+			],
+		});
 	}
 
 	override public function update(delta:Float) {
@@ -73,13 +113,14 @@ class Player extends IsoSprite {
 		var intAngle = FlxMath.wrap(cast angleDeg + halfSegment, 0, 359);
 		var spinFrame = Std.int(intAngle / segmentSize);
 		sprite.animation.frameIndex = spinFrame;
+		body.rotation = calculatedAngle;
 
 		FlxG.watch.addQuick('pAngRaw:', rawAngle);
 		FlxG.watch.addQuick('pAngCalc:', calculatedAngle);
 		FlxG.watch.addQuick('pAngFrame:', spinFrame);
 
 
-		
+
 	}
 
 	function skidControl(delta:Float) {
@@ -104,12 +145,13 @@ class Player extends IsoSprite {
 			rawAngle += inputImpact * (turnSpeedSkid * delta);
 		}
 
+		calculatedAngle = rawAngle;
 
 		var movement = FlxPoint.weak(FlxMath.lerp(speed, 0, moveLerp), 0);
 
 		var influenceAngle = FlxMath.lerp(initialSkidAngle, rawAngle, inputLerp);
 		movement.rotateByDegrees(influenceAngle + (influenceAngle - rawAngle));
-		velocity.copyFrom(movement);
+		body.velocity.set(movement.x, movement.y);
 	}
 
 	function normalControl(delta:Float) {
@@ -144,6 +186,25 @@ class Player extends IsoSprite {
 
 		var movement = FlxPoint.weak(speed, 0);
 		movement.rotateByDegrees(calculatedAngle);
-		velocity.copyFrom(movement);
+		body.velocity.set(movement.x, movement.y);
 	}
+
+    public function damaged(thingBoatRanInto:FlxObject) {
+        // TODO: SFX boat ran into something
+        // TODO: MW blink the boat white
+
+        if (leading == null) return;
+
+        // throw off the back half of the follow chain
+        var followerCount = FollowerHelper.countNumberOfFollowersInChain(this);
+        if (followerCount > 1) {
+            var numberOfFollowersToThrowOff = followerCount / 2;
+            var i = 0;
+            var lastFollower = FollowerHelper.getLastLinkOnChain(this);
+            while (i < numberOfFollowersToThrowOff) {
+                i++;
+                lastFollower = FollowerHelper.stopFollowing(lastFollower);
+            }
+        }
+    }
 }
