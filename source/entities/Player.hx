@@ -1,5 +1,6 @@
 package entities;
 
+import entities.Follower.FollowerHelper;
 import iso.IsoEchoSprite;
 import echo.Body;
 import flixel.math.FlxPoint;
@@ -14,6 +15,7 @@ import loaders.Aseprite;
 import loaders.AsepriteMacros;
 
 import flixel.FlxObject;
+
 class Player extends IsoEchoSprite implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/rotation_template.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");

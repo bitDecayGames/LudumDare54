@@ -48,7 +48,7 @@ class IsoEchoSprite extends FlxSprite {
 
 	public var sprite:FlxSprite;
 
-	public var z:Float;
+	public var z:Float = 0;
 
 	// an adjustment modifier when computing
 	// grid size to ensure rendering is nice.
