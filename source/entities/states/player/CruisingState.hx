@@ -17,7 +17,7 @@ class CruisingState extends State<Player> {
         }
 
         #if FLX_DEBUG
-        if (FlxG.keys.pressed.K) {
+        if (FlxG.keys.justPressed.K) {
             return new CrashState(entity, FlxPoint.get(10, 10));
         }
         #end

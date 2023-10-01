@@ -25,7 +25,7 @@ class CrashState extends State<Player> {
         // throw off the back half of the follow chain
         var followerCount = FollowerHelper.countNumberOfFollowersInChain(entity);
         if (followerCount > 1) {
-            var numberOfFollowersToThrowOff = followerCount / 2;
+            var numberOfFollowersToThrowOff = Math.floor(followerCount / 2);
             var i = 0;
             var lastFollower = FollowerHelper.getLastLinkOnChain(entity);
             while (i < numberOfFollowersToThrowOff && lastFollower != null) {
