@@ -1,5 +1,7 @@
 package states;
 
+import echo.util.TileMap;
+import flixel.addons.editors.tiled.TiledMap;
 import entities.Survivor;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import iso.Grid;
@@ -83,9 +85,11 @@ class PlayState extends FlxTransitionableState {
 
 		for (y in 0...level.raw.l_Terrain.cHei) {
 			for (x in 0...level.raw.l_Terrain.cWid) {
-				terrain.add(new Terrain(x * Grid.CELL_SIZE, y * Grid.CELL_SIZE, level.raw.l_Terrain.getInt(x, y)));
+				makeTerrainPiece(level, x, y);
 			}
 		}
+
+		var terrainBodies = TileMap.generate(level.terrainInts, 16, 16, level.terrainTilesWide, level.terrainTilesHigh);
 
 		playerGroup.add(level.player);
 
@@ -98,6 +102,13 @@ class PlayState extends FlxTransitionableState {
 		#end
 
 		FlxG.camera.follow(level.player.sprite);
+	}
+
+	public function makeTerrainPiece(level:Level, gridX:Int, gridY:Int) {
+		var tileId = level.raw.l_Terrain.getTileStackAt(gridX, gridY)[0].tileId;
+		terrain.add(new Terrain(gridX * Grid.CELL_SIZE, gridY * Grid.CELL_SIZE, tileId));
+
+		// terrain.add(new Terrain(x * Grid.CELL_SIZE, y * Grid.CELL_SIZE, level.raw.l_Terrain..getInt(x, y)));
 	}
 
 	override public function update(elapsed:Float) {

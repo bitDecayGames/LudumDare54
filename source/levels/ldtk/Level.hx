@@ -13,6 +13,10 @@ class Level {
 
     public var raw:levels.ldtk.LDTKProject.LDTKProject_Level = null;
 
+    public var terrainInts = new Array<Int>();
+    public var terrainTilesHigh = 0;
+    public var terrainTilesWide = 0;
+
     public function new(level:String) {
         
         raw = project.all_worlds.Default.getLevel(level);
@@ -32,5 +36,19 @@ class Level {
             var item = new Survivor(s.pixelX, s.pixelY);
             survivors.push(item);
         }
+
+        var rawTerrainLayer = raw.l_Terrain;
+		terrainTilesWide = rawTerrainLayer.cWid;
+		terrainTilesHigh = rawTerrainLayer.cHei;
+		for (ch in 0...rawTerrainLayer.cHei) {
+			for (cw in 0...rawTerrainLayer.cWid) {
+				if (rawTerrainLayer.hasAnyTileAt(cw, ch)) {
+					var tileStack = rawTerrainLayer.getTileStackAt(cw, ch);
+					terrainInts.push(tileStack[0].tileId);
+				} else {
+					terrainInts.push(0);
+				}
+			}
+		}
     }
 }
