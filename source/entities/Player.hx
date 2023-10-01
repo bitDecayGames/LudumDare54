@@ -162,9 +162,9 @@ class Player extends IsoEchoSprite implements Follower {
 				// TODO SFX survivor dying
 				// TODO Switch to corpse state
 				ScoreManager.survivorKilled();
-				survivor.kill();
+				survivor.hitByObject();
 			// colliding with pickup area
-			} else if (collision.sa == pickupShape) {
+			} else if (survivor.isCollectable() && collision.sa == pickupShape) {
 				// TODO SFX survivor pickup, maybe in addFollower
 				if (!survivor.isFollowing()) {
 					FollowerHelper.addFollower(this, survivor);

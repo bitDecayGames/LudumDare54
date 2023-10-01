@@ -1,5 +1,6 @@
 package entities;
 
+import entities.states.survivor.DeadState;
 import entities.states.survivor.FollowingState;
 import flixel.FlxG;
 import flixel.util.FlxColor;
@@ -12,6 +13,7 @@ import entities.statemachine.StateMachine;
 import entities.states.survivor.FloatingState;
 import entities.states.survivor.FlungState;
 import flixel.math.FlxPoint;
+
 class Survivor extends Bobber implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/characters/survivors_floating.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/survivors_floating.json");
@@ -28,6 +30,7 @@ class Survivor extends Bobber implements Follower {
 	private static inline var FLOAT_ANIM = "Float";
 	private static inline var FLY_ANIM = "Fly";
 	private static inline var TUBE_ANIM = "Tube";
+	private static inline var BODY_ANIM = "Body";
 
 	private static var arts = [
 		AssetPaths.Lady1__json,
@@ -112,5 +115,18 @@ class Survivor extends Bobber implements Follower {
 	public function startFling() {
 		// TODO SFX: Survivor thrown from boat.
 		sprite.animation.play(FLY_ANIM);
+	}
+
+	public function die() {
+		// TODO SFX: Survivor killed.
+		sprite.animation.play(BODY_ANIM);
+	}
+
+	public function hitByObject() {
+		stateMachine.setNextState(new DeadState(this));
+	}
+
+	public function isCollectable() {
+		return stateMachine.getCurrentState() is FloatingState;
 	}
 }
