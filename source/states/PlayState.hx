@@ -1,5 +1,6 @@
 package states;
 
+import flixel.FlxObject;
 import echo.util.TileMap;
 import iso.IsoEchoSprite;
 import entities.Survivor;
@@ -26,12 +27,15 @@ import echo.FlxEcho;
 using states.FlxStateExt;
 
 class PlayState extends FlxTransitionableState {
+	public static var ME:PlayState = null;
+
 	var level:Level;
 
 	var playerGroup = new FlxGroup();
 	var survivors = new FlxGroup();
 	var logs = new FlxGroup();
 	var terrain = new FlxGroup();
+	var particles = new FlxGroup();
 
 	private static function defaultEnterHandler(a, b, o) {
 		if (a.object is IsoEchoSprite) {
@@ -53,6 +57,11 @@ class PlayState extends FlxTransitionableState {
 			var bSpr:IsoEchoSprite = cast b.object;
 			bSpr.handleExit(a);
 		}
+	}
+
+	public function new() {
+		super();
+		ME = this;
 	}
 
 	override public function create() {
@@ -82,6 +91,7 @@ class PlayState extends FlxTransitionableState {
 
 		add(terrain);
 		add(survivors);
+		add(particles);
 		add(logs);
 		add(playerGroup);
 
@@ -108,6 +118,11 @@ class PlayState extends FlxTransitionableState {
 			t.destroy();
 		});
 		logs.clear();
+
+		particles.forEach((t) -> {
+			t.destroy();
+		});
+		particles.clear();
 
 		FlxEcho.clear();
 		
@@ -181,6 +196,10 @@ class PlayState extends FlxTransitionableState {
 		if (FlxG.keys.pressed.P) {
 			Grid.drawGrid(5, 5);
 		}
+	}
+
+	public function addParticle(p:FlxObject) {
+		particles.add(p);
 	}
 
 	override public function onFocusLost() {

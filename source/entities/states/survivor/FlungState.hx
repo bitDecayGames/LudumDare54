@@ -1,4 +1,5 @@
 package entities.states.survivor;
+import entities.particle.Splash;
 import entities.statemachine.State;
 
 import flixel.math.FlxPoint;
@@ -17,7 +18,7 @@ class FlungState extends State<Survivor> {
     }
 
     override public function update(delta:Float):State<Survivor> {
-        if (entity.z < 0 && entity.bobVel < 0) return new FloatingState(entity);
+        if (entity.z < 0 && entity.bobVel < 0) return new SplashState(entity);
         return null;
     }
     override public function onEnter():Void {
@@ -34,5 +35,7 @@ class FlungState extends State<Survivor> {
     override public function onExit():Void {
         entity.body.velocity.x = 0;
         entity.body.velocity.y = 0;
+        entity.z = 0;
+        entity.bobVel = 0;
     }
 }

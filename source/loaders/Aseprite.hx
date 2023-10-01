@@ -52,8 +52,15 @@ class Aseprite {
 
 		var tags:Array<AsepriteTypes.AseAtlasTag> = atlas.meta.frameTags;
 		for (tag in tags) {
-			into.animation.add(tag.name, [for (i in tag.from...tag.to + 1) i]);
+			var loop = !(tag.repeat == 1);
+			var frames = [for (i in tag.from...tag.to + 1) i];
+			if (tag.direction == "reverse") {
+				frames.reverse();
+			}
+			into.animation.add(tag.name, frames, loop);
 		}
+
+		into.animation.add("all_frames", [ for (i in 0...into.frames.frames.length) i], true);
 	}
 
 	// loads the requested slice image from the atlas onto the provided sprite
