@@ -70,7 +70,13 @@ class Level {
 
 		// Checkpoints
 		for (cp in raw.l_Entities.all_Checkpoint) {
-			var ent = new Checkpoint(player, cp.pixelX, cp.pixelY, cp.f_EndPoint.cx * CELL_PIXEL_WIDTH + CELL_PIXEL_WIDTH / 2.0, cp.f_EndPoint.cy * CELL_PIXEL_HEIGHT + CELL_PIXEL_HEIGHT / 2.0, cp.f_SpawnPoint.cx * CELL_PIXEL_WIDTH + CELL_PIXEL_WIDTH / 2.0, cp.f_SpawnPoint.cy * CELL_PIXEL_HEIGHT + CELL_PIXEL_HEIGHT / 2.0);
+			var ent = new Checkpoint(player, cp.pixelX, cp.pixelY, cp.f_EndPoint.cx * CELL_PIXEL_WIDTH
+				+ CELL_PIXEL_WIDTH / 2.0,
+				cp.f_EndPoint.cy * CELL_PIXEL_HEIGHT
+				+ CELL_PIXEL_HEIGHT / 2.0, cp.f_SpawnPoint.cx * CELL_PIXEL_WIDTH
+				+ CELL_PIXEL_WIDTH / 2.0,
+				cp.f_SpawnPoint.cy * CELL_PIXEL_HEIGHT
+				+ CELL_PIXEL_HEIGHT / 2.0);
 			checkpoints.push(ent);
 		}
 
@@ -90,17 +96,34 @@ class Level {
 		}
 
 		var rawTerrainLayer = raw.l_Terrain;
+		var rawAutoTilerLayer = raw.l_AutoTiler;
+		var rawAutoTilesArray = rawAutoTilerLayer.autoTiles;
+		// this sorts the auto tiles in the same order as the terrain layer
+		rawAutoTilesArray.sort((a, b) -> a.coordId - b.coordId);
+
 		terrainTilesWide = rawTerrainLayer.cWid;
 		terrainTilesHigh = rawTerrainLayer.cHei;
 		for (ch in 0...rawTerrainLayer.cHei) {
 			for (cw in 0...rawTerrainLayer.cWid) {
 				if (rawTerrainLayer.hasAnyTileAt(cw, ch)) {
 					var tileStack = rawTerrainLayer.getTileStackAt(cw, ch);
-					terrainInts.push(tileStack[tileStack.length - 1].tileId);
+					var tileId = tileStack[tileStack.length - 1].tileId;
+					terrainInts.push(tileId);
+					trace('add terrainInt: ${tileId} from ${cw},${ch}');
+				} else if (rawAutoTilerLayer.hasValue(cw, ch)) {
+					var autoTile = rawAutoTilesArray[ch * terrainTilesWide + cw];
+					trace('add autoTileId: ${autoTile.tileId} from ${cw},${ch}');
+					terrainInts.push(autoTile.tileId);
 				} else {
 					terrainInts.push(0);
 				}
 			}
 		}
+		trace('autoInts:${rawAutoTilesArray.map(v -> '${v.tileId}')}');
+		trace('terrainInts:${terrainInts}');
+	}
+
+	public function getTileIdAtCellCoord(x:Int, y:Int):Int {
+		return terrainInts[y * terrainTilesWide + x];
 	}
 }
