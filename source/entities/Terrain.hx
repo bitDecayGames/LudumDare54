@@ -13,13 +13,14 @@ class Terrain extends IsoEchoSprite {
         gridHeight = 0;
         super(X, Y);
         alpha = .5;
+
+        sprite.animation.frameIndex = frameIndex;
     }
 
     override function configSprite() {
         sprite = new FlxSprite();
         sprite.loadGraphic(AssetPaths.tiles__png, true, 32, 16);
         sprite.offset.set(sprite.width/2, sprite.height);
-        sprite.animation.frameIndex = frameIndex;
     }
 
     override function setBounds() {
