@@ -31,25 +31,27 @@ class CrashState extends State<Player> {
     }
 
     override public function update(delta:Float):State<Player> {
-        duration -= delta;
-        moveDecay -= delta;
+        entity.body.velocity.set(0, 0);
+        
+        // duration -= delta;
+        // moveDecay -= delta;
 
-        FlxG.watch.addQuick('moveDecay:', moveDecay);
+        // FlxG.watch.addQuick('moveDecay:', moveDecay);
 
-        if (duration <= 0) {
-            return new CruisingState(entity);
-        }
+        // if (duration <= 0) {
+        //     return new CruisingState(entity);
+        // }
 
-        entity.rawAngle += spinMod * delta * Math.max(0, moveDecay);
+        // entity.rawAngle += spinMod * delta * Math.max(0, moveDecay);
 
-        var decaySpeed = FlxPoint.get(initialCrashDir.x, initialCrashDir.y);
-        decaySpeed.scale(Math.max(0, moveDecay));
+        // var decaySpeed = FlxPoint.get(initialCrashDir.x, initialCrashDir.y);
+        // decaySpeed.scale(Math.max(0, moveDecay));
 
-        FlxG.watch.addQuick('crashVelocityMod: ', decaySpeed);
+        // FlxG.watch.addQuick('crashVelocityMod: ', decaySpeed);
 
-        entity.body.velocity.set(decaySpeed.x, decaySpeed.y);
+        // entity.body.velocity.set(decaySpeed.x, decaySpeed.y);
 
-        decaySpeed.put();
+        // decaySpeed.put();
         
         return null;
     }
@@ -57,7 +59,8 @@ class CrashState extends State<Player> {
     override public function onEnter(last:State<Player>, current:State<Player>, next:State<Player>):Void {
         FmodManager.PlaySoundOneShot(FmodSFX.BoatCrash);
 
-        entity.visible = false;
+        entity.sprite.visible = false;
+        entity.body.active = false;
         PlayState.ME.addParticle(new Explosion(entity.body.x, entity.body.y, () -> { 
             new FlxTimer().start(1.0, (t) -> {
         		entity.respawn();

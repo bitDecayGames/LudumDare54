@@ -1,5 +1,6 @@
 package levels.ldtk;
 
+import flixel.math.FlxPoint;
 import entities.Debris;
 import iso.IsoEchoSprite;
 import entities.Dam;
@@ -17,6 +18,7 @@ class Level {
 	private static inline var CELL_PIXEL_HEIGHT = 16;
 
 	public var player:Player;
+	public var spawnPoint:FlxPoint = FlxPoint.get();
 
 	public var survivors = new Array<Survivor>();
 	public var debris = new Array<IsoEchoSprite>();
@@ -39,6 +41,7 @@ class Level {
 			QuickLog.warn("more than one player loaded for level, defaulting to first one");
 		}
 		var firstPlayerEnt = raw.l_Entities.all_Player[0];
+		spawnPoint.set(firstPlayerEnt.pixelX, firstPlayerEnt.pixelY);
 
 		player = new Player(firstPlayerEnt.pixelX, firstPlayerEnt.pixelY, firstPlayerEnt.f_Speed, firstPlayerEnt.f_TurnSpeed, firstPlayerEnt.f_TurnSpeedSkid);
 

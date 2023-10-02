@@ -338,6 +338,8 @@ class PlayState extends FlxTransitionableState {
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
 		});
+
+		level.player.respawn();
 	}
 
 	public function showSummary(nextLevel:String) {
@@ -346,7 +348,7 @@ class PlayState extends FlxTransitionableState {
 		});
 	}
 
-	function doOpenSubState(subState:FlxSubState, cb:Void->Void=null) {
+	public function doOpenSubState(subState:FlxSubState, cb:Void->Void=null) {
 		FlxEcho.updates = false;
 		openSubState(subState);
 		subStateClosed.addOnce((ss) -> {

@@ -1,5 +1,6 @@
 package entities;
 
+import states.substate.CountdownOverlay;
 import states.PlayState;
 import entities.states.player.StationaryState;
 import flixel.tweens.FlxEase;
@@ -195,11 +196,21 @@ class Player extends IsoEchoSprite implements Follower {
 	}
 
 	public function respawn() {
-		visible = true;
+		sprite.visible = true;
+
 		if (lastCheckpoint != null) {
 			body.x = lastCheckpoint.spawnPoint.x;
 			body.y = lastCheckpoint.spawnPoint.y;
+		} else {
+			body.x = PlayState.ME.level.spawnPoint.x;
+			body.y = PlayState.ME.level.spawnPoint.y;
 		}
+
+        body.active = true;
+		stateMachine.setNextState(new StationaryState(this));
+		PlayState.ME.doOpenSubState(new CountdownOverlay(), () -> {
+			stateMachine.setNextState(new CruisingState(this));
+		});
 	}
 
 	@:access(echo.Shape)
