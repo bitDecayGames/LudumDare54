@@ -105,13 +105,7 @@ class MainMenuState extends FlxUIState {
 	}
 
 	function clickPlay():Void {
-		FmodManager.StopSong();
-		var swirlOut = new SwirlTransition(TransitionDirection.OUT, () -> {
-			// make sure our music is stopped;
-			FmodManager.StopSongImmediately();
-			FlxG.switchState(new PlayState());
-		}, FlxColor.GRAY, 0.75);
-		openSubState(swirlOut);
+		FmodFlxUtilities.TransitionToState(new PlayState());
 	}
 
 	function clickCredits():Void {

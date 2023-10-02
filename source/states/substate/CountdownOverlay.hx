@@ -17,6 +17,8 @@ class CountdownOverlay extends FlxSubState {
         super.create();
 
         counter = new CruiseText("");
+        counter.fieldWidth = camera.width;
+        counter.autoSize = false;
         counter.alignment = CENTER;
         counter.borderStyle = OUTLINE;
         counter.borderColor = FlxColor.BLACK;
