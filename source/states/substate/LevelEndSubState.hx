@@ -54,6 +54,7 @@ class LevelEndSubState extends FlxSubState {
         add(finalScore);
 
         var start = new CruiseText("Press Start");
+        start.scrollFactor.set();
 		start.x = (256 - start.width) / 2;
 		start.y = FlxG.height - start.height - 15;
 		start.borderStyle = OUTLINE;

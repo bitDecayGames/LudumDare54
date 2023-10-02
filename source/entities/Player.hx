@@ -288,10 +288,13 @@ class Player extends IsoEchoSprite implements Follower {
 
 		new FlxTimer().start(0.3, (t) -> {
 			if (t.elapsedLoops == toTween.length + 1) {
-				stateMachine.setNextState(new CruisingState(this));
 				// Load next level
 				if (nextLevel != null) {
-					PlayState.ME.loadNextLevel = nextLevel;
+					new FlxTimer().start(.5, (t) -> {
+						PlayState.ME.showSummary(nextLevel);
+					});
+				} else {
+					stateMachine.setNextState(new CruisingState(this));
 				}
 			} else {
 				var person = toTween[t.elapsedLoops-1];
