@@ -14,7 +14,9 @@ class SplashState extends State<Survivor> {
     }
 
     override public function update(delta:Float):State<Survivor> {
-        if (done) return new FloatingState(entity);
+        if (done) {
+            return new DeadState(entity);
+        }
         return null;
     }
     override public function onEnter(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {

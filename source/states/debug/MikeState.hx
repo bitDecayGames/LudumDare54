@@ -5,7 +5,7 @@ import states.PlayState;
 
 class MikeState extends PlayState {
 	override public function create() {
-		initialLevelName = "Mike_02";
+		initialLevelName = "Mike_03";
 		super.create();
 		FlxG.debugger.visible = true;
 	}
