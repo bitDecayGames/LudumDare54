@@ -53,7 +53,7 @@ class Main extends Sprite {
 		var width = Std.int(256);
 		var height = Std.int(240);
 
-		#if !FLX_NO_DEBUG
+		#if FLX_DEBUG
 		// FlxG.resizeWindow(width * 6, height * 3);
 		width *= 2;
 		#end
