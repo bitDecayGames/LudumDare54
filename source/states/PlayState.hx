@@ -362,7 +362,9 @@ class PlayState extends FlxTransitionableState {
 		DebugDraw.ME.drawCameraRect(cam.getCenterPoint().x - 5, cam.getCenterPoint().y - 5, 10, 10, DebugLayers.RAYCAST, FlxColor.RED);
 
 
+		#if debug
 		graph.drawDebug();
+		#end
 
 		if (FlxG.keys.pressed.P) {
 			Grid.drawGrid(5, 5);

@@ -98,7 +98,7 @@ class Survivor extends Bobber implements Follower {
 			shapes: [
 				{
 					type:CIRCLE,
-					radius: 6,
+					radius: 4,
 				}
 			],
 		});

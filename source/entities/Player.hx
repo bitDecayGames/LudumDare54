@@ -73,7 +73,7 @@ class Player extends IsoEchoSprite implements Follower {
 
 	public function new(x:Float, y:Float, speed:Float = 70, turnSpeed:Float = 130, turnSpeedSkid:Float = 200, crashTurnSpeed:Int = 200) {
 		gridWidth = .8;
-		gridLength = 6 / 16;
+		gridLength = 4 / 16;
 		gridHeight = 1;
 
 		this.speed = speed;
