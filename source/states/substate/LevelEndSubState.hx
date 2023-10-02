@@ -38,10 +38,10 @@ class LevelEndSubState extends FlxSubState {
         thrillPoints.scrollFactor.set();
         thrillPoints.borderStyle = OUTLINE;
         thrillPoints.borderColor = FlxColor.BLACK;
-        var finalScore = new CruiseText('Total  ${total} of ${max}');
-        finalScore.scrollFactor.set();
-        finalScore.borderStyle = OUTLINE;
-        finalScore.borderColor = FlxColor.BLACK;
+        // var finalScore = new CruiseText('Total  ${total} of ${max}');
+        // finalScore.scrollFactor.set();
+        // finalScore.borderStyle = OUTLINE;
+        // finalScore.borderColor = FlxColor.BLACK;
 
         var baseX = 30;
         var baseY = 30;
@@ -49,11 +49,11 @@ class LevelEndSubState extends FlxSubState {
 
         ridesGiven.setPosition(baseX, baseY);
         thrillPoints.setPosition(baseX, ridesGiven.y + ridesGiven.height + spacingVert);
-        finalScore.setPosition(baseX, thrillPoints.y + thrillPoints.height + spacingVert);
+        // finalScore.setPosition(baseX, thrillPoints.y + thrillPoints.height + spacingVert);
 
         add(ridesGiven);
         add(thrillPoints);
-        add(finalScore);
+        // add(finalScore);
 
         var start = new CruiseText("Press Start");
         start.scrollFactor.set();
