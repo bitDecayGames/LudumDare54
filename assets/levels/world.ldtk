@@ -11,7 +11,7 @@
 	"iid": "78d68120-3b70-11ee-9951-dff492d275d9",
 	"jsonVersion": "1.4.1",
 	"appBuildId": 471015,
-	"nextUid": 81,
+	"nextUid": 82,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -1088,7 +1088,43 @@
 			"limitBehavior": "MoveLastOne",
 			"pivotX": 0.5,
 			"pivotY": 0.5,
-			"fieldDefs": []
+			"fieldDefs": [
+				{
+					"identifier": "nextLevel",
+					"doc": null,
+					"__type": "EntityRef",
+					"uid": 81,
+					"type": "F_EntityRef",
+					"isArray": false,
+					"canBeNull": true,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "RefLinkBetweenCenters",
+					"editorDisplayScale": 1,
+					"editorDisplayPos": "Above",
+					"editorLinkStyle": "CurvedArrow",
+					"editorDisplayColor": null,
+					"editorAlwaysShow": false,
+					"editorShowInWorld": true,
+					"editorCutLongValues": true,
+					"editorTextSuffix": null,
+					"editorTextPrefix": null,
+					"useForSmartColor": false,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": null,
+					"symmetricalRef": false,
+					"autoChainRef": true,
+					"allowOutOfLevelRef": true,
+					"allowedRefs": "Any",
+					"allowedRefsEntityUid": null,
+					"allowedRefTags": [],
+					"tilesetUid": null
+				}
+			]
 		},
 		{
 			"identifier": "Checkpoint",
@@ -1779,7 +1815,15 @@
 							"height": 16,
 							"defUid": 14,
 							"px": [232,56],
-							"fieldInstances": []
+							"fieldInstances": [{ "__identifier": "nextLevel", "__type": "EntityRef", "__value": {
+								"entityIid": "72c13f20-3b70-11ee-aa99-6b5824279180",
+								"layerIid": "25777ae0-3b70-11ee-aa99-1979bea15524",
+								"levelIid": "257753d0-3b70-11ee-aa99-8fb73085b271",
+								"worldIid": "78d6a830-3b70-11ee-9951-8d7d4dc70ba1"
+							}, "__tile": null, "defUid": 81, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["72c13f20-3b70-11ee-aa99-6b5824279180"]
+							}] }]
 						}
 					]
 				},
@@ -3697,7 +3741,15 @@
 							"height": 16,
 							"defUid": 14,
 							"px": [2024,120],
-							"fieldInstances": []
+							"fieldInstances": [{ "__identifier": "nextLevel", "__type": "EntityRef", "__value": {
+								"entityIid": "560f05c0-3b70-11ee-afb8-e7a6b8f6d4bb",
+								"layerIid": "472e3c20-3b70-11ee-afb8-33d107b44db0",
+								"levelIid": "472e1510-3b70-11ee-afb8-9fc444f066f2",
+								"worldIid": "78d6a830-3b70-11ee-9951-8d7d4dc70ba1"
+							}, "__tile": null, "defUid": 81, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["560f05c0-3b70-11ee-afb8-e7a6b8f6d4bb"]
+							}] }]
 						},
 						{
 							"__identifier": "Pier",
