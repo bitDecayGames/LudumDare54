@@ -37,6 +37,7 @@ class Checkpoint extends FlxSprite {
 			if (player != null && !checked) {
 				player.lastCheckpoint = this;
 				checked = true;
+				player.incrementCheckpoint();
 				// TODO: MW figure out a way to update the flag sprite to be a lifted flag
 			}
 		}
