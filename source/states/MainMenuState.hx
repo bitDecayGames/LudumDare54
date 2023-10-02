@@ -96,9 +96,11 @@ class MainMenuState extends FlxUIState {
 			trace("---------- Bitlytics Stopped ----------");
 		}
 
-		if (SimpleController.just_pressed(A) || SimpleController.just_pressed(START)) {
-			clickPlay();
-			acceptInput = false;
+		if (acceptInput) {
+			if (SimpleController.just_pressed(A) || SimpleController.just_pressed(START)) {
+				clickPlay();
+				acceptInput = false;
+			}
 		}
 	}
 
