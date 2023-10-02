@@ -43,7 +43,7 @@ class PlayState extends FlxTransitionableState {
 
 	public var level:Level;
 
-	var initialLevelName = "Level_0";
+	var initialLevelName = "Mike_02";
 
 	public var loadNextLevel:String = null;
 
