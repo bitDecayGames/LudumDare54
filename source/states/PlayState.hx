@@ -150,7 +150,7 @@ class PlayState extends FlxTransitionableState {
 	}
 
 	public function loadLevel(levelName:String) {
-		FlxG.log.error('Load level: ${levelName}');
+		FlxG.log.notice	('Load level: ${levelName}');
 
 		terrain.forEach((t) -> {
 			t.destroy();

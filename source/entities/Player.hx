@@ -82,7 +82,7 @@ class Player extends IsoEchoSprite implements Follower {
 		this.turnSpeedSkid = turnSpeedSkid;
 		this.crashTurnSpeed = crashTurnSpeed;
 
-		FlxG.log.error('Player Stats: speed:${speed}, turnSpeed:${turnSpeed}, turnSpeedSkid:${turnSpeedSkid}, crashTurnSpeed:${crashTurnSpeed}');
+		FlxG.log.notice('Player Stats: speed:${speed}, turnSpeed:${turnSpeed}, turnSpeedSkid:${turnSpeedSkid}, crashTurnSpeed:${crashTurnSpeed}');
 
 		super(x, y);
 
@@ -245,9 +245,7 @@ class Player extends IsoEchoSprite implements Follower {
 			// colliding with dam
 		} else if (other.object is Dam) {
 			var dam:Dam = cast other.object;
-			dropOffSurvivors(dam);
-			// Load next level
-			PlayState.ME.loadNextLevel = dam.nextLevel;
+			dropOffSurvivors(dam, dam.nextLevel);
 		}
 	}
 
@@ -273,7 +271,7 @@ class Player extends IsoEchoSprite implements Follower {
         }
 	}
 
-	private function dropOffSurvivors(dropoff: IsoEchoSprite) {
+	private function dropOffSurvivors(dropoff: IsoEchoSprite, nextLevel: String = null) {
 		// TODO: Take control from the player
 		stateMachine.setNextState(new StationaryState(this));
 
@@ -289,8 +287,11 @@ class Player extends IsoEchoSprite implements Follower {
 
 		new FlxTimer().start(0.3, (t) -> {
 			if (t.elapsedLoops == toTween.length + 1) {
-				// TODO: restore player control
 				stateMachine.setNextState(new CruisingState(this));
+				// Load next level
+				if (nextLevel != null) {
+					PlayState.ME.loadNextLevel = nextLevel;
+				}
 			} else {
 				var person = toTween[t.elapsedLoops-1];
 				person.body.active = false;
