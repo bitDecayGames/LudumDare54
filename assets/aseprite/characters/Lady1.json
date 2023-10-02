@@ -325,7 +325,7 @@
    },
    {
     "filename": "Lady1 36.ase",
-    "frame": { "x": 64, "y": 80, "w": 16, "h": 16 },
+    "frame": { "x": 32, "y": 64, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
