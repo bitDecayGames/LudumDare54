@@ -1,5 +1,6 @@
 package entities;
 
+import states.substate.CountdownOverlay;
 import states.PlayState;
 import entities.states.player.StationaryState;
 import flixel.tweens.FlxEase;
@@ -195,11 +196,21 @@ class Player extends IsoEchoSprite implements Follower {
 	}
 
 	public function respawn() {
-		visible = true;
+		sprite.visible = true;
+
 		if (lastCheckpoint != null) {
 			body.x = lastCheckpoint.spawnPoint.x;
 			body.y = lastCheckpoint.spawnPoint.y;
+		} else {
+			body.x = PlayState.ME.level.spawnPoint.x;
+			body.y = PlayState.ME.level.spawnPoint.y;
 		}
+
+        body.active = true;
+		stateMachine.setNextState(new StationaryState(this));
+		PlayState.ME.doOpenSubState(new CountdownOverlay(), () -> {
+			stateMachine.setNextState(new CruisingState(this));
+		});
 	}
 
 	@:access(echo.Shape)
@@ -288,10 +299,14 @@ class Player extends IsoEchoSprite implements Follower {
 
 		new FlxTimer().start(0.3, (t) -> {
 			if (t.elapsedLoops == toTween.length + 1) {
-				stateMachine.setNextState(new CruisingState(this));
 				// Load next level
+				FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
 				if (nextLevel != null) {
-					PlayState.ME.loadNextLevel = nextLevel;
+					new FlxTimer().start(.5, (t) -> {
+						PlayState.ME.showSummary(nextLevel);
+					});
+				} else {
+					stateMachine.setNextState(new CruisingState(this));
 				}
 			} else {
 				var person = toTween[t.elapsedLoops-1];
@@ -299,6 +314,7 @@ class Player extends IsoEchoSprite implements Follower {
 				person.startFling();
 				person.bobbingEnabled = false;
 				person.z = .1;
+				FmodManager.PlaySoundOneShot(FmodSFX.SurvivorsSave);
 				FlxTween.tween(person.body, {x: dropoff.body.x, y: dropoff.body.y}, 0.5, {
 					ease: FlxEase.sineOut,
 					onComplete: (tween) -> {

@@ -17,7 +17,7 @@ abstract CruiseText(BitmapText) to BitmapText {
 	inline static function get_font() {
 		if (font == null) {
 			@:privateAccess
-			font = BitmapText.createMonospace("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234566789.,!?~", AssetPaths.font9x13__png, 0, 13, 9);
+			font = BitmapText.createMonospace("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?~", AssetPaths.font9x13__png, 0, 13, 9);
 		}
 		return font;
 	}

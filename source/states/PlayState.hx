@@ -1,5 +1,6 @@
 package states;
 
+import states.substate.LevelEndSubState;
 import iso.IsoSortable;
 import iso.IsoSprite;
 import topo.Tophographic.Topographic;
@@ -43,7 +44,7 @@ class PlayState extends FlxTransitionableState {
 
 	public var level:Level;
 
-	var initialLevelName = "Mike_02";
+	var initialLevelName = "Level_0";
 
 	public var loadNextLevel:String = null;
 
@@ -59,6 +60,8 @@ class PlayState extends FlxTransitionableState {
 
 	var sortObjects = new Array<IsoSortable>();
 	var graph:Topographic;
+
+	public var deliveries = 0;
 
 	private static function defaultEnterHandler(a, b, o) {
 		if ((a.object is IsoEchoSprite)) {
@@ -102,6 +105,10 @@ class PlayState extends FlxTransitionableState {
 	override public function create() {
 		super.create();
 		Lifecycle.startup.dispatch();
+
+		Lifecycle.personDelivered.add((s) -> {
+			deliveries++;
+		});
 
 		// FlxG.camera.pixelPerfectRender = true;
 		persistentUpdate = false;
@@ -152,6 +159,8 @@ class PlayState extends FlxTransitionableState {
 
 	public function loadLevel(levelName:String) {
 		FlxG.log.notice('Load level: ${levelName}');
+
+		deliveries = 0;
 
 		terrain.forEach((t) -> {
 			t.destroy();
@@ -329,13 +338,23 @@ class PlayState extends FlxTransitionableState {
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
 		});
+
+		level.player.respawn();
 	}
 
-	function doOpenSubState(subState:FlxSubState) {
+	public function showSummary(nextLevel:String) {
+		doOpenSubState(new LevelEndSubState(), () -> {
+			loadNextLevel = nextLevel;
+			FmodManager.SetEventParameterOnSong("lowpass", 0);
+		});
+	}
+
+	public function doOpenSubState(subState:FlxSubState, cb:Void->Void=null) {
 		FlxEcho.updates = false;
 		openSubState(subState);
 		subStateClosed.addOnce((ss) -> {
 			FlxEcho.updates = true;
+			if (cb != null) cb();
 		});
 	}
 

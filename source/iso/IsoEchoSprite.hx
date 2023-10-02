@@ -97,7 +97,9 @@ class IsoEchoSprite extends FlxSprite implements IsoSortable {
 		tmp.put();
 		var dbgDraw = FlxG.debugger.drawDebug;
 		FlxG.debugger.drawDebug = false;
-		sprite.draw();
+		if (sprite.visible) {
+			sprite.draw();
+		}
 		FlxG.debugger.drawDebug = dbgDraw;
 	}
 

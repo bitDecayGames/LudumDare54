@@ -26,5 +26,6 @@ class FmodSFX {
     public static inline var VoiceRad:String = "event:/SFX/Characters/VoiceRad";
     public static inline var MenuHover:String = "event:/SFX/Menu/MenuHover";
     public static inline var MenuSelect:String = "event:/SFX/Menu/MenuSelect";
+    public static inline var SurvivorsSave:String = "event:/SFX/Survivors/SurvivorsSave";
     public static inline var SurvivorsSplash:String = "event:/SFX/Survivors/SurvivorsSplash";
 }

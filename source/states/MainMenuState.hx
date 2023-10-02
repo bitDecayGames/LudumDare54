@@ -32,7 +32,7 @@ class MainMenuState extends FlxUIState {
 	override public function create():Void {
 		super.create();
 
-		FmodManager.PlaySong(FmodSongs.Title);
+		FmodManager.PlaySong(FmodSongs.Title2);
 		bgColor = FlxColor.TRANSPARENT;
 		FlxG.camera.pixelPerfectRender = true;
 
@@ -96,9 +96,11 @@ class MainMenuState extends FlxUIState {
 			trace("---------- Bitlytics Stopped ----------");
 		}
 
-		if (SimpleController.just_pressed(A) || SimpleController.just_pressed(START)) {
-			clickPlay();
-			acceptInput = false;
+		if (acceptInput) {
+			if (SimpleController.just_pressed(A) || SimpleController.just_pressed(START)) {
+				clickPlay();
+				acceptInput = false;
+			}
 		}
 	}
 
