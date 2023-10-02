@@ -44,7 +44,7 @@ class PlayState extends FlxTransitionableState {
 
 	public var level:Level;
 
-	var initialLevelName = "Mike_02";
+	var initialLevelName = "Level_0";
 
 	public var loadNextLevel:String = null;
 
@@ -345,6 +345,7 @@ class PlayState extends FlxTransitionableState {
 	public function showSummary(nextLevel:String) {
 		doOpenSubState(new LevelEndSubState(), () -> {
 			loadNextLevel = nextLevel;
+			FmodManager.SetEventParameterOnSong("lowpass", 0);
 		});
 	}
 

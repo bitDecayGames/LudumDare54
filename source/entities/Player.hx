@@ -300,6 +300,7 @@ class Player extends IsoEchoSprite implements Follower {
 		new FlxTimer().start(0.3, (t) -> {
 			if (t.elapsedLoops == toTween.length + 1) {
 				// Load next level
+				FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
 				if (nextLevel != null) {
 					new FlxTimer().start(.5, (t) -> {
 						PlayState.ME.showSummary(nextLevel);
@@ -313,6 +314,7 @@ class Player extends IsoEchoSprite implements Follower {
 				person.startFling();
 				person.bobbingEnabled = false;
 				person.z = .1;
+				FmodManager.PlaySoundOneShot(FmodSFX.SurvivorsSave);
 				FlxTween.tween(person.body, {x: dropoff.body.x, y: dropoff.body.y}, 0.5, {
 					ease: FlxEase.sineOut,
 					onComplete: (tween) -> {
