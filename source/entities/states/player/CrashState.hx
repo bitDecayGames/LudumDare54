@@ -12,19 +12,50 @@ class CrashState extends State<Player> {
     private static inline var CAMERA_SHAKE_INTENSITY = 0.01; // smaller number makes a softer shake
     private static inline var CAMERA_SHAKE_DURATION_SECONDS = .7; // number of seconds to shake
 
+    private var spinMod:Float;
+    private var initialCrashDir:FlxPoint;
     private var directionToFlingSurvivors:FlxPoint;
 
-    public function new(entity:Player, directionToFlingSurvivors:FlxPoint) {
+    private var moveDecay = 1.0;
+    private var duration = 2.0;
+
+    public function new(entity:Player, crashDir:FlxPoint, angleMod:Float) {
         super(entity);
-        this.directionToFlingSurvivors = directionToFlingSurvivors;
+        initialCrashDir = crashDir.copyTo();
+        directionToFlingSurvivors = FlxPoint.get(entity.previousVelocity.x, entity.previousVelocity.y);
+        spinMod = angleMod;
     }
 
     override public function update(delta:Float):State<Player> {
-        return new CruisingState(entity);
+        duration -= delta;
+        moveDecay -= delta;
+
+        FlxG.watch.addQuick('moveDecay:', moveDecay);
+
+        if (duration <= 0) {
+            return new CruisingState(entity);
+        }
+
+        entity.rawAngle += spinMod * delta * Math.max(0, moveDecay);
+
+        var decaySpeed = FlxPoint.get(initialCrashDir.x, initialCrashDir.y);
+        decaySpeed.scale(Math.max(0, moveDecay));
+
+        FlxG.watch.addQuick('crashVelocityMod: ', decaySpeed);
+
+        entity.body.velocity.set(decaySpeed.x, decaySpeed.y);
+
+        decaySpeed.put();
+        
+        return null;
     }
 
     override public function onEnter(last:State<Player>, current:State<Player>, next:State<Player>):Void {
         FmodManager.PlaySoundOneShot(FmodSFX.BoatCrash);
+
+        // initialCrashDir.scale(entity.speed * .5);
+
+        entity.body.velocity.set(initialCrashDir.x, initialCrashDir.y);
 
         // blink the boat white to indicate it is invincible
         entity.isInvincible = true;

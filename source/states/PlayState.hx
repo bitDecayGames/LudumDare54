@@ -1,5 +1,6 @@
 package states;
 
+import states.substate.TalkerOverlay;
 import loaders.TileShapes;
 import score.ScoreManager;
 import ui.font.BitmapText.CruiseText;
@@ -91,6 +92,7 @@ class PlayState extends FlxTransitionableState {
 		Lifecycle.startup.dispatch();
 
 		// FlxG.camera.pixelPerfectRender = true;
+		persistentUpdate = false;
 
 		#if tanner
 		FmodManager.PlaySong(FmodSongs.Game);
@@ -128,6 +130,8 @@ class PlayState extends FlxTransitionableState {
 	}
 
 	public function loadLevel(levelName:String) {
+		FlxG.log.error('Load level: ${levelName}');
+
 		terrain.forEach((t) -> {
 			t.destroy();
 		});
@@ -233,6 +237,7 @@ class PlayState extends FlxTransitionableState {
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
 		});
+
 		// collide currents with logs
 		FlxEcho.listen(currents, logs, {
 			separate: false,
@@ -267,6 +272,12 @@ class PlayState extends FlxTransitionableState {
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
 		});
+
+		// FlxEcho.updates = false;
+		// openSubState(new TalkerOverlay("COP", 10));
+		// subStateClosed.addOnce((ss) -> {
+		// 	FlxEcho.updates = true;
+		// });
 	}
 
 	public function makeTerrainPiece(level:Level, gridX:Int, gridY:Int) {

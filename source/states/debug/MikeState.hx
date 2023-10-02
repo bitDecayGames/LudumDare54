@@ -4,12 +4,8 @@ import flixel.FlxG;
 import states.PlayState;
 
 class MikeState extends PlayState {
-	public function new() {
-		initialLevelName = "Mike_01";
-		super();
-	}
-
 	override public function create() {
+		initialLevelName = "Mike_01";
 		super.create();
 		FlxG.debugger.visible = true;
 	}

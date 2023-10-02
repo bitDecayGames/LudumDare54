@@ -65,8 +65,6 @@ class Current extends EchoSprite {
 
 	override public function update(delta:Float):Void {
 		super.update(delta);
-		var l = entitiesInCurrent.length;
-		FlxG.watch.addQuick("L", l);
 		for (entity in entitiesInCurrent) {
 			if (entity != null && entity.alive) {
 				entity.body.x += diff.x;
@@ -77,7 +75,7 @@ class Current extends EchoSprite {
 				#end
 			}
 		}
-
+d
 	}
 
 	override public function destroy() {
@@ -87,7 +85,7 @@ class Current extends EchoSprite {
 	}
 
 	@:access(echo.Shape)
-	override function handleEnter(other:Body, data:Array<CollisionData>) {
+	public override function handleEnter(other:Body, data:Array<CollisionData>) {
 		super.handleEnter(other, data);
 
 		if ((other.object is IsoEchoSprite)) {
@@ -99,7 +97,7 @@ class Current extends EchoSprite {
 	}
 
 	@:access(echo.Shape)
-	override function handleExit(other:Body) {
+	public override function handleExit(other:Body) {
 		super.handleExit(other);
 
 		if ((other.object is IsoEchoSprite)) {
