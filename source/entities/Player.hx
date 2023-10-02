@@ -2,7 +2,6 @@ package entities;
 
 import echo.math.Vector2;
 import flixel.util.FlxTimer;
-import score.ScoreManager;
 import iso.Grid;
 import flixel.util.FlxColor;
 import bitdecay.flixel.debug.DebugDraw;
@@ -171,6 +170,12 @@ class Player extends IsoEchoSprite implements Follower {
 		newDir.put();
     }
 
+	public function incrementCheckpoint() {
+		iterateFollowers((s) -> {
+			s.numCheckpointsHit += 1;
+		});
+	}
+
 	@:access(echo.Shape)
 	override function handleEnter(other:Body, data:Array<CollisionData>) {
 		super.handleEnter(other, data);
@@ -184,7 +189,6 @@ class Player extends IsoEchoSprite implements Follower {
 				if (collision.sa == boatShape) {
 					FmodManager.PlaySoundOneShot(FmodSFX.BoatCollideSurvivor);
 					FmodManager.PlaySoundOneShot(FmodSFX.VoiceHit);
-					ScoreManager.survivorKilled();
 					survivor.hitByObject();
 				// colliding with pickup area
 				} else if (collision.sa == pickupShape) {
@@ -204,7 +208,6 @@ class Player extends IsoEchoSprite implements Follower {
 			for (d in data) {
 				// colliding with boat
 				if (collision.sb == boatShape) { 
-					ScoreManager.playerCrashed();
 					damageMe(log, collision.normal);
 					break;
 				}
@@ -217,29 +220,30 @@ class Player extends IsoEchoSprite implements Follower {
 		} else if (other.object is Dam) {
 			var dam: Dam = cast other.object;
 			dropOffSurvivors();
-			ScoreManager.endCurrentLevel(timeSpentInLevel);
 			// TODO Switch to next level or end game
+		}
+	}
+
+	private function iterateFollowers(callback: Survivor->Void) {
+		var lastFollower = FollowerHelper.getLastLinkOnChain(this);
+		while (lastFollower != null && lastFollower != this) {
+			if (lastFollower is Survivor) {
+				var survivor: Survivor = cast lastFollower;
+				callback(survivor);
+			}
+			lastFollower = FollowerHelper.stopFollowing(lastFollower);
 		}
 	}
 
 	private function dropOffSurvivors() {
 		// TODO SFX Dropping people off at pier/dam
-		var followerCount = FollowerHelper.countNumberOfFollowersInChain(this);
-		ScoreManager.maybeUpdateLongestChain(followerCount);
-
 		// Remove all followers
 		// May need to switch animation to be pier/dam specific
-		var lastFollower = FollowerHelper.getLastLinkOnChain(this);
-		while (lastFollower != null && lastFollower != this) {
-			if (lastFollower is Survivor) {
-				var survivor: Survivor = cast lastFollower;
-				// TODO This is where we would animate followers
-				// being dropped off on the pier
-				survivor.kill();
-				ScoreManager.survivorSaved(followerCount);
-			}
-			lastFollower = FollowerHelper.stopFollowing(lastFollower);
-		}
+		iterateFollowers((s) -> {
+			// TODO This is where we would animate followers
+			// being dropped off on the pier
+			s.kill();
+		});
 	}
 
 	function get_targetX():Float {

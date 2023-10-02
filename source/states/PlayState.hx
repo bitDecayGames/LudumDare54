@@ -2,7 +2,6 @@ package states;
 
 import states.substate.TalkerOverlay;
 import loaders.TileShapes;
-import score.ScoreManager;
 import ui.font.BitmapText.CruiseText;
 import flixel.FlxObject;
 import echo.util.TileMap;
@@ -178,7 +177,6 @@ class PlayState extends FlxTransitionableState {
 
 		FlxEcho.instance.world.width = level.raw.pxWid;
 		FlxEcho.instance.world.height = level.raw.pxHei;
-		ScoreManager.startLevel(levelName);
 
 		for (y in 0...level.raw.l_Terrain.cHei) {
 			for (x in 0...level.raw.l_Terrain.cWid) {
@@ -286,6 +284,15 @@ class PlayState extends FlxTransitionableState {
 		terrain.add(new Terrain(gridX * Grid.CELL_SIZE, gridY * Grid.CELL_SIZE, tileId));
 
 		// terrain.add(new Terrain(x * Grid.CELL_SIZE, y * Grid.CELL_SIZE, level.raw.l_Terrain..getInt(x, y)));
+	}
+
+	public function getScore(): Int {
+		var sum = 0;
+		for (ent in survivors) {
+			var s:Survivor = cast ent;
+			sum += s.numCheckpointsHit;
+		}
+		return sum;
 	}
 
 	override public function update(elapsed:Float) {
