@@ -75,7 +75,6 @@ class Current extends EchoSprite {
 				#end
 			}
 		}
-d
 	}
 
 	override public function destroy() {
