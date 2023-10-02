@@ -299,6 +299,7 @@ class Player extends IsoEchoSprite implements Follower {
 				person.startFling();
 				person.bobbingEnabled = false;
 				person.z = .1;
+				FmodManager.PlaySoundOneShot(FmodSFX.SurvivorsSave);
 				FlxTween.tween(person.body, {x: dropoff.body.x, y: dropoff.body.y}, 0.5, {
 					ease: FlxEase.sineOut,
 					onComplete: (tween) -> {
