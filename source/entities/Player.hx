@@ -1,5 +1,6 @@
 package entities;
 
+import states.CreditsState;
 import states.MainMenuState;
 import states.substate.CountdownOverlay;
 import states.PlayState;
@@ -310,7 +311,7 @@ class Player extends IsoEchoSprite implements Follower {
 								PlayState.ME.showSummary(nextLevel);
 							});
 						} else if (!isPier) {
-							FlxG.switchState(new MainMenuState());
+							FlxG.switchState(new CreditsState());
 						} else {
 							stateMachine.setNextState(new CruisingState(this));
 						}
