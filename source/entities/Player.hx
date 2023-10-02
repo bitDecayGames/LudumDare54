@@ -289,6 +289,7 @@ class Player extends IsoEchoSprite implements Follower {
 		new FlxTimer().start(0.3, (t) -> {
 			if (t.elapsedLoops == toTween.length + 1) {
 				// Load next level
+				FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
 				if (nextLevel != null) {
 					new FlxTimer().start(.5, (t) -> {
 						PlayState.ME.showSummary(nextLevel);
