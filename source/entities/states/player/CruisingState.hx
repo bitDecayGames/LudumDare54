@@ -9,7 +9,7 @@ import flixel.FlxG;
 class CruisingState extends State<Player> {
 
     // how far off (in degrees) the direction of travel will snap to the 45 degree angles
-    private static inline var SNAP_TOLERANCE_DEGREES = 10;
+    private static inline var SNAP_TOLERANCE_DEGREES = 5;
 	public var boatEngineId = "boatEngineId";
 
     override public function update(delta:Float):State<Player> {

@@ -157,7 +157,7 @@ class PlayState extends FlxTransitionableState {
 	}
 
 	public function loadLevel(levelName:String) {
-		FlxG.log.error('Load level: ${levelName}');
+		FlxG.log.notice	('Load level: ${levelName}');
 
 		deliveries = 0;
 
@@ -386,7 +386,9 @@ class PlayState extends FlxTransitionableState {
 		var cam = FlxG.camera;
 		DebugDraw.ME.drawCameraRect(cam.getCenterPoint().x - 5, cam.getCenterPoint().y - 5, 10, 10, DebugLayers.RAYCAST, FlxColor.RED);
 
+		#if debug
 		graph.drawDebug();
+		#end
 
 		if (FlxG.keys.pressed.P) {
 			Grid.drawGrid(5, 5);
