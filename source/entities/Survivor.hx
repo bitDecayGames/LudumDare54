@@ -56,7 +56,7 @@ class Survivor extends Bobber implements Follower {
 	}
 
 	public function isFollowing():Bool {
-		return stateMachine.getCurrentState() is FollowingState;
+		return following != null;
 	}
 
 	public function startTow() {
