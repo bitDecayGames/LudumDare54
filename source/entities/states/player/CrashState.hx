@@ -1,4 +1,7 @@
 package entities.states.player;
+import entities.particle.Explosion;
+import states.PlayState;
+import entities.particle.Splash;
 import entities.statemachine.State;
 import entities.Follower.FollowerHelper;
 
@@ -53,17 +56,21 @@ class CrashState extends State<Player> {
     override public function onEnter(last:State<Player>, current:State<Player>, next:State<Player>):Void {
         FmodManager.PlaySoundOneShot(FmodSFX.BoatCrash);
 
+        entity.visible = false;
+        PlayState.ME.addParticle(new Explosion(entity.body.x, entity.body.y, () -> {  }));
+		
+
         // initialCrashDir.scale(entity.speed * .5);
 
-        entity.body.velocity.set(initialCrashDir.x, initialCrashDir.y);
+        // entity.body.velocity.set(initialCrashDir.x, initialCrashDir.y);
 
-        // blink the boat white to indicate it is invincible
-        entity.isInvincible = true;
-        Whiten.Blink(entity.sprite, BLINK_SPEED, NUM_OF_BLINKS, (blinkIndex) -> {
-            if (blinkIndex >= NUM_OF_BLINKS) {
-                entity.isInvincible = false;
-            }
-        });
+        // // blink the boat white to indicate it is invincible
+        // entity.isInvincible = true;
+        // Whiten.Blink(entity.sprite, BLINK_SPEED, NUM_OF_BLINKS, (blinkIndex) -> {
+        //     if (blinkIndex >= NUM_OF_BLINKS) {
+        //         entity.isInvincible = false;
+        //     }
+        // });
 
         // screen shake
         FlxG.camera.shake(CAMERA_SHAKE_INTENSITY, CAMERA_SHAKE_DURATION_SECONDS);

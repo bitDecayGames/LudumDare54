@@ -26,6 +26,11 @@ class IsoEchoSprite extends FlxSprite {
 		 // It is critical that your grid size matches well with your `sprite` graphic so collisions feel correct
 		 makeGraphic(Math.ceil(gridWidth * Grid.CELL_SIZE), Math.ceil(gridLength * Grid.CELL_SIZE), FlxColor.GRAY);
 
+		 #if FLX_DEBUG
+		 camera = Debug.dbgCam;
+		 #end
+
+
 		 configSprite();
 		 sprite.offset.set(sprite.width/2, sprite.height);
 		 body = makeBody();
@@ -82,7 +87,9 @@ class IsoEchoSprite extends FlxSprite {
 	var bounds:AABB = AABB.get();
 
 	override function draw() {
+		#if FLX_DEBUG
 		super.draw();
+		#end
 
 		// iso renders based on the bottom left corner
 		var tmp = Grid.gridToIso(x + width - z, y + height - z);
