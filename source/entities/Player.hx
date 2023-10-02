@@ -23,7 +23,6 @@ import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.math.FlxMath;
 import flixel.math.FlxAngle;
-import iso.IsoSprite;
 import flixel.FlxSprite;
 import input.InputCalcuator;
 import input.SimpleController;
