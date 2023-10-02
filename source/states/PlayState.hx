@@ -228,27 +228,6 @@ class PlayState extends FlxTransitionableState {
 			FlxEcho.instance.groups.get(terrain).push(tb);
 		}
 
-		if (level.raw.identifier == "Tutorial") {
-			level.player.controller = new TutorialController();
-
-			doOpenSubState(new TalkerOverlay("COP", 15,
-				"Welcome to your first day! Folks out here are just looking for a good time. Pick 'em up and show 'em around. Drop 'em off at one of the piers at some point."));
-			var rider:Survivor;
-			Lifecycle.personPickedUp.addOnce((s) -> {
-				rider = s;
-				doOpenSubState(new TalkerOverlay(s.persona, 5, "Yo! Thanks for picking me up - I'm stoked for a radical ride!"));
-			});
-			Lifecycle.personHit.addOnce((s) -> {
-				new FlxTimer().start(.5, (t) -> {
-					doOpenSubState(new TalkerOverlay(rider.persona, 5,
-						"Did you just hit that person? You probably shouldn't do that... The arrow keys will probably help you steer."));
-				});
-			});
-			Lifecycle.personDelivered.addOnce((s) -> {
-				doOpenSubState(new TalkerOverlay(s.persona, 5, "That was rad! Thanks for the ride, my dude!"));
-			});
-		}
-
 		level.player.add_to_group(playerGroup);
 		graph.add(level.player);
 
@@ -338,7 +317,32 @@ class PlayState extends FlxTransitionableState {
 			exit: defaultExitHandler,
 		});
 
-		level.player.respawn();
+		if (level.raw.identifier == "Tutorial") {
+			level.player.controller = new TutorialController();
+
+			doOpenSubState(new TalkerOverlay("COP", 12,
+				"Welcome to your first day! Folks out here are just looking for a good time. Pick 'em up and show 'em around. Drop 'em off at one of the piers at some point."));
+			var rider:Survivor;
+			Lifecycle.personPickedUp.addOnce((s) -> {
+				rider = s;
+				doOpenSubState(new TalkerOverlay(s.persona, 5, "Yo! Thanks for picking me up - I'm stoked for a radical ride!"));
+			});
+			Lifecycle.personHit.addOnce((s) -> {
+				new FlxTimer().start(.5, (t) -> {
+					doOpenSubState(new TalkerOverlay(rider.persona, 8,
+						"Did you just hit that person? You shouldn't do that... The arrow keys will probably help you steer."));
+				});
+			});
+			Lifecycle.personDelivered.addOnce((s) -> {
+				doOpenSubState(new TalkerOverlay(s.persona, 5, "That was most excellent! Thanks for the ride, my dude!"));
+
+				Lifecycle.personPickedUp.addOnce((s) -> {
+					doOpenSubState(new TalkerOverlay(s.persona, 5, "I know the pier is behind us, just take me to the dam."));
+				});
+			});
+		} else {
+			level.player.respawn();
+		}
 	}
 
 	public function showSummary(nextLevel:String) {
