@@ -1,9 +1,9 @@
 package levels.ldtk;
 
+import entities.Dam;
 import entities.Pier;
 import entities.Log;
 import entities.Survivor;
-import entities.Item;
 import flixel.group.FlxGroup;
 import entities.Player;
 import entities.Current;
@@ -17,6 +17,7 @@ class Level {
 	public var logs = new Array<Log>();
 	public var currents = new Array<Current>();
     public var piers = new Array<Pier>();
+    public var dams = new Array<Dam>();
 
 	public var raw:levels.ldtk.LDTKProject.LDTKProject_Level = null;
 
@@ -51,6 +52,12 @@ class Level {
         for (p in raw.l_Entities.all_Pier) {
             var ent = new Pier(p.pixelX, p.pixelY);
             piers.push(ent);
+        }
+
+        // Dam
+        for (d in raw.l_Entities.all_Dam) {
+            var ent = new Dam(d.pixelX, d.pixelY);
+            dams.push(ent);
         }
 
 		// Currents
