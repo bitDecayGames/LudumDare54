@@ -44,7 +44,7 @@ class IsoSprite extends FlxSprite implements IsoSortable {
 		super(X, Y);
 
 		// It is critical that your grid size matches well with your `sprite` graphic so collisions feel correct
-		makeGraphic(Math.ceil(gridWidth * Grid.CELL_SIZE), Math.ceil(gridLength * Grid.CELL_SIZE), FlxColor.GRAY);
+		makeGraphic(Math.ceil(gridWidth * Grid.CELL_SIZE), Math.ceil(gridLength * Grid.CELL_SIZE), FlxColor.TRANSPARENT);
 
 		if (Debug.dbgCam != null) {
 			camera = Debug.dbgCam;
@@ -57,7 +57,9 @@ class IsoSprite extends FlxSprite implements IsoSortable {
 	}
 
 	override function draw() {
+		#if !debug
 		super.draw();
+		#end
 
 		// iso renders based on the bottom left corner
 		var tmp = Grid.gridToIso(x + width - z, y + height - z);

@@ -11,7 +11,7 @@ class Terrain extends IsoSprite {
         // Some tiles may have height to them
         gridHeight = 0;
         super(X, Y);
-        alpha = .1;
+        alpha = .5;
 
         sprite = new FlxSprite();
         sprite.loadGraphic(AssetPaths.tiles__png, true, 32, 16);
