@@ -22,6 +22,7 @@
    { "name": "Layer 2", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 4", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 16", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 3", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 11", "opacity": 196, "blendMode": "normal" },
    { "name": "Layer 12", "opacity": 255, "blendMode": "normal" },
@@ -32,7 +33,8 @@
    { "name": "Layer 7", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 8", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 13", "opacity": 255, "blendMode": "normal" },
-   { "name": "Layer 14", "opacity": 255, "blendMode": "normal" }
+   { "name": "Layer 14", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 15", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
   ]
