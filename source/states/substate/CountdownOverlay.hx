@@ -32,18 +32,18 @@ class CountdownOverlay extends FlxSubState {
 
         timer -= elapsed;
         if (timer <= 0 && counter.text == "") {
-            // TODO SFX: "READY!"
             counter.text = "READY";
+            FmodManager.PlaySoundOneShot(FmodSFX.ReadySetGo1);
             // counter.screenCenter();
             timer = 0.75;
         } else if (timer <= 0 && counter.text == "READY") {
-            // TODO SFX: "SET!"
             counter.text = "SET";
+            FmodManager.PlaySoundOneShot(FmodSFX.ReadySetGo1);
             // counter.screenCenter();
             timer = 0.75;
         } else if (timer <= 0 && counter.text == "SET") {
-            // TODO SFX: "GO!"
             counter.text = "GO!";
+            FmodManager.PlaySoundOneShot(FmodSFX.ReadySetGo2);
             // counter.screenCenter();
             timer = 0.5;
         } else if (timer <= 0 && counter.text == "GO!") {

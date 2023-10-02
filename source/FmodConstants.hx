@@ -16,6 +16,9 @@ class FmodSFX {
     public static inline var BoatCollectSurvivor:String = "event:/SFX/Boat/BoatCollectSurvivor";
     public static inline var BoatCollideSurvivor:String = "event:/SFX/Boat/BoatCollideSurvivor";
     public static inline var BoatCrash:String = "event:/SFX/Boat/BoatCrash";
+    public static inline var BoatDock:String = "event:/SFX/Boat/BoatDock";
+    public static inline var BoatDockJingle:String = "event:/SFX/Boat/BoatDockJingle";
+    public static inline var BoatDockJingle2:String = "event:/SFX/Boat/BoatDockJingle2";
     public static inline var BoatDrift:String = "event:/SFX/Boat/BoatDrift";
     public static inline var BoatDriftComposite:String = "event:/SFX/Boat/BoatDriftComposite";
     public static inline var BoatEngine:String = "event:/SFX/Boat/BoatEngine";
@@ -24,6 +27,8 @@ class FmodSFX {
     public static inline var VoiceFling:String = "event:/SFX/Characters/VoiceFling";
     public static inline var VoiceHit:String = "event:/SFX/Characters/VoiceHit";
     public static inline var VoiceRad:String = "event:/SFX/Characters/VoiceRad";
+    public static inline var ReadySetGo1:String = "event:/SFX/HUD/ReadySetGo1";
+    public static inline var ReadySetGo2:String = "event:/SFX/HUD/ReadySetGo2";
     public static inline var MenuHover:String = "event:/SFX/Menu/MenuHover";
     public static inline var MenuSelect:String = "event:/SFX/Menu/MenuSelect";
     public static inline var SurvivorsSave:String = "event:/SFX/Survivors/SurvivorsSave";
