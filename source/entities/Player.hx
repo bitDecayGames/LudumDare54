@@ -254,11 +254,11 @@ class Player extends IsoEchoSprite implements Follower {
 			// colliding with pier
 		} else if (other.object is Pier) {
 			var pier:Pier = cast other.object;
-			dropOffSurvivors(pier);
+			dropOffSurvivors(pier, true);
 			// colliding with dam
 		} else if (other.object is Dam) {
 			var dam:Dam = cast other.object;
-			dropOffSurvivors(dam, dam.nextLevel);
+			dropOffSurvivors(dam, false, dam.nextLevel);
 		}
 	}
 
@@ -284,7 +284,7 @@ class Player extends IsoEchoSprite implements Follower {
         }
 	}
 
-	private function dropOffSurvivors(dropoff: IsoEchoSprite, nextLevel: String = null) {
+	private function dropOffSurvivors(dropoff: IsoEchoSprite, isPier:Bool, nextLevel: String = null) {
 		// TODO: Take control from the player
 		FmodManager.PlaySoundOneShot(FmodSFX.BoatDock);
 		stateMachine.setNextState(new StationaryState(this));
@@ -309,9 +309,10 @@ class Player extends IsoEchoSprite implements Follower {
 							new FlxTimer().start(.5, (t) -> {
 								PlayState.ME.showSummary(nextLevel);
 							});
+						} else if (!isPier) {
+							FlxG.switchState(new MainMenuState());
 						} else {
 							stateMachine.setNextState(new CruisingState(this));
-							FlxG.switchState(new MainMenuState());
 						}
 					} else {
 						var person = toTween[t.elapsedLoops-1];

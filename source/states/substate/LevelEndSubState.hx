@@ -68,6 +68,8 @@ class LevelEndSubState extends FlxSubState {
 			FlxSpriteUtil.flicker(start, 0, 0.5);
 			acceptInput = true;
 		});
+
+        add(start);
     }
 
     override function update(elapsed:Float) {
