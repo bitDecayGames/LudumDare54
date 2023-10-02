@@ -1,5 +1,8 @@
 package states;
 
+import iso.IsoSortable;
+import iso.IsoSprite;
+import topo.Tophographic.Topographic;
 import flixel.util.FlxTimer;
 import flixel.FlxSubState;
 import input.TutorialController;
@@ -50,6 +53,9 @@ class PlayState extends FlxTransitionableState {
 	var piers = new FlxGroup();
 	var dams = new FlxGroup();
 	var checkpoints = new FlxGroup();
+
+	var sortObjects = new Array<IsoSortable>();
+	var graph:Topographic;
 
 	private static function defaultEnterHandler(a, b, o) {
 		if ((a.object is IsoEchoSprite)) {
@@ -123,12 +129,17 @@ class PlayState extends FlxTransitionableState {
 		add(terrain);
 		add(currents);
 		add(survivors);
-		add(particles);
 		add(debris);
 		add(piers);
 		add(dams);
 		add(checkpoints);
 		add(playerGroup);
+
+		graph = new Topographic(sortObjects);
+		add(graph);
+
+		add(particles);
+
 
 		#if logan
 		initialLevelName = "Tutorial";
@@ -225,21 +236,26 @@ class PlayState extends FlxTransitionableState {
 		}
 
 		level.player.add_to_group(playerGroup);
+		graph.add(level.player);
 
 		for (s in level.survivors) {
 			s.add_to_group(survivors);
+			graph.add(s);
 		}
-		for (l in level.debris) {
-			l.add_to_group(debris);
+		for (d in level.debris) {
+			d.add_to_group(debris);
+			graph.add(d);
 		}
 		for (v in level.currents) {
 			v.add_to_group(currents);
 		}
 		for (p in level.piers) {
 			p.add_to_group(piers);
+			graph.add(p);
 		}
 		for (d in level.dams) {
 			d.add_to_group(dams);
+			graph.add(d);
 		}
 		for (cp in level.checkpoints) {
 			cp.add_to_group(checkpoints);
@@ -340,8 +356,13 @@ class PlayState extends FlxTransitionableState {
 	override public function update(elapsed:Float) {
 		super.update(elapsed);
 
+		graph.rebuild();
+
 		var cam = FlxG.camera;
 		DebugDraw.ME.drawCameraRect(cam.getCenterPoint().x - 5, cam.getCenterPoint().y - 5, 10, 10, DebugLayers.RAYCAST, FlxColor.RED);
+
+
+		graph.drawDebug();
 
 		if (FlxG.keys.pressed.P) {
 			Grid.drawGrid(5, 5);

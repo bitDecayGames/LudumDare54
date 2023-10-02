@@ -8,7 +8,7 @@ import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 
-class IsoSprite extends FlxSprite {
+class IsoSprite extends FlxSprite implements IsoSortable {
 	public var sprite:FlxSprite;
 
 	public var z:Float;
