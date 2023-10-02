@@ -211,12 +211,12 @@ class Player extends IsoEchoSprite implements Follower {
 			var survivor:Survivor = cast other.object;
 			if (survivor.isCollectable()) {
 				// colliding with boat
-				if (collision.sa == boatShape) {
+				if (collision.sa == boatShape || collision.sb == boatShape) {
 					FmodManager.PlaySoundOneShot(FmodSFX.BoatCollideSurvivor);
 					FmodManager.PlaySoundOneShot(FmodSFX.VoiceHit);
 					survivor.hitByObject();
 					// colliding with pickup area
-				} else if (collision.sa == pickupShape) {
+				} else if (collision.sa == pickupShape || collision.sb == pickupShape) {
 					FmodManager.PlaySoundOneShot(FmodSFX.BoatCollectSurvivor);
 					new FlxTimer().start(0.75, (t) -> {
 						FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
