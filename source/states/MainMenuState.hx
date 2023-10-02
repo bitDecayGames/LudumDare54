@@ -1,5 +1,10 @@
 package states;
 
+import flixel.util.FlxTimer;
+import input.SimpleController;
+import flixel.util.FlxSpriteUtil;
+import ui.font.BitmapText.CruiseText;
+import flixel.FlxSprite;
 import bitdecay.flixel.transitions.TransitionDirection;
 import bitdecay.flixel.transitions.SwirlTransition;
 import states.AchievementsState;
@@ -21,50 +26,39 @@ import lime.system.System;
 #end
 
 class MainMenuState extends FlxUIState {
-	var _btnPlay:FlxButton;
-	var _btnCredits:FlxButton;
-	var _btnExit:FlxButton;
 
-	var _txtTitle:FlxText;
+	var acceptInput = false;
 
 	override public function create():Void {
-		_xml_id = "main_menu";
-		if (Configure.config.menus.keyboardNavigation || Configure.config.menus.controllerNavigation) {
-			_makeCursor = true;
-		}
-
 		super.create();
-
-		if (_makeCursor) {
-			cursor.loadGraphic(AssetPaths.pointer__png, true, 32, 32);
-			cursor.animation.add("pointing", [0, 1], 3);
-			cursor.animation.play("pointing");
-
-			var keys:Int = 0;
-			if (Configure.config.menus.keyboardNavigation) {
-				keys |= FlxUICursor.KEYS_ARROWS | FlxUICursor.KEYS_WASD;
-			}
-			if (Configure.config.menus.controllerNavigation) {
-				keys |= FlxUICursor.GAMEPAD_DPAD;
-			}
-			cursor.setDefaultKeys(keys);
-		}
 
 		FmodManager.PlaySong(FmodSongs.Title);
 		bgColor = FlxColor.TRANSPARENT;
 		FlxG.camera.pixelPerfectRender = true;
-
-		#if !windows
-		// Hide exit button for non-windows targets
-		var test = _ui.getAsset("exit_button");
-		test.visible = false;
-		#end
 
 		// Trigger our focus logic as we are just creating the scene
 		this.handleFocus();
 
 		// we will handle transitions manually
 		transOut = null;
+
+		var bgImage = new FlxSprite(AssetPaths.titleScreen__png);
+		add(bgImage);
+
+		var start = new CruiseText("Press Start");
+		start.x = (256 - start.width) / 2;
+		start.y = FlxG.height - start.height - 15;
+		start.borderStyle = OUTLINE;
+		start.borderColor = FlxColor.BLACK;
+		start.visible = false;
+
+		new FlxTimer().start(1, (t) -> {
+			start.visible = true;
+			FlxSpriteUtil.flicker(start, 0, 0.5);
+			acceptInput = true;
+		});
+
+		add(start);
 	}
 
 	override public function getEvent(name:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>):Void {
@@ -100,6 +94,11 @@ class MainMenuState extends FlxUIState {
 			Bitlytics.Instance().EndSession(false);
 			FmodManager.PlaySoundOneShot(FmodSFX.MenuSelect);
 			trace("---------- Bitlytics Stopped ----------");
+		}
+
+		if (SimpleController.just_pressed(A) || SimpleController.just_pressed(START)) {
+			clickPlay();
+			acceptInput = false;
 		}
 	}
 
