@@ -115,6 +115,11 @@ class Topographic extends FlxBasic {
 			}
 		}
 	}
+
+	public function clear() {
+		objects = [];
+		rebuild();
+	}
 }
 
 class TNode {

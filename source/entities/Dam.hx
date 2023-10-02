@@ -5,6 +5,8 @@ import echo.Body;
 import flixel.FlxSprite;
 
 class Dam extends IsoEchoSprite {
+	public var nextLevel: String = null;
+
 	public function new(x:Float=0, y:Float=0) {
 		gridWidth = 1;
 		gridLength = 1;

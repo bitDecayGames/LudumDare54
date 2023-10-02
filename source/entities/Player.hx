@@ -1,5 +1,6 @@
 package entities;
 
+import states.PlayState;
 import entities.states.player.StationaryState;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -81,7 +82,7 @@ class Player extends IsoEchoSprite implements Follower {
 		this.turnSpeedSkid = turnSpeedSkid;
 		this.crashTurnSpeed = crashTurnSpeed;
 
-		FlxG.log.error('Player Stats: speed:${speed}, turnSpeed:${turnSpeed}, turnSpeedSkid:${turnSpeedSkid}, crashTurnSpeed:${crashTurnSpeed}');
+		FlxG.log.notice('Player Stats: speed:${speed}, turnSpeed:${turnSpeed}, turnSpeedSkid:${turnSpeedSkid}, crashTurnSpeed:${crashTurnSpeed}');
 
 		super(x, y);
 
@@ -245,8 +246,7 @@ class Player extends IsoEchoSprite implements Follower {
 			// colliding with dam
 		} else if (other.object is Dam) {
 			var dam:Dam = cast other.object;
-			dropOffSurvivors(dam);
-			// TODO Switch to next level or end game
+			dropOffSurvivors(dam, dam.nextLevel);
 		}
 	}
 
@@ -272,26 +272,27 @@ class Player extends IsoEchoSprite implements Follower {
         }
 	}
 
-	private function dropOffSurvivors(dropoff: IsoEchoSprite) {
+	private function dropOffSurvivors(dropoff: IsoEchoSprite, nextLevel: String = null) {
 		// TODO: Take control from the player
 		stateMachine.setNextState(new StationaryState(this));
 
 		// TODO SFX Dropping people off at pier/dam
 		// Remove all followers
-		// May need to switch animation to be pier/dam specific
 		var toTween = new Array<Survivor>();
 		removeFollowers((s) -> {
 			// TODO This is where we would animate followers
 			// being dropped off on the pier,
 			toTween.push(s);
-			// s.kill();
 			// Lifecycle.personDelivered.dispatch(s);
 		});
 
 		new FlxTimer().start(0.3, (t) -> {
 			if (t.elapsedLoops == toTween.length + 1) {
-				// TODO: restore player control
 				stateMachine.setNextState(new CruisingState(this));
+				// Load next level
+				if (nextLevel != null) {
+					PlayState.ME.loadNextLevel = nextLevel;
+				}
 			} else {
 				var person = toTween[t.elapsedLoops-1];
 				person.body.active = false;
