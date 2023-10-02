@@ -36,6 +36,7 @@ class Survivor extends Bobber implements Follower {
 	private static inline var BODY_ANIM = "Body";
 
 	public var persona:String = "";
+	public var numCheckpointsHit = 0;
 
 	private static var arts = [
 		AssetPaths.Lady1__json,
@@ -61,7 +62,7 @@ class Survivor extends Bobber implements Follower {
 	}
 
 	public function isFollowing():Bool {
-		return stateMachine.getCurrentState() is FollowingState;
+		return following != null;
 	}
 
 	public function startTow() {
