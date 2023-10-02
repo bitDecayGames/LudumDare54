@@ -74,7 +74,7 @@ class Player extends IsoEchoSprite implements Follower {
 
 	public function new(x:Float, y:Float, speed:Float = 70, turnSpeed:Float = 130, turnSpeedSkid:Float = 200, crashTurnSpeed:Int = 200) {
 		gridWidth = .8;
-		gridLength = 6 / 16;
+		gridLength = 4 / 16;
 		gridHeight = 1;
 
 		this.speed = speed;
@@ -220,7 +220,8 @@ class Player extends IsoEchoSprite implements Follower {
 				} else if (collision.sa == pickupShape || collision.sb == pickupShape) {
 					FmodManager.PlaySoundOneShot(FmodSFX.BoatCollectSurvivor);
 					new FlxTimer().start(0.75, (t) -> {
-						FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
+						// Maybe no voice lines
+						// FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
 					});
 
 					if (!survivor.isFollowing()) {

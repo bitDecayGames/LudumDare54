@@ -152,13 +152,12 @@ class TNode {
 			return;
 		}
 
-
+		drawn = true;
 		object.draw();
 		for (c in children) {
 			// This may not work properly. Need to traverse this graph more intelligently
 			// to avoid drawing things early
 			c.draw();
 		}
-		drawn = true;
 	}
 }
