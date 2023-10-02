@@ -1,5 +1,6 @@
 package entities;
 
+import states.MainMenuState;
 import states.substate.CountdownOverlay;
 import states.PlayState;
 import entities.states.player.StationaryState;
@@ -311,6 +312,7 @@ class Player extends IsoEchoSprite implements Follower {
 							});
 						} else {
 							stateMachine.setNextState(new CruisingState(this));
+							FlxG.switchState(new MainMenuState());
 						}
 					} else {
 						var person = toTween[t.elapsedLoops-1];
