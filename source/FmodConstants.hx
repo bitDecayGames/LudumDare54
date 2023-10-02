@@ -24,6 +24,7 @@ class FmodSFX {
     public static inline var BoatEngine:String = "event:/SFX/Boat/BoatEngine";
     public static inline var BoatEngine2:String = "event:/SFX/Boat/BoatEngine2";
     public static inline var BoatEngineBoost:String = "event:/SFX/Boat/BoatEngineBoost";
+    public static inline var Talk:String = "event:/SFX/Characters/Talk";
     public static inline var VoiceFling:String = "event:/SFX/Characters/VoiceFling";
     public static inline var VoiceHit:String = "event:/SFX/Characters/VoiceHit";
     public static inline var VoiceRad:String = "event:/SFX/Characters/VoiceRad";

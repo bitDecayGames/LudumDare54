@@ -26,6 +26,8 @@ class TalkerOverlay extends FlxSubState {
 	var cb:Void->Void;
     var persona:String;
 	var text:String;
+	var talkingId = "talkingId";
+	var typeText:FlxTypeText;
 
 	public function new(persona:String, displayTime:Float, text:String, cb:Void->Void = null) {
 		super();
@@ -50,22 +52,24 @@ class TalkerOverlay extends FlxSubState {
 		portrait.scrollFactor.set();
 
         if (persona == "COP") {
-            // TODO SFX: static radio mumbling
             var fx = new FlxEffectSprite(portrait, [new FlxGlitchEffect(2, 1, 0.1)]);
             fx.setPosition(portrait.x, portrait.y);
             fx.scrollFactor.set();
             add(fx);
         } else {
-            // TODO SFX: Normal chatter sfx?
             add(portrait);
         }
 
-        var text = new FlxTypeText(portrait.x + portrait.width + 8, banner.y + 10, cast(banner.width - (portrait.x + portrait.width) - 10), text);
-        text.setTypingVariation();
-        text.color = FlxColor.BLACK;
-        text.scrollFactor.set();
-        text.start();
-        add(text);
+        typeText = new FlxTypeText(portrait.x + portrait.width + 8, banner.y + 10, cast(banner.width - (portrait.x + portrait.width) - 10), text);
+        typeText.setTypingVariation();
+        typeText.color = FlxColor.BLACK;
+        typeText.scrollFactor.set();
+        typeText.start();
+		FmodManager.PlaySoundAndAssignId(FmodSFX.Talk, talkingId);
+		typeText.completeCallback = () -> {
+			FmodManager.StopSoundImmediately(talkingId);
+		};
+        add(typeText);
 
 		// var quip = quips[portrait.animation.frameIndex];
 		// var flavorText = new Trooper(portrait.x + portrait.width + 10, portrait.y, quip);

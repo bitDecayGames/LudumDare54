@@ -45,6 +45,8 @@ class PlayState extends FlxTransitionableState {
 
 	var initialLevelName = "Tutorial";
 
+	public var boatEngineId = "boatEngineId";
+
 	public var loadNextLevel:String = null;
 
 	var playerGroup = new FlxGroup();
@@ -158,6 +160,8 @@ class PlayState extends FlxTransitionableState {
 
 	public function loadLevel(levelName:String) {
 		FlxG.log.notice('Load level: ${levelName}');
+
+		FmodManager.SetEventParameterOnSong("lowpass", 0);
 
 		deliveries = 0;
 
@@ -356,6 +360,7 @@ class PlayState extends FlxTransitionableState {
 		FlxEcho.updates = false;
 		openSubState(subState);
 		subStateClosed.addOnce((ss) -> {
+			FmodManager.StopSoundImmediately(boatEngineId);
 			FlxEcho.updates = true;
 			if (cb != null) cb();
 		});

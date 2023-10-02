@@ -47,6 +47,7 @@ class SlidingState extends State<Player> {
         return null;
     }
     override public function onEnter(last:State<Player>, current:State<Player>, next:State<Player>):Void {
+        trace("entering boat drift");
         FmodManager.PlaySoundAndAssignId(FmodSFX.BoatDriftComposite, boatDriftId);
     }
     override public function onExit(last:State<Player>, current:State<Player>, next:State<Player>):Void {
