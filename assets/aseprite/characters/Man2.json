@@ -394,6 +394,78 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
     "sourceSize": { "w": 16, "h": 16 },
     "duration": 100
+   },
+   {
+    "filename": "Man2 44.ase",
+    "frame": { "x": 48, "y": 80, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Man2 45.ase",
+    "frame": { "x": 64, "y": 80, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Man2 46.ase",
+    "frame": { "x": 80, "y": 80, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Man2 47.ase",
+    "frame": { "x": 96, "y": 80, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Man2 48.ase",
+    "frame": { "x": 0, "y": 96, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Man2 49.ase",
+    "frame": { "x": 16, "y": 96, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Man2 50.ase",
+    "frame": { "x": 32, "y": 96, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Man2 51.ase",
+    "frame": { "x": 48, "y": 96, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
    }
  ],
  "meta": {
@@ -401,14 +473,17 @@
   "version": "1.3-rc6-x64",
   "image": "Man2.png",
   "format": "RGBA8888",
-  "size": { "w": 112, "h": 96 },
+  "size": { "w": 112, "h": 112 },
   "scale": "1",
   "frameTags": [
    { "name": "Float", "from": 0, "to": 15, "direction": "forward", "color": "#000000ff" },
    { "name": "Float", "from": 16, "to": 19, "direction": "forward", "color": "#000000ff" },
    { "name": "Fly", "from": 20, "to": 27, "direction": "forward", "color": "#000000ff" },
    { "name": "Body", "from": 28, "to": 28, "direction": "forward", "color": "#000000ff" },
-   { "name": "Cheer", "from": 29, "to": 42, "direction": "forward", "color": "#000000ff" }
+   { "name": "Cheer", "from": 29, "to": 42, "direction": "forward", "color": "#000000ff" },
+   { "name": "Stand", "from": 43, "to": 43, "direction": "forward", "color": "#000000ff" },
+   { "name": "WalkDown", "from": 44, "to": 47, "direction": "forward", "color": "#000000ff" },
+   { "name": "WalkUp", "from": 48, "to": 51, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
    { "name": "Layer 2", "opacity": 255, "blendMode": "normal" },
