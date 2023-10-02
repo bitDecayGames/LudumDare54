@@ -209,12 +209,12 @@ class Player extends IsoEchoSprite implements Follower {
 				}
 			}
 		// colliding with log
-		} else if (other.object is Log) {
-			var log: Log = cast other.object;
+		} else if (other.object is Debris) {
+			var debris: Debris = cast other.object;
 			for (d in data) {
 				// colliding with boat
 				if (collision.sb == boatShape) { 
-					damageMe(log, collision.normal);
+					damageMe(debris, collision.normal);
 					break;
 				}
 			}
