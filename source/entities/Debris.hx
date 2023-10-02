@@ -3,9 +3,8 @@ package entities;
 import echo.Body;
 import flixel.FlxSprite;
 import loaders.Aseprite;
-import loaders.AsepriteMacros;
 
-class Log extends Bobber {
+class Debris extends Bobber {
 	public function new(x:Float=0, y:Float=0) {
 		gridWidth = 28/16;
 		gridLength = 0.5;
@@ -17,7 +16,11 @@ class Log extends Bobber {
 
 	override function configSprite() {
 		this.sprite = new FlxSprite();
-		Aseprite.loadAllAnimations(this.sprite, AssetPaths.log__json);
+		var heads = Math.random() >= 0.5;
+		var assetPath = heads ?	
+			AssetPaths.log__json :
+			AssetPaths.canoe__json;
+		Aseprite.loadAllAnimations(this.sprite, assetPath);
 	}
 
 	override function makeBody():Body {

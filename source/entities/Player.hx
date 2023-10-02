@@ -1,5 +1,8 @@
 package entities;
 
+import signals.Lifecycle;
+import input.PlayerInstanceController;
+import input.IController;
 import echo.math.Vector2;
 import flixel.util.FlxTimer;
 import iso.Grid;
@@ -61,6 +64,8 @@ class Player extends IsoEchoSprite implements Follower {
 	public var targetX(get, null):Float;
 	public var targetY(get, null):Float;
 
+	public var controller:IController;
+
 	public function new(x:Float, y:Float, speed:Float = 70, turnSpeed:Float = 130, turnSpeedSkid:Float = 200, crashTurnSpeed:Int = 200) {
 		gridWidth = .8;
 		gridLength = 6 / 16;
@@ -80,6 +85,8 @@ class Player extends IsoEchoSprite implements Follower {
 
 		stateMachine = new StateMachine<Player>(this);
 		stateMachine.setNextState(new CruisingState(this));
+
+		controller = new PlayerInstanceController();
 	}
 
 	override function configSprite() {
@@ -207,47 +214,59 @@ class Player extends IsoEchoSprite implements Follower {
 					}
 				}
 			}
-			// colliding with log
-		} else if (other.object is Log) {
-			var log:Log = cast other.object;
+		// colliding with debris
+		} else if (other.object is Debris) {
+			var debris: Debris = cast other.object;
 			for (d in data) {
 				// colliding with boat
-				if (collision.sb == boatShape) {
-					damageMe(log, collision.normal);
+				if (collision.sb == boatShape) { 
+					damageMe(debris, collision.normal);
 					break;
 				}
 			}
 			// colliding with pier
 		} else if (other.object is Pier) {
 			var pier:Pier = cast other.object;
-			dropOffSurvivors();
+			dropOffSurvivors(pier);
 			// colliding with dam
 		} else if (other.object is Dam) {
 			var dam:Dam = cast other.object;
-			dropOffSurvivors();
+			dropOffSurvivors(dam);
 			// TODO Switch to next level or end game
 		}
 	}
 
-	private function iterateFollowers(callback:Survivor->Void) {
+	private function removeFollowers(preRemoveCallback:Survivor->Void) {
 		var lastFollower = FollowerHelper.getLastLinkOnChain(this);
 		while (lastFollower != null && lastFollower != this) {
 			if ((lastFollower is Survivor)) {
 				var survivor:Survivor = cast lastFollower;
-				callback(survivor);
+				preRemoveCallback(survivor);
 			}
 			lastFollower = FollowerHelper.stopFollowing(lastFollower);
 		}
 	}
 
-	private function dropOffSurvivors() {
+	private function iterateFollowers(callback:Survivor->Void) {
+		var cur = FollowerHelper.getLastLinkOnChain(this);
+        while (cur != null && cur != this) {
+			if ((cur is Survivor)) {
+				var survivor:Survivor = cast cur;
+				callback(survivor);
+			}
+			cur = cur.following;
+        }
+	}
+
+	private function dropOffSurvivors(dropoff: IsoEchoSprite) {
 		// TODO SFX Dropping people off at pier/dam
 		// Remove all followers
 		// May need to switch animation to be pier/dam specific
-		iterateFollowers((s) -> {
+		removeFollowers((s) -> {
 			// TODO This is where we would animate followers
 			// being dropped off on the pier
 			s.kill();
+			Lifecycle.personDelivered.dispatch(s);
 		});
 	}
 

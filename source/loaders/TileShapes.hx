@@ -5,6 +5,16 @@ import echo.util.TileMap.SlopeAngle;
 import echo.util.TileMap.TileShape;
 
 class TileShapes {
+    static public var ignored:Array<Int> = [
+        10,
+        39,
+        40,
+        52,
+        53,
+        54,
+        55
+    ];
+    
     static public var shapes:Array<TileShape> = [
         {
             index: 4,

@@ -1,5 +1,8 @@
 package entities;
 
+import signals.Lifecycle;
+import haxe.io.Path;
+import states.PlayState;
 import entities.states.survivor.DeadState;
 import entities.states.survivor.FollowingState;
 import flixel.FlxG;
@@ -32,6 +35,7 @@ class Survivor extends Bobber implements Follower {
 	private static inline var TUBE_ANIM = "Tube";
 	private static inline var BODY_ANIM = "Body";
 
+	public var persona:String = "";
 	public var numCheckpointsHit = 0;
 
 	private static var arts = [
@@ -65,6 +69,7 @@ class Survivor extends Bobber implements Follower {
 		// TODO SFX: Survivor thrown from boat.
 		sprite.animation.play(TUBE_ANIM);
 		sprite.animation.pause();
+		Lifecycle.personPickedUp.dispatch(this);
 	}
 
 	public function startFloat() {
@@ -80,6 +85,7 @@ class Survivor extends Bobber implements Follower {
 	override function configSprite() {
 		this.sprite = new FlxSprite();
 		var asset = FlxG.random.getObject(arts);
+		persona = Path.withoutExtension(Path.withoutDirectory(asset));
 		Aseprite.loadAllAnimations(this.sprite, asset);
 		startFloat();
 	}
@@ -122,6 +128,7 @@ class Survivor extends Bobber implements Follower {
 	public function die() {
 		// TODO SFX: Survivor killed.
 		sprite.animation.play(BODY_ANIM);
+		Lifecycle.personHit.dispatch(this);
 	}
 
 	public function hitByObject() {

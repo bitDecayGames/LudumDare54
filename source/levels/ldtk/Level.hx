@@ -1,9 +1,9 @@
 package levels.ldtk;
 
+import entities.Debris;
 import iso.IsoEchoSprite;
 import entities.Dam;
 import entities.Pier;
-import entities.Log;
 import entities.Survivor;
 import flixel.group.FlxGroup;
 import entities.Player;
@@ -45,7 +45,7 @@ class Level {
 
         // Debris (Logs, etc.)
 		for (l in raw.l_Entities.all_Log) {
-			var ent = new Log(l.pixelX, l.pixelY);
+			var ent = new Debris(l.pixelX, l.pixelY);
 			debris.push(ent);
 		}
 

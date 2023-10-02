@@ -25,12 +25,14 @@ class TalkerOverlay extends FlxSubState {
 	var display:Float = 0;
 	var cb:Void->Void;
     var persona:String;
+	var text:String;
 
-	public function new(persona:String, displayTime:Float, cb:Void->Void = null) {
+	public function new(persona:String, displayTime:Float, text:String, cb:Void->Void = null) {
 		super();
 		display = displayTime;
 		this.cb = cb;
         this.persona = persona;
+		this.text = text;
 	}
 
 	override function create() {
@@ -58,8 +60,7 @@ class TalkerOverlay extends FlxSubState {
             add(portrait);
         }
 
-        var text = new FlxTypeText(portrait.x + portrait.width + 8, banner.y + 10, cast(banner.width - (portrait.x + portrait.width) - 30),
-            "Hey man, what are you trying to do here? Get out there and save those people! Last I counted, there were 6 reports of people who fell in.");
+        var text = new FlxTypeText(portrait.x + portrait.width + 8, banner.y + 10, cast(banner.width - (portrait.x + portrait.width) - 10), text);
         text.setTypingVariation();
         text.color = FlxColor.BLACK;
         text.scrollFactor.set();
