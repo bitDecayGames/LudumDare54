@@ -103,9 +103,9 @@ class PlayState extends FlxTransitionableState {
 		// FlxG.camera.pixelPerfectRender = true;
 		persistentUpdate = false;
 
-		#if tanner
+		// #if tanner
 		FmodManager.PlaySong(FmodSongs.Game);
-		#end
+		// #end
 
 		// Echo/physics init
 		FlxEcho.init({
