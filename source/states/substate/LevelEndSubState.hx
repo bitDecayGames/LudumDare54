@@ -19,6 +19,8 @@ class LevelEndSubState extends FlxSubState {
     override function create() {
         super.create();
 
+        FmodManager.SetEventParameterOnSong("lowpass", 1);
+
         var bg = new FlxSprite(AssetPaths.tallyScreen__png);
         bg.scrollFactor.set();
         add(bg);

@@ -109,18 +109,18 @@ class Level {
 					var tileStack = rawTerrainLayer.getTileStackAt(cw, ch);
 					var tileId = tileStack[tileStack.length - 1].tileId;
 					terrainInts.push(tileId);
-					trace('add terrainInt: ${tileId} from ${cw},${ch}');
+					// trace('add terrainInt: ${tileId} from ${cw},${ch}');
 				} else if (rawAutoTilerLayer.hasValue(cw, ch)) {
 					var autoTile = rawAutoTilesArray[ch * terrainTilesWide + cw];
-					trace('add autoTileId: ${autoTile.tileId} from ${cw},${ch}');
+					// trace('add autoTileId: ${autoTile.tileId} from ${cw},${ch}');
 					terrainInts.push(autoTile.tileId);
 				} else {
 					terrainInts.push(0);
 				}
 			}
 		}
-		trace('autoInts:${rawAutoTilesArray.map(v -> '${v.tileId}')}');
-		trace('terrainInts:${terrainInts}');
+		// trace('autoInts:${rawAutoTilesArray.map(v -> '${v.tileId}')}');
+		// trace('terrainInts:${terrainInts}');
 	}
 
 	public function getTileIdAtCellCoord(x:Int, y:Int):Int {

@@ -193,7 +193,7 @@
 			<value>highGain</value>
 		</property>
 		<relationship name="automationCurves">
-			<destination>{ea2e087c-ac74-4fc6-bd88-3f7945bc00dd}</destination>
+			<destination>{23b35730-9c62-494f-bfec-3909d684336d}</destination>
 		</relationship>
 	</object>
 	<object class="Automator" id="{83b96fd0-051e-448f-9dc0-043ad7087801}">
@@ -204,13 +204,13 @@
 			<destination>{a868703a-2576-49a6-9a5d-5aed9607b438}</destination>
 		</relationship>
 	</object>
-	<object class="AutomationCurve" id="{ea2e087c-ac74-4fc6-bd88-3f7945bc00dd}">
+	<object class="AutomationCurve" id="{23b35730-9c62-494f-bfec-3909d684336d}">
 		<relationship name="parameter">
 			<destination>{fe004c9a-8741-4152-b679-be7971ceeec4}</destination>
 		</relationship>
 		<relationship name="automationPoints">
-			<destination>{611b7209-83b4-451e-ba50-35d5543b4052}</destination>
-			<destination>{014e6125-c278-4dab-9255-57decef29c36}</destination>
+			<destination>{c0f71e97-66e7-4827-84a2-cfda8e262451}</destination>
+			<destination>{13a01b77-002b-475a-a6fa-22a77a7da487}</destination>
 		</relationship>
 	</object>
 	<object class="AutomationCurve" id="{a868703a-2576-49a6-9a5d-5aed9607b438}">
@@ -222,7 +222,7 @@
 			<destination>{1c6a0d25-6c3d-405a-ac48-6fe0b3894d6d}</destination>
 		</relationship>
 	</object>
-	<object class="AutomationPoint" id="{611b7209-83b4-451e-ba50-35d5543b4052}">
+	<object class="AutomationPoint" id="{c0f71e97-66e7-4827-84a2-cfda8e262451}">
 		<property name="position">
 			<value>1</value>
 		</property>
@@ -230,15 +230,12 @@
 			<value>-80</value>
 		</property>
 	</object>
-	<object class="AutomationPoint" id="{014e6125-c278-4dab-9255-57decef29c36}">
+	<object class="AutomationPoint" id="{13a01b77-002b-475a-a6fa-22a77a7da487}">
 		<property name="position">
 			<value>0</value>
 		</property>
 		<property name="value">
 			<value>0</value>
-		</property>
-		<property name="curveShape">
-			<value>0.26505816</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{bacb856f-072f-43ac-8d04-bc0d61ba0fd9}">
