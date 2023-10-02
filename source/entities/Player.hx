@@ -33,12 +33,13 @@ class Player extends IsoEchoSprite implements Follower {
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
 	public static var eventData = AsepriteMacros.frameUserData("assets/aseprite/characters/player.json", "Layer 1");
 
-	public var speed:Float = 70;
-	public var turnSpeed:Float = 130;
-	public var turnSpeedSkid:Float = 200;
-	public var playerNum = 0;
+	public var speed:Float;
+	public var turnSpeed:Float;
+	public var turnSpeedSkid:Float;
 
-	public var crashTurnSpeed = 200;
+	public var crashTurnSpeed:Int;
+
+	public var playerNum = 0;
 
 	public var previousVelocity:Vector2 = new Vector2(0, 0);
 
@@ -62,10 +63,15 @@ class Player extends IsoEchoSprite implements Follower {
 	public var targetY(get, null):Float;
 
 
-	public function new(x:Float, y:Float) {
+	public function new(x:Float, y:Float, speed:Float=70, turnSpeed:Float=130, turnSpeedSkid:Float=200, crashTurnSpeed:Int=200) {
 		gridWidth = .8;
 		gridLength = 6/16;
 		gridHeight = 1;
+
+		this.speed = speed;
+		this.turnSpeed = turnSpeed;
+		this.turnSpeedSkid = turnSpeedSkid;
+		this.crashTurnSpeed = crashTurnSpeed;
 
 		super(x, y);
 
@@ -144,7 +150,7 @@ class Player extends IsoEchoSprite implements Follower {
 		FlxG.watch.addQuick('pAngFrame:', spinFrame);
 		FlxG.watch.addQuick('playerPos:', sprite.getPosition());
 		#end
-		
+
 		FlxG.watch.addQuick('playerVel:', body.velocity);
 
 		#if FLX_DEBUG
