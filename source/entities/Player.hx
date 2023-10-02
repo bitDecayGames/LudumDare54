@@ -1,5 +1,8 @@
 package entities;
 
+import entities.states.player.StationaryState;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import signals.Lifecycle;
 import input.PlayerInstanceController;
 import input.IController;
@@ -269,15 +272,39 @@ class Player extends IsoEchoSprite implements Follower {
 	}
 
 	private function dropOffSurvivors(dropoff: IsoEchoSprite) {
+		// TODO: Take control from the player
+		stateMachine.setNextState(new StationaryState(this));
+
 		// TODO SFX Dropping people off at pier/dam
 		// Remove all followers
 		// May need to switch animation to be pier/dam specific
+		var toTween = new Array<Survivor>();
 		removeFollowers((s) -> {
 			// TODO This is where we would animate followers
-			// being dropped off on the pier
-			s.kill();
-			Lifecycle.personDelivered.dispatch(s);
+			// being dropped off on the pier,
+			toTween.push(s);
+			// s.kill();
+			// Lifecycle.personDelivered.dispatch(s);
 		});
+
+		new FlxTimer().start(0.3, (t) -> {
+			if (t.elapsedLoops == toTween.length + 1) {
+				// TODO: restore player control
+				stateMachine.setNextState(new CruisingState(this));
+			} else {
+				var person = toTween[t.elapsedLoops-1];
+				person.body.active = false;
+				person.startFling();
+				FlxTween.tween(person.body, {x: dropoff.body.x, y: dropoff.body.y}, 0.5, {
+					ease: FlxEase.sineOut,
+					onComplete: (tween) -> {
+						// TODO SFX: points SFX with better sound based on t.elapsedLoops (bigger is better)
+						person.startStanding();
+						Lifecycle.personDelivered.dispatch(person);
+					}
+				});
+			}
+		}, toTween.length + 1);
 	}
 
 	function get_targetX():Float {

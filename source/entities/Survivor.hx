@@ -34,6 +34,7 @@ class Survivor extends Bobber implements Follower {
 	private static inline var FLY_ANIM = "Fly";
 	private static inline var TUBE_ANIM = "Tube";
 	private static inline var BODY_ANIM = "Body";
+	private static inline var STAND_ANIM = "Cheer";
 
 	public var persona:String = "";
 	public var numCheckpointsHit = 0;
@@ -118,6 +119,10 @@ class Survivor extends Bobber implements Follower {
 
 	function get_targetY():Float {
 		return body.y;
+	}
+
+	public function startStanding() {
+		sprite.animation.play(STAND_ANIM);
 	}
 
 	public function startFling() {
