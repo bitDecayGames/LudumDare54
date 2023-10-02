@@ -218,6 +218,7 @@ class PlayState extends FlxTransitionableState {
 		FlxEcho.listen(playerGroup, logs, {
 			separate: true,
 			enter: defaultEnterHandler,
+			stay: defaultEnterHandler,
 			exit: defaultExitHandler,
 		});
 
