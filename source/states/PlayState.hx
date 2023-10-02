@@ -32,18 +32,20 @@ import flixel.group.FlxSpriteGroup;
 import bitdecay.flixel.debug.DebugDraw;
 import levels.ldtk.Level;
 import echo.FlxEcho;
-
 import entities.Current;
 import entities.EchoSprite;
 import entities.EchoSprite;
+
 using states.FlxStateExt;
 
 class PlayState extends FlxTransitionableState {
 	public static var ME:PlayState = null;
 
 	public var level:Level;
+
 	var initialLevelName = "Level_0";
-	public var loadNextLevel: String = null;
+
+	public var loadNextLevel:String = null;
 
 	var playerGroup = new FlxGroup();
 	var survivors = new FlxGroup();
@@ -141,7 +143,6 @@ class PlayState extends FlxTransitionableState {
 
 		add(particles);
 
-
 		#if logan
 		initialLevelName = "Tutorial";
 		#end
@@ -150,7 +151,7 @@ class PlayState extends FlxTransitionableState {
 	}
 
 	public function loadLevel(levelName:String) {
-		FlxG.log.notice	('Load level: ${levelName}');
+		FlxG.log.notice('Load level: ${levelName}');
 
 		terrain.forEach((t) -> {
 			t.destroy();
@@ -222,7 +223,8 @@ class PlayState extends FlxTransitionableState {
 		if (level.raw.identifier == "Tutorial") {
 			level.player.controller = new TutorialController();
 
-			doOpenSubState(new TalkerOverlay("COP", 15, "Welcome to your first day! Folks out here are just looking for a good time. Pick 'em up and show 'em around. Drop 'em off at one of the piers at some point."));
+			doOpenSubState(new TalkerOverlay("COP", 15,
+				"Welcome to your first day! Folks out here are just looking for a good time. Pick 'em up and show 'em around. Drop 'em off at one of the piers at some point."));
 			var rider:Survivor;
 			Lifecycle.personPickedUp.addOnce((s) -> {
 				rider = s;
@@ -230,7 +232,8 @@ class PlayState extends FlxTransitionableState {
 			});
 			Lifecycle.personHit.addOnce((s) -> {
 				new FlxTimer().start(.5, (t) -> {
-					doOpenSubState(new TalkerOverlay(rider.persona, 5, "Did you just hit that person? You probably shouldn't do that... The arrow keys will probably help you steer."));
+					doOpenSubState(new TalkerOverlay(rider.persona, 5,
+						"Did you just hit that person? You probably shouldn't do that... The arrow keys will probably help you steer."));
 				});
 			});
 			Lifecycle.personDelivered.addOnce((s) -> {
@@ -337,17 +340,19 @@ class PlayState extends FlxTransitionableState {
 	}
 
 	public function makeTerrainPiece(level:Level, gridX:Int, gridY:Int) {
-		if (!level.raw.l_Terrain.hasAnyTileAt(gridX, gridY)) {
-			return;
-		}
+		// if (!level.raw.l_Terrain.hasAnyTileAt(gridX, gridY)) {
+		// 	return;
+		// }
 
-		var tileId = level.raw.l_Terrain.getTileStackAt(gridX, gridY)[0].tileId;
+		// var tileId = level.raw.l_Terrain.getTileStackAt(gridX, gridY)[0].tileId;
+
+		var tileId = level.getTileIdAtCellCoord(gridX, gridY);
 		terrain.add(new Terrain(gridX * Grid.CELL_SIZE, gridY * Grid.CELL_SIZE, tileId));
 
 		// terrain.add(new Terrain(x * Grid.CELL_SIZE, y * Grid.CELL_SIZE, level.raw.l_Terrain..getInt(x, y)));
 	}
 
-	public function getScore(): Int {
+	public function getScore():Int {
 		var sum = 0;
 		for (ent in survivors) {
 			var s:Survivor = cast ent;
