@@ -4,7 +4,7 @@ import flixel.FlxObject;
 
 class Overlap {
 	// returns true if blocks overlap on all 3 axes in iso projection space
-	public static function doSpritesOverlapInIsoSpace(a:IsoSprite, b:IsoSprite):Bool {
+	public static function doSpritesOverlapInIsoSpace(a:IsoSortable, b:IsoSortable):Bool {
 		var aXMin = a.isoXmin;
 		var aXMax = a.isoXmax;
 		var aYMin = a.isoYmin;
@@ -32,10 +32,12 @@ class Overlap {
 		// 	!(a.hMin >= b.hMax || b.hMin >= a.hMax));
 	}
 
-	public static function isSpriteInFront(a:IsoSprite, b:IsoSprite) {
+	public static function isSpriteInFront(a:IsoSortable, b:IsoSortable) {
 		// test for intersection x-axis
 		// (larger x value is in front)
 		var aGXMin = a.gridXmin;
+		var aGXMax = a.gridXmax;
+		var bGXMin = b.gridXmin;
 		var bGXMax = b.gridXmax;
 		if (a.gridXmin >= b.gridXmax) {
 			return true;
@@ -45,6 +47,10 @@ class Overlap {
 
 		// test for intersection y-axis
 		// (larger2 y value is in front)
+		var aGYMin = a.gridYmin;
+		var aGYMax = a.gridYmax;
+		var bGYMin = b.gridYmin;
+		var bGYMax = b.gridYmax;
 		if (a.gridYmin >= b.gridYmax) {
 			return true;
 		} else if (b.gridYmin >= a.gridYmax) {

@@ -296,6 +296,8 @@ class Player extends IsoEchoSprite implements Follower {
 				var person = toTween[t.elapsedLoops-1];
 				person.body.active = false;
 				person.startFling();
+				person.bobbingEnabled = false;
+				person.z = .1;
 				FlxTween.tween(person.body, {x: dropoff.body.x, y: dropoff.body.y}, 0.5, {
 					ease: FlxEase.sineOut,
 					onComplete: (tween) -> {

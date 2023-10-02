@@ -1,5 +1,6 @@
 package topo;
 
+import iso.IsoSortable;
 import bitdecay.flixel.debug.DebugDraw;
 import debug.DebugLayers;
 import flixel.FlxBasic;
@@ -12,19 +13,19 @@ import iso.IsoSprite;
 import iso.Overlap;
 
 class Topographic extends FlxBasic {
-	public var objects:Array<IsoSprite>;
+	public var objects:Array<IsoSortable>;
 
 	public var rootNodes:Array<TNode>;
 	public var allNodes:Array<TNode>;
 
-	public function new(objs:Array<IsoSprite>) {
+	public function new(objs:Array<IsoSortable>) {
 		super();
 
 		objects = objs;
 		rebuild();
 	}
 
-	public function add(o:IsoSprite) {
+	public function add(o:IsoSortable) {
 		objects.push(o);
 	}
 
@@ -53,7 +54,7 @@ class Topographic extends FlxBasic {
 
 	private function drawGraphBranch(n:TNode, color:FlxColor = FlxColor.ORANGE, size:Float = 3) {
 		if (n.children.length == 0) {
-			return;
+			// return;
 		}
 
 		var p = n.object.centerPoint();
@@ -121,7 +122,7 @@ class TNode {
 	public var visited = false;
 	public var parents:Array<TNode>;
 	public var children:Array<TNode>;
-	public var object:IsoSprite;
+	public var object:IsoSortable;
 
 	private static var colors = [
 		for (i in 0...5) {
@@ -130,7 +131,7 @@ class TNode {
 	];
 	public static var index = 0;
 
-	public function new(o:IsoSprite) {
+	public function new(o:IsoSortable) {
 		object = o;
 		parents = [];
 		children = [];
