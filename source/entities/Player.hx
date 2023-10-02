@@ -285,46 +285,51 @@ class Player extends IsoEchoSprite implements Follower {
 
 	private function dropOffSurvivors(dropoff: IsoEchoSprite, nextLevel: String = null) {
 		// TODO: Take control from the player
+		FmodManager.PlaySoundOneShot(FmodSFX.BoatDock);
 		stateMachine.setNextState(new StationaryState(this));
-
-		// TODO SFX Dropping people off at pier/dam
-		// Remove all followers
-		var toTween = new Array<Survivor>();
-		removeFollowers((s) -> {
-			// TODO This is where we would animate followers
-			// being dropped off on the pier,
-			toTween.push(s);
-			// Lifecycle.personDelivered.dispatch(s);
-		});
-
-		new FlxTimer().start(0.3, (t) -> {
-			if (t.elapsedLoops == toTween.length + 1) {
-				// Load next level
-				FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
-				if (nextLevel != null) {
-					new FlxTimer().start(.5, (t) -> {
-						PlayState.ME.showSummary(nextLevel);
-					});
-				} else {
-					stateMachine.setNextState(new CruisingState(this));
-				}
-			} else {
-				var person = toTween[t.elapsedLoops-1];
-				person.body.active = false;
-				person.startFling();
-				person.bobbingEnabled = false;
-				person.z = .1;
-				FmodManager.PlaySoundOneShot(FmodSFX.SurvivorsSave);
-				FlxTween.tween(person.body, {x: dropoff.body.x, y: dropoff.body.y}, 0.5, {
-					ease: FlxEase.sineOut,
-					onComplete: (tween) -> {
-						// TODO SFX: points SFX with better sound based on t.elapsedLoops (bigger is better)
-						person.startStanding();
-						Lifecycle.personDelivered.dispatch(person);
-					}
+		new FlxTimer().start(0.125, (t) -> {
+			FmodManager.PlaySoundOneShot(FmodSFX.BoatDockJingle2);
+			
+			new FlxTimer().start(0.5, (t) -> {
+				// Remove all followers
+				var toTween = new Array<Survivor>();
+				removeFollowers((s) -> {
+					// TODO This is where we would animate followers
+					// being dropped off on the pier,
+					toTween.push(s);
+					// Lifecycle.personDelivered.dispatch(s);
 				});
-			}
-		}, toTween.length + 1);
+		
+				new FlxTimer().start(0.3, (t) -> {
+					if (t.elapsedLoops == toTween.length + 1) {
+						// Load next level
+						FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
+						if (nextLevel != null) {
+							new FlxTimer().start(.5, (t) -> {
+								PlayState.ME.showSummary(nextLevel);
+							});
+						} else {
+							stateMachine.setNextState(new CruisingState(this));
+						}
+					} else {
+						var person = toTween[t.elapsedLoops-1];
+						person.body.active = false;
+						person.startFling();
+						person.bobbingEnabled = false;
+						person.z = .1;
+						FmodManager.PlaySoundOneShot(FmodSFX.SurvivorsSave);
+						FlxTween.tween(person.body, {x: dropoff.body.x, y: dropoff.body.y}, 0.5, {
+							ease: FlxEase.sineOut,
+							onComplete: (tween) -> {
+								// TODO SFX: points SFX with better sound based on t.elapsedLoops (bigger is better)
+								person.startStanding();
+								Lifecycle.personDelivered.dispatch(person);
+							}
+						});
+					}
+				}, toTween.length + 1);
+			});
+		});
 	}
 
 	function get_targetX():Float {

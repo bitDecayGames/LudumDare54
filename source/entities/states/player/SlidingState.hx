@@ -20,8 +20,6 @@ class SlidingState extends State<Player> {
         if (initialSkidAngle == Math.POSITIVE_INFINITY) {
             initialSkidAngle = entity.rawAngle;
             skidDuration = 0.0;
-
-            // TODO SFX: Start boat skid
         }
 
         skidDuration = Math.min(skidDuration + delta, MAX_SKID_MOVE_TIME);
@@ -53,7 +51,6 @@ class SlidingState extends State<Player> {
     }
     override public function onExit(last:State<Player>, current:State<Player>, next:State<Player>):Void {
         if (skidDuration > 0) {
-            // TODO SFX: Skid ended
             // TODO: We likely want some sort of cooldown as a way to reset when the player can drift/skid again
             skidDuration = 0;
             initialSkidAngle = Math.POSITIVE_INFINITY;
