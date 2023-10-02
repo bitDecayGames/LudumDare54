@@ -220,31 +220,42 @@ class Player extends IsoEchoSprite implements Follower {
 			// colliding with pier
 		} else if (other.object is Pier) {
 			var pier:Pier = cast other.object;
-			dropOffSurvivors();
+			dropOffSurvivors(pier);
 			// colliding with dam
 		} else if (other.object is Dam) {
 			var dam:Dam = cast other.object;
-			dropOffSurvivors();
+			dropOffSurvivors(dam);
 			// TODO Switch to next level or end game
 		}
 	}
 
-	private function iterateFollowers(callback:Survivor->Void) {
+	private function removeFollowers(preRemoveCallback:Survivor->Void) {
 		var lastFollower = FollowerHelper.getLastLinkOnChain(this);
 		while (lastFollower != null && lastFollower != this) {
 			if ((lastFollower is Survivor)) {
 				var survivor:Survivor = cast lastFollower;
-				callback(survivor);
+				preRemoveCallback(survivor);
 			}
 			lastFollower = FollowerHelper.stopFollowing(lastFollower);
 		}
 	}
 
-	private function dropOffSurvivors() {
+	private function iterateFollowers(callback:Survivor->Void) {
+		var cur = FollowerHelper.getLastLinkOnChain(this);
+        while (cur != null && cur != this) {
+			if ((cur is Survivor)) {
+				var survivor:Survivor = cast cur;
+				callback(survivor);
+			}
+			cur = cur.following;
+        }
+	}
+
+	private function dropOffSurvivors(dropoff: IsoEchoSprite) {
 		// TODO SFX Dropping people off at pier/dam
 		// Remove all followers
 		// May need to switch animation to be pier/dam specific
-		iterateFollowers((s) -> {
+		removeFollowers((s) -> {
 			// TODO This is where we would animate followers
 			// being dropped off on the pier
 			s.kill();
