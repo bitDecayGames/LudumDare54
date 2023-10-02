@@ -239,11 +239,11 @@ class PlayState extends FlxTransitionableState {
 			exit: defaultExitHandler,
 		});
 
-		FlxEcho.updates = false;
-		openSubState(new TalkerOverlay("COP", 10));
-		subStateClosed.addOnce((ss) -> {
-			FlxEcho.updates = true;
-		});
+		// FlxEcho.updates = false;
+		// openSubState(new TalkerOverlay("COP", 10));
+		// subStateClosed.addOnce((ss) -> {
+		// 	FlxEcho.updates = true;
+		// });
 	}
 
 	public function makeTerrainPiece(level:Level, gridX:Int, gridY:Int) {

@@ -1,5 +1,6 @@
 package entities;
 
+import echo.math.Vector2;
 import flixel.util.FlxTimer;
 import score.ScoreManager;
 import iso.Grid;
@@ -37,6 +38,10 @@ class Player extends IsoEchoSprite implements Follower {
 	public var turnSpeed:Float = 130;
 	public var turnSpeedSkid:Float = 200;
 	public var playerNum = 0;
+
+	public var crashTurnSpeed = 200;
+
+	public var previousVelocity:Vector2 = new Vector2(0, 0);
 
 	public var rawAngle:Float = 0;
 	public var calculatedAngle:Float = 0;
@@ -114,9 +119,9 @@ class Player extends IsoEchoSprite implements Follower {
 	}
 
 	override public function update(delta:Float) {
+		previousVelocity.copy_from(body.velocity);
+
 		super.update(delta);
-
-
 
 		stateMachine.update(delta);
 
@@ -130,25 +135,36 @@ class Player extends IsoEchoSprite implements Follower {
 		sprite.animation.frameIndex = spinFrame;
 		body.rotation = calculatedAngle;
 
+		#if angle_debug
 		FlxG.watch.addQuick('pAngRaw:', rawAngle);
 		FlxG.watch.addQuick('pAngCalc:', calculatedAngle);
 		FlxG.watch.addQuick('pAngFrame:', spinFrame);
-
 		FlxG.watch.addQuick('playerPos:', sprite.getPosition());
+		#end
+		
+		FlxG.watch.addQuick('playerVel:', body.velocity);
 
 		#if FLX_DEBUG
 		FollowerHelper.drawDebugLines(this);
 		#end
 	}
 
-    public function damageMe(thingBoatRanInto:FlxSprite) {
+    public function damageMe(thingBoatRanInto:FlxSprite, normal:echo.math.Vector2) {
 		if (isInvincible) {
 			// ignore this collision because the boat is invincible
 			return;
 		}
 
-		var directionToFling = FlxPoint.get(thingBoatRanInto.x - x, thingBoatRanInto.y - y);
-		stateMachine.setNextState(new CrashState(this, directionToFling));
+		var preVel = FlxPoint.get(previousVelocity.x, previousVelocity.y);
+		var normal = FlxPoint.get(normal.x, normal.y);
+
+		var newDir = preVel.bounce(normal);
+
+		stateMachine.setNextState(new CrashState(this, newDir, FlxG.random.bool() ? crashTurnSpeed : -crashTurnSpeed));
+
+		preVel.put();
+		normal.put();
+		newDir.put();
     }
 
 	@:access(echo.Shape)
@@ -182,7 +198,7 @@ class Player extends IsoEchoSprite implements Follower {
 			// colliding with boat
 			if (collision.sb == boatShape) { 
 				ScoreManager.playerCrashed();
-				damageMe(log);
+				damageMe(log, collision.normal);
 			}
 		// colliding with pier
 		} else if (other.object is Pier) {
