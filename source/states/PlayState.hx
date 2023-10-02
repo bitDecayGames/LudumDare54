@@ -43,6 +43,7 @@ class PlayState extends FlxTransitionableState {
 
 	public var level:Level;
 	var initialLevelName = "Level_0";
+	public var loadNextLevel: String = null;
 
 	var playerGroup = new FlxGroup();
 	var survivors = new FlxGroup();
@@ -195,6 +196,8 @@ class PlayState extends FlxTransitionableState {
 			t.destroy();
 		});
 		checkpoints.clear();
+
+		graph.clear();
 
 		FlxEcho.clear();
 
@@ -356,11 +359,16 @@ class PlayState extends FlxTransitionableState {
 	override public function update(elapsed:Float) {
 		super.update(elapsed);
 
+		if (loadNextLevel != null) {
+			loadLevel(loadNextLevel);
+			loadNextLevel = null;
+			return;
+		}
+
 		graph.rebuild();
 
 		var cam = FlxG.camera;
 		DebugDraw.ME.drawCameraRect(cam.getCenterPoint().x - 5, cam.getCenterPoint().y - 5, 10, 10, DebugLayers.RAYCAST, FlxColor.RED);
-
 
 		graph.drawDebug();
 

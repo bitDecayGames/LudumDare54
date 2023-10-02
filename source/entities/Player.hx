@@ -1,5 +1,6 @@
 package entities;
 
+import states.PlayState;
 import entities.states.player.StationaryState;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -245,7 +246,8 @@ class Player extends IsoEchoSprite implements Follower {
 		} else if (other.object is Dam) {
 			var dam:Dam = cast other.object;
 			dropOffSurvivors(dam);
-			// TODO Switch to next level or end game
+			// Load next level
+			PlayState.ME.loadNextLevel = dam.nextLevel;
 		}
 	}
 
@@ -277,13 +279,11 @@ class Player extends IsoEchoSprite implements Follower {
 
 		// TODO SFX Dropping people off at pier/dam
 		// Remove all followers
-		// May need to switch animation to be pier/dam specific
 		var toTween = new Array<Survivor>();
 		removeFollowers((s) -> {
 			// TODO This is where we would animate followers
 			// being dropped off on the pier,
 			toTween.push(s);
-			// s.kill();
 			// Lifecycle.personDelivered.dispatch(s);
 		});
 
