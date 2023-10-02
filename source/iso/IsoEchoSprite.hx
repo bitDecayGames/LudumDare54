@@ -14,7 +14,7 @@ import echo.data.Data.CollisionData;
 /**
  * Combination pizza hut/taco bell of EchoSprite & IsoSprite
  */
-class IsoEchoSprite extends FlxSprite {
+class IsoEchoSprite extends FlxSprite implements IsoSortable {
 	/**
      * BEGIN Combination
 	 */
@@ -102,19 +102,19 @@ class IsoEchoSprite extends FlxSprite {
 	}
 
 	function get_gridXmin():Float {
-		return bounds.min_x;
+		return bounds.min_x + adjust;
 	}
 
 	function get_gridXmax():Float {
-		return bounds.max_x;
+		return bounds.max_x - adjust;
 	}
 
 	function get_gridYmin():Float {
-		return bounds.min_y;
+		return bounds.min_y + adjust;
 	}
 
 	function get_gridYmax():Float {
-		return bounds.max_y;
+		return bounds.max_y - adjust;
 	}
 
 	function get_gridZmin():Float {
@@ -126,27 +126,27 @@ class IsoEchoSprite extends FlxSprite {
 	}
 
 	function get_isoXmin():Float {
-		return bounds.min_x - z;
+		return bounds.min_x - gridHeight * Grid.CELL_SIZE + adjust - z;
 	}
 
 	function get_isoXmax():Float {
-		return bounds.max_x - z;
+		return bounds.max_x - adjust - z;
 	}
 
 	function get_isoYmin():Float {
-		return bounds.min_y - z;
+		return bounds.min_y - gridHeight * Grid.CELL_SIZE + adjust - z;
 	}
 
 	function get_isoYmax():Float {
-		return bounds.max_y - z;
+		return bounds.max_y - adjust - z;
 	}
 
 	function get_hMin():Float {
-		return Grid.gridToIso(bounds.max_x, bounds.max_y).x;
+		return Grid.gridToIso(bounds.min_x - gridHeight * Grid.CELL_SIZE - z, bounds.max_y - gridHeight * Grid.CELL_SIZE - z).y;
 	}
-
+	
 	function get_hMax():Float {
-		return Grid.gridToIso(bounds.min_x, bounds.min_y).x;
+		return Grid.gridToIso(bounds.max_x - z, bounds.max_y - z).y;
 	}
 
 	public function debugDraw(i:Int, color:FlxColor) {
