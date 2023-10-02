@@ -219,7 +219,8 @@ class Player extends IsoEchoSprite implements Follower {
 				} else if (collision.sa == pickupShape) {
 					FmodManager.PlaySoundOneShot(FmodSFX.BoatCollectSurvivor);
 					new FlxTimer().start(0.75, (t) -> {
-						FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
+						// Maybe no voice lines
+						// FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
 					});
 
 					if (!survivor.isFollowing()) {
