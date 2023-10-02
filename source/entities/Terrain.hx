@@ -3,7 +3,6 @@ package entities;
 import iso.IsoEchoSprite;
 import flixel.FlxSprite;
 
-import iso.IsoSprite;
 
 class Terrain extends IsoEchoSprite {
     public function new(X:Float, Y:Float, frameIndex:Int) {

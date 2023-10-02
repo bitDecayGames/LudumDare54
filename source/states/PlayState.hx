@@ -2,7 +2,6 @@ package states;
 
 import states.substate.LevelEndSubState;
 import iso.IsoSortable;
-import iso.IsoSprite;
 import topo.Tophographic.Topographic;
 import flixel.util.FlxTimer;
 import flixel.FlxSubState;

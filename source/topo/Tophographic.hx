@@ -9,7 +9,6 @@ import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 import iso.Grid;
-import iso.IsoSprite;
 import iso.Overlap;
 
 class Topographic extends FlxBasic {
