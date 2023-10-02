@@ -133,6 +133,7 @@ class Survivor extends Bobber implements Follower {
 	public function die() {
 		// TODO SFX: Survivor killed.
 		sprite.animation.play(BODY_ANIM);
+		numCheckpointsHit = 0;
 		Lifecycle.personHit.dispatch(this);
 	}
 
