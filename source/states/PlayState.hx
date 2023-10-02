@@ -37,6 +37,7 @@ class PlayState extends FlxTransitionableState {
 	public static var ME:PlayState = null;
 
 	var level:Level;
+	var initialLevelName = "Level_0";
 
 	var playerGroup = new FlxGroup();
 	var survivors = new FlxGroup();
@@ -93,7 +94,7 @@ class PlayState extends FlxTransitionableState {
 		persistentUpdate = false;
 
 		#if tanner
-		FmodManager.PlaySong(FmodSongs.Game);	
+		FmodManager.PlaySong(FmodSongs.Game);
 		#end
 
 		// Echo/physics init
@@ -123,7 +124,7 @@ class PlayState extends FlxTransitionableState {
 		add(piers);
 		add(playerGroup);
 
-		loadLevel("Level_0");
+		loadLevel(initialLevelName);
 	}
 
 	public function loadLevel(levelName:String) {
@@ -218,8 +219,14 @@ class PlayState extends FlxTransitionableState {
 			exit: defaultExitHandler,
 		});
 
-		// collide stuff? for collisions? Maybe?
+		// collide currents with survivors
 		FlxEcho.listen(currents, survivors, {
+			separate: false,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+		// collide currents with logs
+		FlxEcho.listen(currents, logs, {
 			separate: false,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
@@ -232,8 +239,15 @@ class PlayState extends FlxTransitionableState {
 			exit: defaultExitHandler,
 		});
 
-		// collide terrain as second group so they are always on the 'b' side of interaction
+		// collide player with terrain
 		FlxEcho.instance.world.listen(FlxEcho.get_group_bodies(playerGroup), terrainBodies, {
+			separate: true,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+
+		// collide survivors with terrain
+		FlxEcho.instance.world.listen(FlxEcho.get_group_bodies(survivors), terrainBodies, {
 			separate: true,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,

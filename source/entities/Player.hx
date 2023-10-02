@@ -175,21 +175,23 @@ class Player extends IsoEchoSprite implements Follower {
 		// colliding with survivor
 		if (other.object is Survivor) {
 			var survivor: Survivor = cast other.object;
-			// colliding with boat
-			if (collision.sa == boatShape) {
-        		FmodManager.PlaySoundOneShot(FmodSFX.BoatCollideSurvivor);
-        		FmodManager.PlaySoundOneShot(FmodSFX.VoiceHit);
-				ScoreManager.survivorKilled();
-				survivor.hitByObject();
-			// colliding with pickup area
-			} else if (survivor.isCollectable() && collision.sa == pickupShape) {
-        		FmodManager.PlaySoundOneShot(FmodSFX.BoatCollectSurvivor);
-				new FlxTimer().start(0.75, (t) -> {
-					FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
-				});
+			if (survivor.isCollectable()) {
+				// colliding with boat
+				if (collision.sa == boatShape) {
+					FmodManager.PlaySoundOneShot(FmodSFX.BoatCollideSurvivor);
+					FmodManager.PlaySoundOneShot(FmodSFX.VoiceHit);
+					ScoreManager.survivorKilled();
+					survivor.hitByObject();
+				// colliding with pickup area
+				} else if (collision.sa == pickupShape) {
+					FmodManager.PlaySoundOneShot(FmodSFX.BoatCollectSurvivor);
+					new FlxTimer().start(0.75, (t) -> {
+						FmodManager.PlaySoundOneShot(FmodSFX.VoiceRad);
+					});
 
-				if (!survivor.isFollowing()) {
-					FollowerHelper.addFollower(this, survivor);
+					if (!survivor.isFollowing()) {
+						FollowerHelper.addFollower(this, survivor);
+					}
 				}
 			}
 		// colliding with log
