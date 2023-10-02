@@ -32,11 +32,13 @@ class FlungState extends State<Survivor> {
         entity.bobVel = BOB_VEL;
         entity.body.velocity.x = directionToBeFlung.x;
         entity.body.velocity.y = directionToBeFlung.y;
+        entity.bobbingEnabled = true;
     }
     override public function onExit(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
         entity.body.velocity.x = 0;
         entity.body.velocity.y = 0;
         entity.z = 0;
         entity.bobVel = 0;
+        entity.bobbingEnabled = false;
     }
 }
