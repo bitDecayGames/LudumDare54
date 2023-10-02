@@ -46,6 +46,7 @@ class PlayState extends FlxTransitionableState {
 	var particles = new FlxGroup();
 	var currents = new FlxGroup();
 	var piers = new FlxGroup();
+	var dams = new FlxGroup();
 
 	private static function defaultEnterHandler(a, b, o) {
 		if ((a.object is IsoEchoSprite)) {
@@ -122,6 +123,7 @@ class PlayState extends FlxTransitionableState {
 		add(particles);
 		add(logs);
 		add(piers);
+		add(dams);
 		add(playerGroup);
 
 		loadLevel(initialLevelName);
@@ -165,6 +167,11 @@ class PlayState extends FlxTransitionableState {
 		});
 		piers.clear();
 
+		dams.forEach((t) -> {
+			t.destroy();
+		});
+		dams.clear();
+
 		FlxEcho.clear();
 
 		level = new Level(levelName);
@@ -200,6 +207,9 @@ class PlayState extends FlxTransitionableState {
 		for (p in level.piers) {
 			p.add_to_group(piers);
 		}
+		for (d in level.dams) {
+			d.add_to_group(dams);
+		}
 
 		#if FLX_DEBUG
 		Debug.dbgCam.follow(level.player);
@@ -228,6 +238,7 @@ class PlayState extends FlxTransitionableState {
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
 		});
+
 		// collide currents with logs
 		FlxEcho.listen(currents, logs, {
 			separate: false,
@@ -235,8 +246,15 @@ class PlayState extends FlxTransitionableState {
 			exit: defaultExitHandler,
 		});
 
-		// collide piers as second group so they are always on the 'b' side of interaction
+		// collide player with piers
 		FlxEcho.listen(playerGroup, piers, {
+			separate: true,
+			enter: defaultEnterHandler,
+			exit: defaultExitHandler,
+		});
+
+		// collide player with dams
+		FlxEcho.listen(playerGroup, dams, {
 			separate: true,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,

@@ -7,7 +7,7 @@ typedef LevelScore = {
     survivorsKilled: Int,
     survivorsLongestChain: Int,
     playerCrashes: Int,
-    timeTaken: Int,
+    timeTaken: Float,
 };
 
 class ScoreManager {
@@ -33,7 +33,7 @@ class ScoreManager {
         currentScore = createEmptyScore(levelName);
     }
 
-    public static function endCurrentLevel(timeTaken: Int) {
+    public static function endCurrentLevel(timeTaken: Float) {
         currentScore.timeTaken = timeTaken;
         completedLevelScores.push(currentScore);
     }
