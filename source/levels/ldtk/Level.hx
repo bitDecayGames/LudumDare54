@@ -1,5 +1,6 @@
 package levels.ldtk;
 
+import iso.IsoEchoSprite;
 import entities.Dam;
 import entities.Pier;
 import entities.Log;
@@ -14,7 +15,7 @@ class Level {
 	public var player:Player;
 
 	public var survivors = new Array<Survivor>();
-	public var logs = new Array<Log>();
+	public var debris = new Array<IsoEchoSprite>();
 	public var currents = new Array<Current>();
     public var piers = new Array<Pier>();
     public var dams = new Array<Dam>();
@@ -42,10 +43,10 @@ class Level {
 			survivors.push(ent);
 		}
 
-		// Logs
+        // Debris (Logs, etc.)
 		for (l in raw.l_Entities.all_Log) {
 			var ent = new Log(l.pixelX, l.pixelY);
-			logs.push(ent);
+			debris.push(ent);
 		}
 
         // Piers
