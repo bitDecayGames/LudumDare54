@@ -128,6 +128,7 @@ class TNode {
 	public var parents:Array<TNode>;
 	public var children:Array<TNode>;
 	public var object:IsoSortable;
+	public var drawn:Bool = false;
 
 	private static var colors = [
 		for (i in 0...5) {
@@ -147,11 +148,17 @@ class TNode {
 	}
 
 	public function draw() {
+		if (drawn) {
+			return;
+		}
+
+
 		object.draw();
 		for (c in children) {
 			// This may not work properly. Need to traverse this graph more intelligently
 			// to avoid drawing things early
 			c.draw();
 		}
+		drawn = true;
 	}
 }

@@ -21,3 +21,5 @@ dump/
 .DS_Store
 .idea/
 *.iml
+
+assets/levels/world/backups/
