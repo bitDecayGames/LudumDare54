@@ -280,7 +280,7 @@
    },
    {
     "filename": "Man2 31.ase",
-    "frame": { "x": 0, "y": 64, "w": 16, "h": 16 },
+    "frame": { "x": 32, "y": 64, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -298,15 +298,6 @@
    },
    {
     "filename": "Man2 33.ase",
-    "frame": { "x": 0, "y": 64, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   {
-    "filename": "Man2 34.ase",
     "frame": { "x": 32, "y": 64, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -315,7 +306,7 @@
     "duration": 100
    },
    {
-    "filename": "Man2 35.ase",
+    "filename": "Man2 34.ase",
     "frame": { "x": 48, "y": 64, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -324,8 +315,17 @@
     "duration": 100
    },
    {
-    "filename": "Man2 36.ase",
+    "filename": "Man2 35.ase",
     "frame": { "x": 64, "y": 64, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Man2 36.ase",
+    "frame": { "x": 80, "y": 64, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -334,33 +334,6 @@
    },
    {
     "filename": "Man2 37.ase",
-    "frame": { "x": 80, "y": 64, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   {
-    "filename": "Man2 38.ase",
-    "frame": { "x": 64, "y": 64, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   {
-    "filename": "Man2 39.ase",
-    "frame": { "x": 80, "y": 64, "w": 16, "h": 16 },
-    "rotated": false,
-    "trimmed": false,
-    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   {
-    "filename": "Man2 40.ase",
     "frame": { "x": 96, "y": 64, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
@@ -369,8 +342,35 @@
     "duration": 100
    },
    {
-    "filename": "Man2 41.ase",
+    "filename": "Man2 38.ase",
     "frame": { "x": 0, "y": 80, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Man2 39.ase",
+    "frame": { "x": 96, "y": 64, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Man2 40.ase",
+    "frame": { "x": 0, "y": 80, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "Man2 41.ase",
+    "frame": { "x": 96, "y": 64, "w": 16, "h": 16 },
     "rotated": false,
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
