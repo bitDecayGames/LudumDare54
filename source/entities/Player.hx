@@ -182,8 +182,6 @@ class Player extends IsoEchoSprite implements Follower {
 		preVel.put();
 		normal.put();
 		newDir.put();
-
-		respawn();
 	}
 
 	public function incrementCheckpoint() {
@@ -193,6 +191,7 @@ class Player extends IsoEchoSprite implements Follower {
 	}
 
 	public function respawn() {
+		visible = true;
 		if (lastCheckpoint != null) {
 			body.x = lastCheckpoint.spawnPoint.x;
 			body.y = lastCheckpoint.spawnPoint.y;

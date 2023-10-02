@@ -1,4 +1,5 @@
 package entities.states.player;
+import flixel.util.FlxTimer;
 import entities.particle.Explosion;
 import states.PlayState;
 import entities.particle.Splash;
@@ -57,7 +58,11 @@ class CrashState extends State<Player> {
         FmodManager.PlaySoundOneShot(FmodSFX.BoatCrash);
 
         entity.visible = false;
-        PlayState.ME.addParticle(new Explosion(entity.body.x, entity.body.y, () -> {  }));
+        PlayState.ME.addParticle(new Explosion(entity.body.x, entity.body.y, () -> { 
+            new FlxTimer().start(1.0, (t) -> {
+        		entity.respawn();
+            });
+        }));
 		
 
         // initialCrashDir.scale(entity.speed * .5);
