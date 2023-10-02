@@ -8,7 +8,7 @@ import flixel.FlxG;
 class CrashState extends State<Player> {
 
     private static inline var NUM_OF_BLINKS = 5; // the bigger the number, the more blinks that happen
-    private static inline var BLINK_SPEED = 0.3; // the smaller the number, the faster the blink rate
+    private static inline var BLINK_SPEED = 0.2; // the smaller the number, the faster the blink rate
     private static inline var CAMERA_SHAKE_INTENSITY = 0.01; // smaller number makes a softer shake
     private static inline var CAMERA_SHAKE_DURATION_SECONDS = .7; // number of seconds to shake
 
@@ -17,7 +17,7 @@ class CrashState extends State<Player> {
     private var directionToFlingSurvivors:FlxPoint;
 
     private var moveDecay = 1.0;
-    private var duration = 2.0;
+    private var duration = 1.0;
 
     public function new(entity:Player, crashDir:FlxPoint, angleMod:Float) {
         super(entity);
