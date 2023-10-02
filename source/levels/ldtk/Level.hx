@@ -8,9 +8,13 @@ import entities.Survivor;
 import flixel.group.FlxGroup;
 import entities.Player;
 import entities.Current;
+import entities.Checkpoint;
 
 class Level {
 	public static var project = new LDTKProject();
+
+	private static inline var CELL_PIXEL_WIDTH = 16;
+	private static inline var CELL_PIXEL_HEIGHT = 16;
 
 	public var player:Player;
 
@@ -19,6 +23,7 @@ class Level {
 	public var currents = new Array<Current>();
 	public var piers = new Array<Pier>();
 	public var dams = new Array<Dam>();
+	public var checkpoints = new Array<Checkpoint>();
 
 	public var raw:levels.ldtk.LDTKProject.LDTKProject_Level = null;
 
@@ -43,7 +48,7 @@ class Level {
 			survivors.push(ent);
 		}
 
-        // Debris (Logs, etc.)
+		// Debris (Logs, etc.)
 		for (l in raw.l_Entities.all_Log) {
 			var ent = new Debris(l.pixelX, l.pixelY);
 			debris.push(ent);
@@ -59,6 +64,12 @@ class Level {
 		for (d in raw.l_Entities.all_Dam) {
 			var ent = new Dam(d.pixelX, d.pixelY);
 			dams.push(ent);
+		}
+
+		// Checkpoints
+		for (cp in raw.l_Entities.all_Checkpoint) {
+			var ent = new Checkpoint(player, cp.pixelX, cp.pixelY, cp.f_EndPoint.cx * CELL_PIXEL_WIDTH + CELL_PIXEL_WIDTH / 2.0, cp.f_EndPoint.cy * CELL_PIXEL_HEIGHT + CELL_PIXEL_HEIGHT / 2.0, cp.f_SpawnPoint.cx * CELL_PIXEL_WIDTH + CELL_PIXEL_WIDTH / 2.0, cp.f_SpawnPoint.cy * CELL_PIXEL_HEIGHT + CELL_PIXEL_HEIGHT / 2.0);
+			checkpoints.push(ent);
 		}
 
 		// Currents

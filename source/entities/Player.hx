@@ -66,6 +66,8 @@ class Player extends IsoEchoSprite implements Follower {
 
 	public var controller:IController;
 
+	public var lastCheckpoint:Null<Checkpoint>;
+
 	public function new(x:Float, y:Float, speed:Float = 70, turnSpeed:Float = 130, turnSpeedSkid:Float = 200, crashTurnSpeed:Int = 200) {
 		gridWidth = .8;
 		gridLength = 6 / 16;
@@ -180,12 +182,21 @@ class Player extends IsoEchoSprite implements Follower {
 		preVel.put();
 		normal.put();
 		newDir.put();
+
+		respawn();
 	}
 
 	public function incrementCheckpoint() {
 		iterateFollowers((s) -> {
 			s.numCheckpointsHit += 1;
 		});
+	}
+
+	public function respawn() {
+		if (lastCheckpoint != null) {
+			body.x = lastCheckpoint.spawnPoint.x;
+			body.y = lastCheckpoint.spawnPoint.y;
+		}
 	}
 
 	@:access(echo.Shape)
@@ -219,7 +230,7 @@ class Player extends IsoEchoSprite implements Follower {
 			var debris: Debris = cast other.object;
 			for (d in data) {
 				// colliding with boat
-				if (collision.sb == boatShape) { 
+				if (collision.sb == boatShape) {
 					damageMe(debris, collision.normal);
 					break;
 				}
