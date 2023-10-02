@@ -2,7 +2,6 @@ package states;
 
 import states.substate.TalkerOverlay;
 import loaders.TileShapes;
-import score.ScoreManager;
 import ui.font.BitmapText.CruiseText;
 import flixel.FlxObject;
 import echo.util.TileMap;
@@ -41,7 +40,7 @@ class PlayState extends FlxTransitionableState {
 
 	var playerGroup = new FlxGroup();
 	var survivors = new FlxGroup();
-	var logs = new FlxGroup();
+	var debris = new FlxGroup();
 	var terrain = new FlxGroup();
 	var particles = new FlxGroup();
 	var currents = new FlxGroup();
@@ -121,7 +120,7 @@ class PlayState extends FlxTransitionableState {
 		add(currents);
 		add(survivors);
 		add(particles);
-		add(logs);
+		add(debris);
 		add(piers);
 		add(dams);
 		add(playerGroup);
@@ -152,10 +151,10 @@ class PlayState extends FlxTransitionableState {
 		});
 		survivors.clear();
 
-		logs.forEach((t) -> {
+		debris.forEach((t) -> {
 			t.destroy();
 		});
-		logs.clear();
+		debris.clear();
 
 		particles.forEach((t) -> {
 			t.destroy();
@@ -178,7 +177,6 @@ class PlayState extends FlxTransitionableState {
 
 		FlxEcho.instance.world.width = level.raw.pxWid;
 		FlxEcho.instance.world.height = level.raw.pxHei;
-		ScoreManager.startLevel(levelName);
 
 		for (y in 0...level.raw.l_Terrain.cHei) {
 			for (x in 0...level.raw.l_Terrain.cWid) {
@@ -198,8 +196,8 @@ class PlayState extends FlxTransitionableState {
 		for (s in level.survivors) {
 			s.add_to_group(survivors);
 		}
-		for (l in level.logs) {
-			l.add_to_group(logs);
+		for (l in level.debris) {
+			l.add_to_group(debris);
 		}
 		for (v in level.currents) {
 			v.add_to_group(currents);
@@ -225,7 +223,7 @@ class PlayState extends FlxTransitionableState {
 		});
 
 		// collide logs as second group so they are always on the 'b' side of interaction
-		FlxEcho.listen(playerGroup, logs, {
+		FlxEcho.listen(playerGroup, debris, {
 			separate: true,
 			enter: defaultEnterHandler,
 			stay: defaultEnterHandler,
@@ -240,7 +238,7 @@ class PlayState extends FlxTransitionableState {
 		});
 
 		// collide currents with logs
-		FlxEcho.listen(currents, logs, {
+		FlxEcho.listen(currents, debris, {
 			separate: false,
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
@@ -286,6 +284,15 @@ class PlayState extends FlxTransitionableState {
 		terrain.add(new Terrain(gridX * Grid.CELL_SIZE, gridY * Grid.CELL_SIZE, tileId));
 
 		// terrain.add(new Terrain(x * Grid.CELL_SIZE, y * Grid.CELL_SIZE, level.raw.l_Terrain..getInt(x, y)));
+	}
+
+	public function getScore(): Int {
+		var sum = 0;
+		for (ent in survivors) {
+			var s:Survivor = cast ent;
+			sum += s.numCheckpointsHit;
+		}
+		return sum;
 	}
 
 	override public function update(elapsed:Float) {

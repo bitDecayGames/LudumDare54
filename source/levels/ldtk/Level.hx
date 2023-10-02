@@ -1,5 +1,6 @@
 package levels.ldtk;
 
+import iso.IsoEchoSprite;
 import entities.Dam;
 import entities.Pier;
 import entities.Log;
@@ -14,10 +15,10 @@ class Level {
 	public var player:Player;
 
 	public var survivors = new Array<Survivor>();
-	public var logs = new Array<Log>();
+	public var debris = new Array<IsoEchoSprite>();
 	public var currents = new Array<Current>();
-    public var piers = new Array<Pier>();
-    public var dams = new Array<Dam>();
+	public var piers = new Array<Pier>();
+	public var dams = new Array<Dam>();
 
 	public var raw:levels.ldtk.LDTKProject.LDTKProject_Level = null;
 
@@ -34,7 +35,7 @@ class Level {
 		}
 		var firstPlayerEnt = raw.l_Entities.all_Player[0];
 
-		player = new Player(firstPlayerEnt.pixelX, firstPlayerEnt.pixelY);
+		player = new Player(firstPlayerEnt.pixelX, firstPlayerEnt.pixelY, firstPlayerEnt.f_Speed, firstPlayerEnt.f_TurnSpeed, firstPlayerEnt.f_TurnSpeedSkid);
 
 		// Survivors
 		for (s in raw.l_Entities.all_Survivor) {
@@ -42,23 +43,23 @@ class Level {
 			survivors.push(ent);
 		}
 
-		// Logs
+        // Debris (Logs, etc.)
 		for (l in raw.l_Entities.all_Log) {
 			var ent = new Log(l.pixelX, l.pixelY);
-			logs.push(ent);
+			debris.push(ent);
 		}
 
-        // Piers
-        for (p in raw.l_Entities.all_Pier) {
-            var ent = new Pier(p.pixelX, p.pixelY);
-            piers.push(ent);
-        }
+		// Piers
+		for (p in raw.l_Entities.all_Pier) {
+			var ent = new Pier(p.pixelX, p.pixelY);
+			piers.push(ent);
+		}
 
-        // Dam
-        for (d in raw.l_Entities.all_Dam) {
-            var ent = new Dam(d.pixelX, d.pixelY);
-            dams.push(ent);
-        }
+		// Dam
+		for (d in raw.l_Entities.all_Dam) {
+			var ent = new Dam(d.pixelX, d.pixelY);
+			dams.push(ent);
+		}
 
 		// Currents
 		for (c in raw.l_Entities.all_Current) {

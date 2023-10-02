@@ -32,6 +32,8 @@ class Survivor extends Bobber implements Follower {
 	private static inline var TUBE_ANIM = "Tube";
 	private static inline var BODY_ANIM = "Body";
 
+	public var numCheckpointsHit = 0;
+
 	private static var arts = [
 		AssetPaths.Lady1__json,
 		AssetPaths.Lady2__json,

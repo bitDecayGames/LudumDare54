@@ -2,7 +2,6 @@ package entities;
 
 import echo.math.Vector2;
 import flixel.util.FlxTimer;
-import score.ScoreManager;
 import iso.Grid;
 import flixel.util.FlxColor;
 import bitdecay.flixel.debug.DebugDraw;
@@ -22,13 +21,12 @@ import input.InputCalcuator;
 import input.SimpleController;
 import loaders.Aseprite;
 import loaders.AsepriteMacros;
-
 import flixel.FlxObject;
-
 import entities.statemachine.StateMachine;
 import entities.states.player.CruisingState;
 import entities.states.player.CrashState;
 import bitdecay.flixel.debug.DebugDraw;
+
 class Player extends IsoEchoSprite implements Follower {
 	public static var anims = AsepriteMacros.tagNames("assets/aseprite/rotation_template.json");
 	public static var layers = AsepriteMacros.layerNames("assets/aseprite/characters/player.json");
@@ -47,8 +45,8 @@ class Player extends IsoEchoSprite implements Follower {
 	public var rawAngle:Float = 0;
 	public var calculatedAngle:Float = 0;
 
-	public var boatShape: Shape;
-	public var pickupShape: Shape;
+	public var boatShape:Shape;
+	public var pickupShape:Shape;
 
 	var timeSpentInLevel:Float = 0;
 
@@ -63,16 +61,17 @@ class Player extends IsoEchoSprite implements Follower {
 	public var targetX(get, null):Float;
 	public var targetY(get, null):Float;
 
-
-	public function new(x:Float, y:Float, speed:Float=70, turnSpeed:Float=130, turnSpeedSkid:Float=200, crashTurnSpeed:Int=200) {
+	public function new(x:Float, y:Float, speed:Float = 70, turnSpeed:Float = 130, turnSpeedSkid:Float = 200, crashTurnSpeed:Int = 200) {
 		gridWidth = .8;
-		gridLength = 6/16;
+		gridLength = 6 / 16;
 		gridHeight = 1;
 
 		this.speed = speed;
 		this.turnSpeed = turnSpeed;
 		this.turnSpeedSkid = turnSpeedSkid;
 		this.crashTurnSpeed = crashTurnSpeed;
+
+		FlxG.log.error('Player Stats: speed:${speed}, turnSpeed:${turnSpeed}, turnSpeedSkid:${turnSpeedSkid}, crashTurnSpeed:${crashTurnSpeed}');
 
 		super(x, y);
 
@@ -82,7 +81,6 @@ class Player extends IsoEchoSprite implements Follower {
 		stateMachine = new StateMachine<Player>(this);
 		stateMachine.setNextState(new CruisingState(this));
 	}
-
 
 	override function configSprite() {
 		this.sprite = new FlxSprite();
@@ -159,7 +157,7 @@ class Player extends IsoEchoSprite implements Follower {
 		#end
 	}
 
-    public function damageMe(thingBoatRanInto:FlxSprite, normal:echo.math.Vector2) {
+	public function damageMe(thingBoatRanInto:FlxSprite, normal:echo.math.Vector2) {
 		if (isInvincible) {
 			// ignore this collision because the boat is invincible
 			return;
@@ -175,7 +173,13 @@ class Player extends IsoEchoSprite implements Follower {
 		preVel.put();
 		normal.put();
 		newDir.put();
-    }
+	}
+
+	public function incrementCheckpoint() {
+		iterateFollowers((s) -> {
+			s.numCheckpointsHit += 1;
+		});
+	}
 
 	@:access(echo.Shape)
 	override function handleEnter(other:Body, data:Array<CollisionData>) {
@@ -184,15 +188,14 @@ class Player extends IsoEchoSprite implements Follower {
 		var collision = data[0];
 		// colliding with survivor
 		if (other.object is Survivor) {
-			var survivor: Survivor = cast other.object;
+			var survivor:Survivor = cast other.object;
 			if (survivor.isCollectable()) {
 				// colliding with boat
 				if (collision.sa == boatShape) {
 					FmodManager.PlaySoundOneShot(FmodSFX.BoatCollideSurvivor);
 					FmodManager.PlaySoundOneShot(FmodSFX.VoiceHit);
-					ScoreManager.survivorKilled();
 					survivor.hitByObject();
-				// colliding with pickup area
+					// colliding with pickup area
 				} else if (collision.sa == pickupShape) {
 					FmodManager.PlaySoundOneShot(FmodSFX.BoatCollectSurvivor);
 					new FlxTimer().start(0.75, (t) -> {
@@ -204,48 +207,48 @@ class Player extends IsoEchoSprite implements Follower {
 					}
 				}
 			}
-		// colliding with log
+			// colliding with log
 		} else if (other.object is Log) {
-			var log: Log = cast other.object;
+			var log:Log = cast other.object;
 			for (d in data) {
 				// colliding with boat
 				if (collision.sb == boatShape) {
-					ScoreManager.playerCrashed();
 					damageMe(log, collision.normal);
 					break;
 				}
 			}
-		// colliding with pier
+			// colliding with pier
 		} else if (other.object is Pier) {
-			var pier: Pier = cast other.object;
+			var pier:Pier = cast other.object;
 			dropOffSurvivors();
-		// colliding with dam
+			// colliding with dam
 		} else if (other.object is Dam) {
-			var dam: Dam = cast other.object;
+			var dam:Dam = cast other.object;
 			dropOffSurvivors();
-			ScoreManager.endCurrentLevel(timeSpentInLevel);
 			// TODO Switch to next level or end game
+		}
+	}
+
+	private function iterateFollowers(callback:Survivor->Void) {
+		var lastFollower = FollowerHelper.getLastLinkOnChain(this);
+		while (lastFollower != null && lastFollower != this) {
+			if ((lastFollower is Survivor)) {
+				var survivor:Survivor = cast lastFollower;
+				callback(survivor);
+			}
+			lastFollower = FollowerHelper.stopFollowing(lastFollower);
 		}
 	}
 
 	private function dropOffSurvivors() {
 		// TODO SFX Dropping people off at pier/dam
-		var followerCount = FollowerHelper.countNumberOfFollowersInChain(this);
-		ScoreManager.maybeUpdateLongestChain(followerCount);
-
 		// Remove all followers
 		// May need to switch animation to be pier/dam specific
-		var lastFollower = FollowerHelper.getLastLinkOnChain(this);
-		while (lastFollower != null && lastFollower != this) {
-			if (lastFollower is Survivor) {
-				var survivor: Survivor = cast lastFollower;
-				// TODO This is where we would animate followers
-				// being dropped off on the pier
-				survivor.kill();
-				ScoreManager.survivorSaved(followerCount);
-			}
-			lastFollower = FollowerHelper.stopFollowing(lastFollower);
-		}
+		iterateFollowers((s) -> {
+			// TODO This is where we would animate followers
+			// being dropped off on the pier
+			s.kill();
+		});
 	}
 
 	function get_targetX():Float {
