@@ -28,6 +28,7 @@ class FmodSFX {
     public static inline var VoiceFling:String = "event:/SFX/Characters/VoiceFling";
     public static inline var VoiceHit:String = "event:/SFX/Characters/VoiceHit";
     public static inline var VoiceRad:String = "event:/SFX/Characters/VoiceRad";
+    public static inline var Checkpoint:String = "event:/SFX/HUD/Checkpoint";
     public static inline var ReadySetGo1:String = "event:/SFX/HUD/ReadySetGo1";
     public static inline var ReadySetGo2:String = "event:/SFX/HUD/ReadySetGo2";
     public static inline var MenuHover:String = "event:/SFX/Menu/MenuHover";

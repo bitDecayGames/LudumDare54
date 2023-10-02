@@ -38,6 +38,7 @@ class Checkpoint extends FlxSprite {
 				player.lastCheckpoint = this;
 				checked = true;
 				player.incrementCheckpoint();
+				FmodManager.PlaySoundOneShot(FmodSFX.Checkpoint);
 				// TODO: MW figure out a way to update the flag sprite to be a lifted flag
 			}
 		}
