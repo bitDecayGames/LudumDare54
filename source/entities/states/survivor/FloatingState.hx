@@ -15,10 +15,10 @@ class FloatingState extends State<Survivor> {
         entity.bobVel = entity.minBob;
         entity.bobGravity = .01;
         entity.bobDampening = .99;
-        entity.bobbingEnabled = true;
+        entity.bobbingEnabled = false;
         entity.startFloat();
     }
-    
+
     override public function onExit(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
 
     }

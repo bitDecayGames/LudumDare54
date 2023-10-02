@@ -82,7 +82,7 @@ class Level {
 			for (cw in 0...rawTerrainLayer.cWid) {
 				if (rawTerrainLayer.hasAnyTileAt(cw, ch)) {
 					var tileStack = rawTerrainLayer.getTileStackAt(cw, ch);
-					terrainInts.push(tileStack[0].tileId);
+					terrainInts.push(tileStack[tileStack.length - 1].tileId);
 				} else {
 					terrainInts.push(0);
 				}
