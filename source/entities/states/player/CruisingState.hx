@@ -13,7 +13,7 @@ class CruisingState extends State<Player> {
 	public var boatEngineId = "boatEngineId";
 
     override public function update(delta:Float):State<Player> {
-        if (SimpleController.pressed(A)) {
+        if (entity.controller.pressed(A)) {
             return new SlidingState(entity);
         }
 
@@ -23,11 +23,11 @@ class CruisingState extends State<Player> {
         }
         #end
 
-        if (SimpleController.pressed(LEFT)) {
+        if (entity.controller.pressed(LEFT)) {
             entity.rawAngle -= entity.turnSpeed * delta;
         }
 
-        if (SimpleController.pressed(RIGHT)) {
+        if (entity.controller.pressed(RIGHT)) {
             entity.rawAngle += entity.turnSpeed * delta;
         }
 

@@ -1,5 +1,8 @@
 package states;
 
+import flixel.util.FlxTimer;
+import flixel.FlxSubState;
+import input.TutorialController;
 import states.substate.TalkerOverlay;
 import loaders.TileShapes;
 import score.ScoreManager;
@@ -36,7 +39,7 @@ using states.FlxStateExt;
 class PlayState extends FlxTransitionableState {
 	public static var ME:PlayState = null;
 
-	var level:Level;
+	public var level:Level;
 	var initialLevelName = "Level_0";
 
 	var playerGroup = new FlxGroup();
@@ -126,6 +129,10 @@ class PlayState extends FlxTransitionableState {
 		add(dams);
 		add(playerGroup);
 
+		#if logan
+		initialLevelName = "Tutorial";
+		#end
+
 		loadLevel(initialLevelName);
 	}
 
@@ -186,11 +193,30 @@ class PlayState extends FlxTransitionableState {
 			}
 		}
 
-		var terrainBodies = TileMap.generate(level.terrainInts, 16, 16, level.terrainTilesWide, level.terrainTilesHigh, TileShapes.shapes);
+		var terrainBodies = TileMap.generate(level.terrainInts, 16, 16, level.terrainTilesWide, level.terrainTilesHigh, TileShapes.shapes, TileShapes.ignored);
 		terrain.add_group_bodies();
 		for (tb in terrainBodies) {
 			FlxEcho.instance.world.add(tb);
 			FlxEcho.instance.groups.get(terrain).push(tb);
+		}
+
+		if (level.raw.identifier == "Tutorial") {
+			level.player.controller = new TutorialController();
+
+			doOpenSubState(new TalkerOverlay("COP", 15, "Welcome to your first day! Folks out here are just looking for a good time. Pick 'em up and show 'em around. Drop 'em off at one of the piers at some point."));
+			var rider:Survivor;
+			Lifecycle.personPickedUp.addOnce((s) -> {
+				rider = s;
+				doOpenSubState(new TalkerOverlay(s.persona, 5, "Yo! Thanks for picking me up - I'm stoked for a radical ride!"));
+			});
+			Lifecycle.personHit.addOnce((s) -> {
+				new FlxTimer().start(.5, (t) -> {
+					doOpenSubState(new TalkerOverlay(rider.persona, 5, "Did you just hit that person? You probably shouldn't do that... The arrow keys will probably help you steer."));
+				});
+			});
+			Lifecycle.personDelivered.addOnce((s) -> {
+				doOpenSubState(new TalkerOverlay(s.persona, 5, "That was rad! Thanks for the ride, my dude!"));
+			});
 		}
 
 		level.player.add_to_group(playerGroup);
@@ -273,15 +299,21 @@ class PlayState extends FlxTransitionableState {
 			enter: defaultEnterHandler,
 			exit: defaultExitHandler,
 		});
+	}
 
-		// FlxEcho.updates = false;
-		// openSubState(new TalkerOverlay("COP", 10));
-		// subStateClosed.addOnce((ss) -> {
-		// 	FlxEcho.updates = true;
-		// });
+	function doOpenSubState(subState:FlxSubState) {
+		FlxEcho.updates = false;
+		openSubState(subState);
+		subStateClosed.addOnce((ss) -> {
+			FlxEcho.updates = true;
+		});
 	}
 
 	public function makeTerrainPiece(level:Level, gridX:Int, gridY:Int) {
+		if (!level.raw.l_Terrain.hasAnyTileAt(gridX, gridY)) {
+			return;
+		}
+
 		var tileId = level.raw.l_Terrain.getTileStackAt(gridX, gridY)[0].tileId;
 		terrain.add(new Terrain(gridX * Grid.CELL_SIZE, gridY * Grid.CELL_SIZE, tileId));
 

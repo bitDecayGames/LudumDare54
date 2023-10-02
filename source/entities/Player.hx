@@ -1,5 +1,8 @@
 package entities;
 
+import signals.Lifecycle;
+import input.PlayerInstanceController;
+import input.IController;
 import echo.math.Vector2;
 import flixel.util.FlxTimer;
 import score.ScoreManager;
@@ -62,6 +65,8 @@ class Player extends IsoEchoSprite implements Follower {
 	public var targetX(get, null):Float;
 	public var targetY(get, null):Float;
 
+	public var controller:IController;
+
 
 	public function new(x:Float, y:Float) {
 		gridWidth = .8;
@@ -75,6 +80,8 @@ class Player extends IsoEchoSprite implements Follower {
 
 		stateMachine = new StateMachine<Player>(this);
 		stateMachine.setNextState(new CruisingState(this));
+
+		controller = new PlayerInstanceController();
 	}
 
 
@@ -236,6 +243,8 @@ class Player extends IsoEchoSprite implements Follower {
 				// TODO This is where we would animate followers
 				// being dropped off on the pier
 				survivor.kill();
+
+				Lifecycle.personDelivered.dispatch(survivor);
 				ScoreManager.survivorSaved(followerCount);
 			}
 			lastFollower = FollowerHelper.stopFollowing(lastFollower);

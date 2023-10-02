@@ -11,7 +11,7 @@ class DeadState extends State<Survivor> {
     }
 
     override public function onEnter(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {
-        entity.sprite.animation.play("Body");
+        entity.die();
     }
     
     override public function onExit(last:State<Survivor>, current:State<Survivor>, next:State<Survivor>):Void {

@@ -14,7 +14,7 @@ class SlidingState extends State<Player> {
 
     override public function update(delta:Float):State<Player> {
         // if you stop pressing the button, switch back to cruising state
-        if (!SimpleController.pressed(A)) {
+        if (!entity.controller.pressed(A)) {
             return new CruisingState(entity);
         }
         if (initialSkidAngle == Math.POSITIVE_INFINITY) {
@@ -30,11 +30,11 @@ class SlidingState extends State<Player> {
 
         var inputImpact = 1 - inputLerp;
 
-        if (SimpleController.pressed(LEFT)) {
+        if (entity.controller.pressed(LEFT)) {
             entity.rawAngle -= inputImpact * (entity.turnSpeedSkid * delta);
         }
 
-        if (SimpleController.pressed(RIGHT)) {
+        if (entity.controller.pressed(RIGHT)) {
             entity.rawAngle += inputImpact * (entity.turnSpeedSkid * delta);
         }
 
