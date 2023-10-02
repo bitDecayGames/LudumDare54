@@ -66,8 +66,10 @@ class Level {
 		// Dam
 		for (d in raw.l_Entities.all_Dam) {
 			var ent = new Dam(d.pixelX, d.pixelY);
-			var lvl = project.all_worlds.Default.getLevel(d.f_nextLevel.levelIid);
-			ent.nextLevel = lvl.identifier;
+			if (d.f_nextLevel != null) {
+				var lvl = project.all_worlds.Default.getLevel(d.f_nextLevel.levelIid);
+				ent.nextLevel = lvl.identifier;
+			}
 			dams.push(ent);
 		}
 

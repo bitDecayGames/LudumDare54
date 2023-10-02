@@ -197,6 +197,7 @@ class Player extends IsoEchoSprite implements Follower {
 
 	public function respawn() {
 		sprite.visible = true;
+		rawAngle = -90;
 
 		if (lastCheckpoint != null) {
 			body.x = lastCheckpoint.spawnPoint.x;

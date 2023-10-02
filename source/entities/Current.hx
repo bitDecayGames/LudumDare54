@@ -1,5 +1,6 @@
 package entities;
 
+import flixel.util.FlxColor;
 import echo.Body;
 import flixel.math.FlxPoint;
 import echo.data.Data.CollisionData;
@@ -31,6 +32,7 @@ class Current extends EchoSprite {
 		entitiesInCurrent = [];
 		visible = false;
 		super(x, y);
+		makeGraphic(1, 1, FlxColor.TRANSPARENT);
 	}
 
 	public override function makeBody():Body {
