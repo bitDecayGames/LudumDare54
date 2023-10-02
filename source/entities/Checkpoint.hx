@@ -18,7 +18,7 @@ class Checkpoint extends FlxSprite {
 	public var player:Player;
 
 	public function new(player:Player, x:Float=0, y:Float=0, x2:Float=1, y2:Float=1) {
-		line = new Line(x, y, x2, y2);
+		line = Line.get(x, y, x2, y2);
 		this.player = player;
 		visible = false;
 		super(x, y);

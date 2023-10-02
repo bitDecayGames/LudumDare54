@@ -11,7 +11,7 @@
 	"iid": "78d68120-3b70-11ee-9951-dff492d275d9",
 	"jsonVersion": "1.4.1",
 	"appBuildId": 471015,
-	"nextUid": 80,
+	"nextUid": 81,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -1157,6 +1157,41 @@
 					"allowedRefsEntityUid": null,
 					"allowedRefTags": [],
 					"tilesetUid": null
+				},
+				{
+					"identifier": "SpawnPoint",
+					"doc": "The place that the player will respawn to",
+					"__type": "Point",
+					"uid": 80,
+					"type": "F_Point",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "PointStar",
+					"editorDisplayScale": 1,
+					"editorDisplayPos": "Above",
+					"editorLinkStyle": "ZigZag",
+					"editorDisplayColor": "#F7EEB2",
+					"editorAlwaysShow": true,
+					"editorShowInWorld": true,
+					"editorCutLongValues": true,
+					"editorTextSuffix": null,
+					"editorTextPrefix": null,
+					"useForSmartColor": false,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": null,
+					"symmetricalRef": false,
+					"autoChainRef": true,
+					"allowOutOfLevelRef": true,
+					"allowedRefs": "OnlySame",
+					"allowedRefsEntityUid": null,
+					"allowedRefTags": [],
+					"tilesetUid": null
 				}
 			]
 		}
@@ -1745,44 +1780,6 @@
 							"defUid": 14,
 							"px": [232,56],
 							"fieldInstances": []
-						},
-						{
-							"__identifier": "Checkpoint",
-							"__grid": [12,18],
-							"__pivot": [0.5,0.5],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#FFFFFF",
-							"__worldX": 136,
-							"__worldY": -232,
-							"iid": "44ca1b50-3b70-11ee-adc1-713c85bfa295",
-							"width": 16,
-							"height": 16,
-							"defUid": 78,
-							"px": [200,296],
-							"fieldInstances": [{ "__identifier": "EndPoint", "__type": "Point", "__value": { "cx": 3, "cy": 18 }, "__tile": null, "defUid": 79, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["3,18"]
-							}] }]
-						},
-						{
-							"__identifier": "Checkpoint",
-							"__grid": [19,26],
-							"__pivot": [0.5,0.5],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#FFFFFF",
-							"__worldX": 248,
-							"__worldY": -104,
-							"iid": "4dc39f60-3b70-11ee-adc1-c9e39bfeec69",
-							"width": 16,
-							"height": 16,
-							"defUid": 78,
-							"px": [312,424],
-							"fieldInstances": [{ "__identifier": "EndPoint", "__type": "Point", "__value": { "cx": 10, "cy": 26 }, "__tile": null, "defUid": 79, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["10,26"]
-							}] }]
 						}
 					]
 				},
@@ -10758,18 +10755,18 @@
 						},
 						{
 							"__identifier": "Survivor",
-							"__grid": [6,33],
+							"__grid": [5,32],
 							"__pivot": [0.5,0.5],
 							"__tags": [],
 							"__tile": null,
 							"__smartColor": "#E4A672",
-							"__worldX": 1752,
-							"__worldY": 1176,
+							"__worldX": 1736,
+							"__worldY": 1160,
 							"iid": "98706e40-3b70-11ee-afb8-670fdd223ad2",
 							"width": 16,
 							"height": 16,
 							"defUid": 3,
-							"px": [104,536],
+							"px": [88,520],
 							"fieldInstances": []
 						},
 						{
@@ -10898,10 +10895,16 @@
 							"height": 16,
 							"defUid": 78,
 							"px": [200,584],
-							"fieldInstances": [{ "__identifier": "EndPoint", "__type": "Point", "__value": { "cx": 6, "cy": 36 }, "__tile": null, "defUid": 79, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["6,36"]
-							}] }]
+							"fieldInstances": [
+								{ "__identifier": "EndPoint", "__type": "Point", "__value": { "cx": 6, "cy": 36 }, "__tile": null, "defUid": 79, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["6,36"]
+								}] },
+								{ "__identifier": "SpawnPoint", "__type": "Point", "__value": { "cx": 6, "cy": 34 }, "__tile": null, "defUid": 80, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["6,34"]
+								}] }
+							]
 						},
 						{
 							"__identifier": "Checkpoint",
@@ -10917,10 +10920,16 @@
 							"height": 16,
 							"defUid": 78,
 							"px": [312,264],
-							"fieldInstances": [{ "__identifier": "EndPoint", "__type": "Point", "__value": { "cx": 14, "cy": 16 }, "__tile": null, "defUid": 79, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["14,16"]
-							}] }]
+							"fieldInstances": [
+								{ "__identifier": "EndPoint", "__type": "Point", "__value": { "cx": 14, "cy": 16 }, "__tile": null, "defUid": 79, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["14,16"]
+								}] },
+								{ "__identifier": "SpawnPoint", "__type": "Point", "__value": { "cx": 16, "cy": 14 }, "__tile": null, "defUid": 80, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["16,14"]
+								}] }
+							]
 						}
 					]
 				},
