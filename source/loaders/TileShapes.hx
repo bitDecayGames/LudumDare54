@@ -7,6 +7,7 @@ import echo.util.TileMap.TileShape;
 class TileShapes {
     static public var ignored:Array<Int> = [
         10,
+        11,
         39,
         40,
         52,
@@ -14,7 +15,7 @@ class TileShapes {
         54,
         55
     ];
-    
+
     static public var shapes:Array<TileShape> = [
         {
             index: 4,

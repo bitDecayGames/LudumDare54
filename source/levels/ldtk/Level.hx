@@ -13,6 +13,9 @@ import entities.Checkpoint;
 class Level {
 	public static var project = new LDTKProject();
 
+	private static inline var CELL_PIXEL_WIDTH = 16;
+	private static inline var CELL_PIXEL_HEIGHT = 16;
+
 	public var player:Player;
 
 	public var survivors = new Array<Survivor>();
@@ -65,7 +68,7 @@ class Level {
 
 		// Checkpoints
 		for (cp in raw.l_Entities.all_Checkpoint) {
-			var ent = new Checkpoint(player, cp.pixelX, cp.pixelY, cp.f_EndPoint.cx, cp.f_EndPoint.cy);
+			var ent = new Checkpoint(player, cp.pixelX, cp.pixelY, cp.f_EndPoint.cx * CELL_PIXEL_WIDTH + CELL_PIXEL_WIDTH / 2.0, cp.f_EndPoint.cy * CELL_PIXEL_HEIGHT + CELL_PIXEL_HEIGHT / 2.0, cp.f_SpawnPoint.cx * CELL_PIXEL_WIDTH + CELL_PIXEL_WIDTH / 2.0, cp.f_SpawnPoint.cy * CELL_PIXEL_HEIGHT + CELL_PIXEL_HEIGHT / 2.0);
 			checkpoints.push(ent);
 		}
 

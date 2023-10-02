@@ -49,6 +49,7 @@ class PlayState extends FlxTransitionableState {
 	var currents = new FlxGroup();
 	var piers = new FlxGroup();
 	var dams = new FlxGroup();
+	var checkpoints = new FlxGroup();
 
 	private static function defaultEnterHandler(a, b, o) {
 		if ((a.object is IsoEchoSprite)) {
@@ -126,6 +127,7 @@ class PlayState extends FlxTransitionableState {
 		add(debris);
 		add(piers);
 		add(dams);
+		add(checkpoints);
 		add(playerGroup);
 
 		#if logan
@@ -177,6 +179,11 @@ class PlayState extends FlxTransitionableState {
 			t.destroy();
 		});
 		dams.clear();
+
+		checkpoints.forEach((t) -> {
+			t.destroy();
+		});
+		checkpoints.clear();
 
 		FlxEcho.clear();
 
@@ -233,6 +240,9 @@ class PlayState extends FlxTransitionableState {
 		}
 		for (d in level.dams) {
 			d.add_to_group(dams);
+		}
+		for (cp in level.checkpoints) {
+			cp.add_to_group(checkpoints);
 		}
 
 		#if FLX_DEBUG
